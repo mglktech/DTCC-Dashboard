@@ -8,7 +8,7 @@
                 <div class="border p-4">
                     Hello <?php echo $char_name ?><br>
                     Your application to Downtown Cab Co. has been approved!<br>
-                    Our stardard operating procedures can be found here: http://bit.ly/HighLife_DTCC_SOP <br>
+                    Our standard operating procedures can be found here: http://bit.ly/HighLife_DTCC_SOP <br>
                     Please read this document thoroughly, as it describes the upcoming stages in the recruitment process.<br>
                     We look forward to hiring you!<br>
                     Regards<br>

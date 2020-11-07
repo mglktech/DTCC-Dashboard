@@ -32,7 +32,7 @@ function CreateTable($tableType)
         </li>
         <li class="nav-item">
             <a class="nav-link" id="allapps-tab" data-toggle="tab" href="#all" role="tab" aria-controls="profile" aria-selected="false">
-                <h5>App Historical</h5>
+                <h5>App History</h5>
             </a>
         </li>
     </ul>
