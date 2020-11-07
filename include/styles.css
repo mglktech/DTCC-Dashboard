@@ -1,0 +1,147 @@
+.table th {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.table td {
+  font-size: 16px;
+  padding: 10px !important;
+  vertical-align: unset !important;
+}
+
+.table td .btn {
+  background-color: #272b30;
+  border-color: #272b30;
+  color: #fff;
+  font-size: 16px;
+}
+
+.table td .btn:hover {
+  background-color: #494e53;
+}
+
+.applicant-data button,
+.modal-footer button {
+  font-size: 18px;
+  width: 175px;
+}
+
+.form-check-input::before,
+.form-check-input::after {
+  top: 0.8rem;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.steam-input {
+  width: 60% !important;
+  margin: auto !important;
+}
+
+.overflow-content {
+  max-height: 500px;
+  min-height: 500px;
+  overflow-y: scroll;
+}
+
+.questions-table td {
+  vertical-align: top !important;
+}
+
+.questions-table td:nth-of-type(1) {
+  padding-right: 30px !important;
+}
+
+.questions-table th:first-of-type {
+  width: 5% !important;
+}
+
+.questions-table th:last-of-type {
+  width: 10% !important;
+}
+
+.questions-table th,
+.questions-table td {
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}
+
+.table-padding {
+  padding-right: 30px;
+}
+
+.duration {
+  margin-top: -9px;
+  margin-left: -5px !important;
+}
+
+.version-number {
+  width: 100px !important;
+}
+
+.labels {
+  width: 200px;
+  padding-left: 15px;
+}
+
+.scoll-players {
+  max-height: 190px;
+  overflow-y: scroll;
+  border: 1px solid #ced4da;
+}
+
+.scoll-players ul {
+  padding-left: 25px !important;
+}
+
+.scoll-players ul li {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.navbar-toggler {
+  display: none;
+}
+
+.navbar-brand {
+  background-color: unset !important;
+  box-shadow: unset;
+}
+
+.bg-dark {
+  background-color: #224D7C !important;
+}
+
+@media screen and (max-width: 767px) {
+  .sidebar {
+    position: unset;
+  }
+  .nav-link {
+    display: inline-block;
+  }
+  .sidebar-sticky {
+    height: auto;
+  }
+  .navbar-toggler {
+    display: block;
+  }
+  .navbar-brand {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  .sidebar-sticky {
+    padding-top: 0 !important;
+  }
+}
+
+div.containerLogin {
+  height: 10em;
+  position: relative }
+div.containerLogin p {
+  margin: 0;
+  background: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%) }
