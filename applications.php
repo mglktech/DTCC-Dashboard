@@ -16,13 +16,10 @@ function CreateTable($tableType)
 
     return $table;
 }
-
-
-
 ?>
 
-<h1 class="mb-4">Applications</h1>
-
+<h1>Applications</h1>
+<h5 class="mb-3 font-weight-normal"><i>need friends?</i></h5>
 <div class="container-fluid-p0">
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
@@ -42,7 +39,7 @@ function CreateTable($tableType)
         <div class="tab-pane fade show active" id="unread" role="tabpanel" aria-labelledby="unreadapps-tab">
             <?php $tableData = CreateTable("unread");
             if ($tableData) { ?>
-                <table class="table">
+                <table class="table table-striped blue-header">
                     <tr>
                         <th>Date</th>
                         <th>Player Name</th>
@@ -57,7 +54,7 @@ function CreateTable($tableType)
                         echo "<td>" . $row[1] . "</td>";
                         echo "<td>" . $row[2] . "</td>";
 
-                        echo "<td><a class='btn btn-outline-secondary' href='/view_app.php?appid=" . $row[0] . "'>View Application</a></td>";
+                        echo "<td><a class='btn btn-info' href='/view_app.php?appid=" . $row[0] . "'>View Application</a></td>";
                         echo "</tr>";
                     }
 
@@ -72,7 +69,7 @@ function CreateTable($tableType)
         <div class="tab-pane fade" id="all" role="tabpanel" aria-labelledby="allapps-tab">
             <?php $tableData = CreateTable("all");
             if ($tableData) { ?>
-                <table class="table">
+                <table class="table table-striped blue-header">
                     <tr>
                         <th>Player Name</th>
                         <th>Time</th>

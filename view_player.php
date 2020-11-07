@@ -83,18 +83,14 @@ function PassFail($ret, $score_percent)
         return "FAIL";
     }
 }
-
-
-
 ?>
 
-<div class="container">
+<div class="container-fluid">
     <!-- APPLICATION FORM -->
     <div class="row">
-        <div class="col border rounded">
-            <h1 class="mt-3">Player Profile</h1>
-            <h5 class="font-italic">Gimme the DEETS.</h5>
-            <br>
+        <div class="col rounded p-0 pb-3">
+        <h1>Player</h1>
+        <h5 class="font-italic mb-3 font-weight-normal">gimme the deets</h5>
             <div class="container-fluid p-0">
                 <div class="row">
                     <div class="col-md-6">
@@ -111,20 +107,20 @@ function PassFail($ret, $score_percent)
                         CreateInputElem("Timezone:", $zone, "");
                         ?>
                         <?php if ($_SESSION['rank'] > $rank) { ?>
-                            <button class="btn btn-lg bg-danger text-light" data-toggle="modal" data-target="#StrikeModal">Strike</button>
+                            <button class="btn btn-lg bg-danger text-light" data-toggle="modal" data-target="#StrikeModal"><i class="fas fa-times"></i> Strike</button>
 
                         <?php }
                         if ($_SESSION['rank'] > 2 && $_SESSION['rank'] > $rank) { ?>
-                            <button class="btn btn-lg bg-danger text-light" disabled>Fire</button>
-                            <button class="btn btn-lg bg-danger text-light" disabled>Ban</button>
+                            <button class="btn btn-lg bg-danger text-light" disabled><i class="fas fa-angry"></i> Fire</button>
+                            <button class="btn btn-lg bg-danger text-light" disabled><i class="fas fa-gavel"></i> Ban</button>
                         <?php } ?>
                     </div>
                     <div class="col-md-6">
                         <h5 class="mb-1">Application History</h5>
-                        <div class="border text-center p-4">
+                        <div>
                             <?php $tableData = getApps($steamid);
                             if ($tableData) { ?>
-                                <table class="table">
+                                <table class="table table-striped blue-header">
                                     <tr>
                                         <th>Date</th>
                                         <th>Status</th>
@@ -148,10 +144,10 @@ function PassFail($ret, $score_percent)
                             ?>
                         </div>
                         <h5 class="mt-3 mb-1">Completed Tests:</h5>
-                        <div class="border text-center p-4">
+                        <div>
                             <?php $tableData = getTests($steamid);
                             if ($tableData) { ?>
-                                <table class="table">
+                                <table class="table table-striped blue-header">
                                     <tr>
                                         <th>Date</th>
                                         <th>Type</th>
@@ -177,10 +173,10 @@ function PassFail($ret, $score_percent)
                             ?>
                         </div>
                         <h5 class="mt-3 mb-1">Strikes:</h5>
-                            <div class="border text-center p-4">
+                            <div>
                                 <?php $tableData = getStrikes($steamid);
                                 if ($tableData) { ?>
-                                    <table class="table">
+                                    <table class="table table-striped blue-header">
                                         <tr>
                                             <th>Start Date</th>
                                             <th>Severity</th>
@@ -218,12 +214,12 @@ function PassFail($ret, $score_percent)
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content border-danger">
                 <div class="modal-header">
-                    <h5 class="modal-title text-center">Striking <?php echo $char_name ?></h5>
+                    <h5 class="modal-title">Striking <?php echo $char_name ?></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body text-center">
+                <div class="modal-body">
                     <h5>
                         Please describe your Strike
                     </h5>
@@ -237,7 +233,7 @@ function PassFail($ret, $score_percent)
                                     <textarea name="reason" class="form-control" aria-label="With textarea"></textarea>
                                 </div>
                             </div>
-                            <div class="col-3 text-center align-items-center">
+                            <div class="col-3 align-items-center">
                                 <h5>Severity:</h5>
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="severity" id="low" value="1" checked>
@@ -270,7 +266,7 @@ function PassFail($ret, $score_percent)
                 <div class="modal-footer">
 
                     <input name="applyStrike" value="1" hidden></input>
-                    <button type="submit" class="btn btn-danger">Strike Player</button>
+                    <button type="submit" class="btn btn-danger"><i class="fas fa-times"></i> Strike Player</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Go Back</button>
 
 

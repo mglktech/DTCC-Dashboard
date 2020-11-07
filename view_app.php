@@ -172,10 +172,10 @@ otherwise, disable accept button
 */
 include "include/elements.php";
 ?>
-<div class="container">
+<div class="container-fluid">
     <!-- APPLICATION FORM -->
     <div class="row">
-        <div class="col border rounded">
+        <div class="col p-0 pb-3 mb-3 rounded">
             <h1>Downtown Cab Co. Application</h1>
             <h5>Version 0</h5>
             <br>
