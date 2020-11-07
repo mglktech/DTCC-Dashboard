@@ -52,46 +52,47 @@ $isBanned = IsBanned($detected_steam_id);
 $banned_status = prepBanned($isBanned);
 ?>
 
-<div class="col border rounded text-center">
-    <h3> Additional Data</h3>
-    <h6><?php echo $SteamWebAPIResponse; ?></h6>
-    <h5 class="mb-3">
-        <span class="font-weight-normal"><?php echo $banned_status; ?></span>
-    </h5>
+<div class="row mt-3">
+    <div class="col border rounded pb-3">
+        <h3 class="mt-1">Additional Data</h3>
+        <h6><?php echo $SteamWebAPIResponse; ?></h6>
+        <h5 class="mb-3">
+            <span class="font-weight-normal"><?php echo $banned_status; ?></span>
+        </h5>
 
-    <h5 class="mb-3">
-        <form action="/view_app.php" method="get">
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="inputGroup-sizing-default">SteamID64:</span>
+        <h5 class="mb-3">
+            <form action="/view_app.php" method="get">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-default">SteamID64:</span>
+                    </div>
+                    <input name="appid" value="<?php echo $appid; ?>" hidden></input>
+                    <input name="detected_steamid" value="<?php echo $detected_steamid; ?>" hidden></input>
+
+                    <input name="manual_steamid" class="form-control" value="<?php
+                        if ($detected_steam_id) {
+                            echo $detected_steam_id;
+                        } else {
+                            echo "";
+                        } ?>" aria-label="" aria-describedby="basic-addon2" <?php if ($detected_steam_id) {
+                            echo "disabled";
+                        } ?>>
+                    <div class="input-group-append">
+                        <button class="btn btn-secondary" type="submit" <?php if ($detected_steam_id) echo "disabled"; ?>>Submit</button>
+                    </div>
                 </div>
-                <input name="appid" value="<?php echo $appid; ?>" hidden></input>
-                <input name="detected_steamid" value="<?php echo $detected_steamid; ?>" hidden></input>
+            </form>
+        </h5>
 
-                <input name="manual_steamid" class="form-control" value="<?php
-
-                                                                            if ($detected_steam_id) {
-                                                                                echo $detected_steam_id;
-                                                                            } else {
-                                                                                echo "";
-                                                                            } ?>" aria-label="" aria-describedby="basic-addon2" <?php if ($detected_steam_id) {
-                                                                                                                                    echo "disabled";
-                                                                                                                                } ?>>
-                <div class="input-group-append">
-                    <button class="btn btn-secondary" type="submit" <?php if ($detected_steam_id) echo "disabled"; ?>>Submit</button>
-                </div>
-            </div>
-        </form>
-    </h5>
-
-    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#acceptmodal" <?php if (!$detected_steam_id | $isBanned) echo "disabled"; ?>>
-        Approve Application
-    </button>
-    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#denyModal">
-        Reject Application
-    </button>
-    <div class="text-center"><a type="button" class="btn btn-secondary" data-dismiss="modal" href="applications.php">Go Back</a></div>
-</div>
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#acceptmodal" <?php if (!$detected_steam_id | $isBanned) echo "disabled"; ?>>
+            Approve Application
+        </button>
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#denyModal">
+            Reject Application
+        </button>
+        <a type="button" class="btn btn-secondary" data-dismiss="modal" href="applications.php">Go Back</a>
+    </div>
+    </div>
 </div>
 <br>
 

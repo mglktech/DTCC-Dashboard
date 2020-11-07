@@ -176,8 +176,8 @@ include "include/elements.php";
     <!-- APPLICATION FORM -->
     <div class="row">
         <div class="col border rounded">
-            <h3 class="text-center">Downtown Cab Co. Application</h3>
-            <h5 class="text-center">Version 0</h5>
+            <h1>Downtown Cab Co. Application</h1>
+            <h5>Version 0</h5>
             <br>
             <div class="container-fluid p-0">
                 <div class="row">
@@ -192,22 +192,15 @@ include "include/elements.php";
                         CreateInputElemFull(SpanPrepend("Steam Link: "), SpanMiddleDefault($steam_link), SpanBtnLink("Go", $steam_link)); ?>
                     </div>
                     <div class="col-md-6">
-                        <p>
-                            <h5 class="mb-3 text-center">
-                                Backstory:<br />
-                                <div class="border text-center p-4">
-                                    <span class="font-weight-normal"><?php echo $backstory; ?></span>
-                                </div>
-                            </h5>
-                        </p>
-                        <p>
-                            <h5 class="mb-3 text-center">
-                                Why do you want to join Downtown Cab Co?<br />
-                                <div class="border text-center p-4">
-                                    <span class="font-weight-normal"><?php echo $reason; ?></span>
-                                </div>
-                            </h5>
-                        </p>
+                        <h5 class="mb-1">Backstory:</h5>
+                        <div class="border p-4">
+                            <span class="font-weight-normal"><?php echo $backstory; ?></span>
+                        </div>
+                        </h5>
+                        <h5 class="mt-3 mb-1">Why do you want to join Downtown Cab Co?</h5>
+                        <div class="border p-4">
+                            <span class="font-weight-normal"><?php echo $reason; ?></span>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col">
                 <h6>Copy/Pasta to send directly to recruit:</h6>
-                <div class="border text-center p-4">
+                <div class="border p-4">
                     Hello <?php echo $char_name ?><br>
                     Your application to Downtown Cab Co. has been approved!<br>
                     Our stardard operating procedures can be found here: http://bit.ly/HighLife_DTCC_SOP <br>
@@ -17,7 +17,7 @@
             </div>
             <div class="col">
                 <h6>Copy/paste for #database-todos:</h6>
-                <div class="border text-center p-4">
+                <div class="border p-4">
                     Please give @<?php echo $discord_name ?> the Downtown Cab Co. Recruitment tag. Thanks!
                 </div>
             </div>

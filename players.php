@@ -1,5 +1,4 @@
 <?php include 'include/header.php';  ?>
-<h1 class="mb-5">Roster</h1>
 <?php
 
 function OldWay()
@@ -22,6 +21,9 @@ function getRostor()
 
 // output data of each row
 ?>
+
+<h1 class="mb-3">Roster</h1>
+
 <table class="table">
     <tr>
         <th>Callsign</th>

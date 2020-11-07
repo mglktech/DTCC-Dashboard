@@ -92,8 +92,8 @@ function PassFail($ret, $score_percent)
     <!-- APPLICATION FORM -->
     <div class="row">
         <div class="col border rounded">
-            <h3 class="text-center">Player Profile</h3>
-            <h6 class="text-center font-italic">Gimme the DEETS.</h6>
+            <h1 class="mt-3">Player Profile</h1>
+            <h5 class="font-italic">Gimme the DEETS.</h5>
             <br>
             <div class="container-fluid p-0">
                 <div class="row">
@@ -120,104 +120,91 @@ function PassFail($ret, $score_percent)
                         <?php } ?>
                     </div>
                     <div class="col-md-6">
-                        <p>
-                            <h5 class="mb-3 text-center">
-                                Application History<br />
-                                <div class="border text-center p-4">
-                                    <?php $tableData = getApps($steamid);
-                                    if ($tableData) { ?>
-                                        <table class="table">
-                                            <tr>
-                                                <th>Date</th>
-                                                <th>Status</th>
-                                                <th>Signed By</th>
-                                                <th></th>
-                                            </tr>
-                                            <?php
-                                            foreach ($tableData as $row) {
-                                                echo "<tr>";
-                                                echo "<td>" . toDate($row[1]) . "</td>";
-                                                echo "<td>" . $row[4] . "</td>";
-                                                echo "<td>" . $row[6] . " | " .  $row[5] . "</td>";
-                                                echo "<td><a class='btn btn-outline-secondary' href='/view_app.php?appid=" . $row[3] . "'>View</a></td>";
-                                                echo "</tr>";
-                                            }
-                                            ?>
-                                        </table>
-                                    <?php } else {
-                                        echo "Table is empty";
+                        <h5 class="mb-1">Application History</h5>
+                        <div class="border text-center p-4">
+                            <?php $tableData = getApps($steamid);
+                            if ($tableData) { ?>
+                                <table class="table">
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th>Signed By</th>
+                                        <th></th>
+                                    </tr>
+                                    <?php
+                                    foreach ($tableData as $row) {
+                                        echo "<tr>";
+                                        echo "<td>" . toDate($row[1]) . "</td>";
+                                        echo "<td>" . $row[4] . "</td>";
+                                        echo "<td>" . $row[6] . " | " .  $row[5] . "</td>";
+                                        echo "<td><a class='btn btn-outline-secondary' href='/view_app.php?appid=" . $row[3] . "'>View</a></td>";
+                                        echo "</tr>";
                                     }
                                     ?>
-                                </div>
-                            </h5>
-                        </p>
-                        <p>
-                            <h5 class="mb-3 text-center">
-                                Completed Tests:<br />
-                                <div class="border text-center p-4">
-                                    <?php $tableData = getTests($steamid);
-                                    if ($tableData) { ?>
-                                        <table class="table">
-                                            <tr>
-                                                <th>Date</th>
-                                                <th>Type</th>
-                                                <th>Status</th>
-                                                <th>Signed By</th>
-                                                <th></th>
-                                            </tr>
-                                            <?php
-                                            foreach ($tableData as $row) {
-                                                echo "<tr>";
-                                                echo "<td>" . toDateS($row[9]) . "</td>";
-                                                echo "<td>" . $row[2] . "</td>";
-                                                echo "<td>" . PassFail(getMetas($row[2], $row[3]), $row[4]) . "</td>";
-                                                echo "<td>" . $row[7] . " | " .  $row[6] . "</td>";
-                                                echo "<td><a class='btn btn-outline-secondary' href='../tests/view_test.php?test_id=" . $row[0] . "'>View</a></td>";
-                                                echo "</tr>";
-                                            }
-                                            ?>
-                                        </table>
-                                    <?php } else {
-                                        echo "Table is empty";
+                                </table>
+                            <?php } else {
+                                echo "Table is empty";
+                            }
+                            ?>
+                        </div>
+                        <h5 class="mt-3 mb-1">Completed Tests:</h5>
+                        <div class="border text-center p-4">
+                            <?php $tableData = getTests($steamid);
+                            if ($tableData) { ?>
+                                <table class="table">
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Type</th>
+                                        <th>Status</th>
+                                        <th>Signed By</th>
+                                        <th></th>
+                                    </tr>
+                                    <?php
+                                    foreach ($tableData as $row) {
+                                        echo "<tr>";
+                                        echo "<td>" . toDateS($row[9]) . "</td>";
+                                        echo "<td>" . $row[2] . "</td>";
+                                        echo "<td>" . PassFail(getMetas($row[2], $row[3]), $row[4]) . "</td>";
+                                        echo "<td>" . $row[7] . " | " .  $row[6] . "</td>";
+                                        echo "<td><a class='btn btn-outline-secondary' href='../tests/view_test.php?test_id=" . $row[0] . "'>View</a></td>";
+                                        echo "</tr>";
                                     }
                                     ?>
-                                </div>
-                            </h5>
-                        </p>
-                        <p>
-                            <h5 class="mb-3 text-center">
-                                Strikes:<br />
-                                <div class="border text-center p-4">
-                                    <?php $tableData = getStrikes($steamid);
-                                    if ($tableData) { ?>
-                                        <table class="table">
-                                            <tr>
-                                                <th>Start Date</th>
-                                                <th>Severity</th>
-                                                <th>End Date</th>
-                                                <th>Signed By</th>
-                                                <th></th>
-                                            </tr>
-                                            <?php
-                                            foreach ($tableData as $row) {
-                                                echo "<tr>";
-                                                echo "<td>" . toDateS($row[8]) . "</td>";
-                                                echo "<td>" . $row[4] . "</td>";
-                                                echo "<td>" . toDateS($row[9]) . "</td>";
-                                                echo "<td>" . $row[6] . " | " .  $row[7] . "</td>";
-                                                echo "<td><a class='btn btn-outline-secondary' href='../tests/view_strike.php?strike_id=" . $row[0] . "'>View</a></td>";
-                                                echo "</tr>";
-                                            }
-                                            ?>
-                                        </table>
-                                    <?php } else {
-                                        echo "Table is empty";
-                                    }
-                                    ?>
-                                </div>
-                            </h5>
-                        </p>
-
+                                </table>
+                            <?php } else {
+                                echo "Table is empty";
+                            }
+                            ?>
+                        </div>
+                        <h5 class="mt-3 mb-1">Strikes:</h5>
+                            <div class="border text-center p-4">
+                                <?php $tableData = getStrikes($steamid);
+                                if ($tableData) { ?>
+                                    <table class="table">
+                                        <tr>
+                                            <th>Start Date</th>
+                                            <th>Severity</th>
+                                            <th>End Date</th>
+                                            <th>Signed By</th>
+                                            <th></th>
+                                        </tr>
+                                        <?php
+                                        foreach ($tableData as $row) {
+                                            echo "<tr>";
+                                            echo "<td>" . toDateS($row[8]) . "</td>";
+                                            echo "<td>" . $row[4] . "</td>";
+                                            echo "<td>" . toDateS($row[9]) . "</td>";
+                                            echo "<td>" . $row[6] . " | " .  $row[7] . "</td>";
+                                            echo "<td><a class='btn btn-outline-secondary' href='../tests/view_strike.php?strike_id=" . $row[0] . "'>View</a></td>";
+                                            echo "</tr>";
+                                        }
+                                        ?>
+                                    </table>
+                                <?php } else {
+                                    echo "Table is empty";
+                                }
+                                ?>
+                            </div>
                     </div>
                 </div>
             </div>

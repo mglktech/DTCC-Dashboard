@@ -21,7 +21,7 @@ function CreateTable($tableType)
 
 ?>
 
-
+<h1 class="mb-4">Applications</h1>
 
 <div class="container-fluid-p0">
     <ul class="nav nav-tabs" id="myTab" role="tablist">
