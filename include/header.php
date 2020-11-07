@@ -16,10 +16,10 @@ include "includes.php";
 <body>
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
         <a class="navbar-brand col-sm-3 col-md-2 pl-3 p-1" href="#"><img src="/images/logo.png"></a>
-        <h1 class="text-light">LOCALHOST DEVELOPMENT SERVER</h1>
+        <h1 class="text-light"></h1>
         <ul class="navbar-nav px-3">
             <li class="nav-item text-nowrap">
-                <span style="color: rgba(255, 255, 255, 0.5)" id="SteamName"><?php echo $_SESSION["char_name"]; ?>
+                <span style="color: rgba(255, 255, 255, 0.5)" id="SteamName"><?php echo $_SESSION["char_name"]; ?>&nbsp;
                     <img id="DisplayImg" style="height: 32px; width: 32px" src="<?php echo $_SESSION['profile_pic'] ?>" />
                     |
                 </span><a style="display: inline-block" class="nav-link" href="../logout.php">Sign out</a>
@@ -37,4 +37,4 @@ include "includes.php";
         <div class="row">
             <?php include "sidebar.php" ?>
 
-            <main id="main" role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <main id="main" role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-4">

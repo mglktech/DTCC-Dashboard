@@ -1,5 +1,4 @@
 <?php include 'include/header.php';  ?>
-<h1 class="mb-5">Roster</h1>
 <?php
 
 function OldWay()
@@ -22,7 +21,10 @@ function getRostor()
 
 // output data of each row
 ?>
-<table class="table">
+
+<h1>Roster</h1>
+<h5 class="font-italic mb-3 font-weight-normal">my minions!</h5>
+<table class="table table-striped blue-header">
     <tr>
         <th>Callsign</th>
         <th>Name</th>

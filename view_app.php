@@ -79,7 +79,7 @@ if (isset($_POST["SubmitApp"])) {
          `additional_info`='' 
          WHERE `app_id`='$appid'";
         $response = UpdateDB($sql);
-        echo "Database Response: " . $response;
+        echo "Database Response: " . $response . " SQL: " . $sql;
     }
 
     if ($_POST["SubmitApp"] == "deny") {
@@ -105,7 +105,7 @@ if (isset($_POST["SubmitApp"])) {
          `additional_info`='$additionalInfo' 
          WHERE `app_id`='$appid'";
         $response = UpdateDB($sql);
-        echo "Database Response: " . $response;
+        echo "Database Response: " . $response . " SQL: " . $sql;
     }
     if ($detected_steam_id) {
         if ($isBanned) {
@@ -172,12 +172,12 @@ otherwise, disable accept button
 */
 include "include/elements.php";
 ?>
-<div class="container">
+<div class="container-fluid">
     <!-- APPLICATION FORM -->
     <div class="row">
-        <div class="col border rounded">
-            <h3 class="text-center">Downtown Cab Co. Application</h3>
-            <h5 class="text-center">Version 0</h5>
+        <div class="col p-0 pb-3 mb-3 rounded">
+            <h1>Downtown Cab Co. Application</h1>
+            <h5>Version 0</h5>
             <br>
             <div class="container-fluid p-0">
                 <div class="row">
@@ -192,22 +192,15 @@ include "include/elements.php";
                         CreateInputElemFull(SpanPrepend("Steam Link: "), SpanMiddleDefault($steam_link), SpanBtnLink("Go", $steam_link)); ?>
                     </div>
                     <div class="col-md-6">
-                        <p>
-                            <h5 class="mb-3 text-center">
-                                Backstory:<br />
-                                <div class="border text-center p-4">
-                                    <span class="font-weight-normal"><?php echo $backstory; ?></span>
-                                </div>
-                            </h5>
-                        </p>
-                        <p>
-                            <h5 class="mb-3 text-center">
-                                Why do you want to join Downtown Cab Co?<br />
-                                <div class="border text-center p-4">
-                                    <span class="font-weight-normal"><?php echo $reason; ?></span>
-                                </div>
-                            </h5>
-                        </p>
+                        <h5 class="mb-1">Backstory:</h5>
+                        <div class="border p-4">
+                            <span class="font-weight-normal"><?php echo $backstory; ?></span>
+                        </div>
+                        </h5>
+                        <h5 class="mt-3 mb-1">Why do you want to join Downtown Cab Co?</h5>
+                        <div class="border p-4">
+                            <span class="font-weight-normal"><?php echo $reason; ?></span>
+                        </div>
                     </div>
                 </div>
             </div>
