@@ -4,7 +4,7 @@ function SpanPrepend($text)
 {
     return "<span class='input-group-text bg-secondary text-light'>" . $text . "</span>";
 }
-
+// simple change
 function SpanIsAlive($IsAlive)
 {
     if ($IsAlive == 1) {
