@@ -79,7 +79,7 @@ if (isset($_POST["SubmitApp"])) {
          `additional_info`='' 
          WHERE `app_id`='$appid'";
         $response = UpdateDB($sql);
-        echo "Database Response: " . $response . " SQL: " . $sql;
+       // echo "Database Response: " . $response . " SQL: " . $sql;
     }
 
     if ($_POST["SubmitApp"] == "deny") {
@@ -105,7 +105,7 @@ if (isset($_POST["SubmitApp"])) {
          `additional_info`='$additionalInfo' 
          WHERE `app_id`='$appid'";
         $response = UpdateDB($sql);
-        echo "Database Response: " . $response . " SQL: " . $sql;
+        //echo "Database Response: " . $response . " SQL: " . $sql;
     }
     if ($detected_steam_id) {
         if ($isBanned) {
@@ -119,7 +119,7 @@ if (isset($_POST["SubmitApp"])) {
         }
         $response = UpdateDB($sql);
         if ($response == "failure") {
-            echo "ERROR: SQL Failure. SQL: " . $sql;
+            //echo "ERROR: SQL Failure. SQL: " . $sql;
         }
     }
 }
