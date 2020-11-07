@@ -16,7 +16,7 @@ include "includes.php";
 <body>
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
         <a class="navbar-brand col-sm-3 col-md-2 pl-3 p-1" href="#"><img src="/images/logo.png"></a>
-        <h1 class="text-light">LOCALHOST DEVELOPMENT SERVER</h1>
+        <h1 class="text-light"></h1>
         <ul class="navbar-nav px-3">
             <li class="nav-item text-nowrap">
                 <span style="color: rgba(255, 255, 255, 0.5)" id="SteamName"><?php echo $_SESSION["char_name"]; ?>
