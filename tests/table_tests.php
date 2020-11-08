@@ -44,7 +44,8 @@ callsign
 */
 
 ?>
-
+<h1>Tests</h1>
+<h5 class="font-italic mb-3 font-weight-normal">look at all these idiots...</h5>
 <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item">
         <a class="nav-link active" id="theory-tab" data-toggle="tab" href="#theory" role="tab" aria-controls="home" aria-selected="true">
@@ -66,9 +67,8 @@ callsign
 <div class="tab-content" id="myTabContent">
     <div class="tab-pane show active" id="theory" role="tabpanel" aria-labelledby="theory-tab">
 
-        <div class='container-flex border'>
-            <h1 class="mb-2 mt-2">Needs Theory</h1>
-            <table class="table table-striped">
+        <div class='container-flex'>
+            <table class="table table-striped blue-header">
                 <thead>
                     <tr>
                         <th>Player Name</th>
@@ -94,9 +94,8 @@ callsign
 
     </div>
     <div class="tab-pane fade" id="practical" role="tabpanel" aria-labelledby="practical-tab">
-        <div class='container-flex border'>
-            <h1 class="mb-2 mt-2">Needs Practical</h1>
-            <table class="table table-striped">
+        <div class='container-flex'>
+            <table class="table table-striped blue-header">
                 <thead>
                     <tr>
                         <th>Player Name</th>
@@ -125,7 +124,7 @@ callsign
     <div class="tab-pane fade" id="all" role="tabpanel" aria-labelledby="all-tab">
         <?php
         if ($test_history) { ?>
-            <table class="table">
+            <table class="table table-striped blue-header">
                 <tr>
                     <th>Player Name</th>
                     <th>Type</th>

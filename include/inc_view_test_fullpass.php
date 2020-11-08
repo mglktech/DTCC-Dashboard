@@ -1,4 +1,4 @@
-<div class="container-fluid p-0">
+<div class="container-fluid">
     <div class="row">
         <div class="col-6">
             <h6>Copy/Pasta to send directly to recruit:</h6>
@@ -14,7 +14,7 @@
         </div>
         <div class="col-6">
             <h6>Copy/paste for #database-todos:</h6>
-            <div class="border text-center p-4">
+            <div class="border text-center p-4 mb-3">
                 Please **remove** DTCC Recruitment tag from @<?php echo $rvals['discord_name']; ?>, and give him the main Downtown Cab Co. tag. Thanks!
             </div>
             <h6>No Whitelisting access?<br>

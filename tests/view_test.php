@@ -258,79 +258,82 @@ function CreateQuestionElement($id, $question, $score)
 <div class="col-md-6 text-center">
 
 </div>
-<div class="container text-center">
-    <h2 class="font-weight-bold">Test Results</h2>
+<div class="container-fluid">
     <div class="row">
-        <div class="col-md-12">
-            <?php
-            if (isset($rvals['hex']) && passed($rvals['total_score'], $rvals['pass_mark'])) { ?>
+        <h1>Test Results</h1>
+        <h5 class="w-100 font-italic mb-3 font-weight-normal">did this buttholes pass?</h5>
+        <div class="row w-100">
+            <div class="col-md-12">
+                <?php
+                if (isset($rvals['hex']) && passed($rvals['total_score'], $rvals['pass_mark'])) { ?>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?php CreateInputElem("Callsign", $rvals["callsign"], ""); ?>
+                        </div>
+                        <div class="col-md-6">
+                            <?php
+                            $link = new stdClass();
+                            $link->label = "Whitelist";
+                            $link->href = "https://highliferoleplay.net/whitelisting/index.php";
+                            CreateInputBtnElem("Steam Hex:", $rvals['hex'], $link);
+                            ?>
+
+                        </div>
+                    </div>
+                <?php } ?>
                 <div class="row">
                     <div class="col-md-6">
-                        <?php CreateInputElem("Callsign", $rvals["callsign"], ""); ?>
+                        <?php CreateInputElem("Student Name:", $rvals['char_name'], ""); ?>
                     </div>
                     <div class="col-md-6">
-                        <?php
-                        $link = new stdClass();
-                        $link->label = "Whitelist";
-                        $link->href = "https://highliferoleplay.net/whitelisting/index.php";
-                        CreateInputBtnElem("Steam Hex:", $rvals['hex'], $link);
-                        ?>
+                        <?php CreateInputElem("Signed By: ", $rvals["signed_by"], ""); ?>
 
                     </div>
                 </div>
-            <?php } ?>
-            <div class="row">
-                <div class="col-md-6">
-                    <?php CreateInputElem("Student Name:", $rvals['char_name'], ""); ?>
-                </div>
-                <div class="col-md-6">
-                    <?php CreateInputElem("Signed By: ", $rvals["signed_by"], ""); ?>
 
+                <div class="row">
+                    <div class="col-md-6">
+                        <?php CreateInputElem("Test Type", $rvals["test_type"], "v0"); ?>
+                    </div>
+                    <div class="col-md-6">
+                        <?php CreateRichInputElem("Test Result:", CreatePassFail($rvals['total_score'], $rvals['pass_mark']), ($rvals['percentage'] * 100) .  "%"); ?>
+                    </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <?php CreateInputElem("Total Score:", $rvals['total_score'], "/ " . $rvals['max_score']); ?>
+                    </div>
+                    <div class="col-md-6">
+                        <?php CreateInputElem("Pass Mark:", $rvals['pass_mark'] . "/ " . $rvals['max_score'], (round($rvals['pass_mark'] / $rvals['max_score'], 2) * 100) . "%"); ?>
+                    </div>
+                </div>
+                <table class="table table-striped text-center">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>No.</th>
+                            <th>Questions</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $questions = getQuestions($rvals['test_type']);
+                        foreach ($questions as $key => $q) {
+                            $score = $rvals['Answers'][$key];
+                            echo "<tr>";
+                            echo "<td class='font-weight-bold'>" . ($key + 1) . "</td>";
+                            echo "<td class='" . pickTWeight($score) . "'>" . $q[0] . "</td>";
+                            echo "<td class='" . pickBGCol($score) . "'>" . $score . "</td>";
+                            echo "</tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
             </div>
-
-            <div class="row">
-                <div class="col-md-6">
-                    <?php CreateInputElem("Test Type", $rvals["test_type"], "v0"); ?>
-                </div>
-                <div class="col-md-6">
-                    <?php CreateRichInputElem("Test Result:", CreatePassFail($rvals['total_score'], $rvals['pass_mark']), ($rvals['percentage'] * 100) .  "%"); ?>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <?php CreateInputElem("Total Score:", $rvals['total_score'], "/ " . $rvals['max_score']); ?>
-                </div>
-                <div class="col-md-6">
-                    <?php CreateInputElem("Pass Mark:", $rvals['pass_mark'] . "/ " . $rvals['max_score'], (round($rvals['pass_mark'] / $rvals['max_score'], 2) * 100) . "%"); ?>
-                </div>
-            </div>
-            <table class="table table-striped text-center">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>No.</th>
-                        <th>Questions</th>
-                        <th>Score</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    $questions = getQuestions($rvals['test_type']);
-                    foreach ($questions as $key => $q) {
-                        $score = $rvals['Answers'][$key];
-                        echo "<tr>";
-                        echo "<td class='font-weight-bold'>" . ($key + 1) . "</td>";
-                        echo "<td class='" . pickTWeight($score) . "'>" . $q[0] . "</td>";
-                        echo "<td class='" . pickBGCol($score) . "'>" . $score . "</td>";
-                        echo "</tr>";
-                    }
-                    ?>
-                </tbody>
-            </table>
+            <?php if (isset($rvals['hex']) && passed($rvals['total_score'], $rvals['pass_mark'])) {
+                include "../include/inc_view_test_fullpass.php";
+            } ?>
         </div>
-        <?php if (isset($rvals['hex']) && passed($rvals['total_score'], $rvals['pass_mark'])) {
-            include "../include/inc_view_test_fullpass.php";
-        } ?>
+        <a class="btn btn-secondary mb-5" href="table_tests.php">Done</a>
     </div>
-    <a class="btn btn-secondary" href="table_tests.php">Done</a>
 </div>
