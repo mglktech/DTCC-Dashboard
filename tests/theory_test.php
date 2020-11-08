@@ -50,6 +50,12 @@ function CreateQuestionnaireElement($id, $data)
             <input name="steamid" value="<?php echo $student_steamid ?>" hidden>
             <input name="char_name" value="<?php echo $char_name ?>" hidden>
             <input name="test_type" value="theory" hidden>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Comments</span>
+                </div>
+                <textarea name="comments" rows="5" class="form-control" aria-label="With textarea"></textarea>
+            </div>
             <button class="btn btn-success ml-3 mb-5" type="submit">Submit</button>
             <a class="btn btn-secondary mb-5" href="table_tests.php">Go Back</a>
         </form>
