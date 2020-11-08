@@ -24,14 +24,23 @@ function getRostor()
 
 <h1>Roster</h1>
 <h5 class="font-italic mb-3 font-weight-normal">my minions!</h5>
-<table class="table table-striped blue-header">
+<table class="table table-striped blue-header roster-table">
     <tr>
         <th>Callsign</th>
         <th>Name</th>
         <th>Discord</th>
         <th>Rank</th>
         <th>Status</th>
-        <th></th>
+        <th>
+            <div class="input-group input-group float-left">
+                <input style="height: 27px;" type="text" class="form-control" placeholder="Search Players...">
+                <div class="input-group-append">
+                <button style="height: 27px;" class="btn btn-secondary player-search" type="button">
+                    <i class="fa fa-search"></i>
+                </button>
+                </div>
+            </div>
+        </th>
     </tr>
     <?php
     $table = getRostor();
@@ -43,7 +52,7 @@ function getRostor()
             echo "<td>" . $row[4] . "</td>";
             echo "<td>" . $row[7] . "</td>";
             echo "<td>" . $row[8] . "</td>";
-            echo "<td><a class='btn btn-secondary' href='/view_player.php?steamid=" . $row[2] . "'>View Player</button></td>";
+            echo "<td><a class='btn btn-secondary view-player' href='/view_player.php?steamid=" . $row[2] . "'>View Player</button></td>";
             echo "</tr>";
         }
     } else {
