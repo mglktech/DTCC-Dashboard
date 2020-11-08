@@ -33,19 +33,26 @@ if (!isset($_GET["manual_steamid"])) {
     }
     if (!isset($detected_steam_id)) {
         $detected_steam_id = "";
+        $detected_steam_name = "";
         $SteamWebAPIResponse = "<p class='text-warning'>SteamWebAPI cannot retrieve this user's SteamID. (is their profile set to private?)</p>";
     }
 }
 if (isset($_GET["manual_steamid"])) {
-    require_once "steam/SteamUser.php";
-    $user = new SteamUser($_GET["manual_steamid"]);
-    $detected_steam_name = $user->steamID;
-    if ($detected_steam_name) {
-        $detected_steam_id = $_GET["manual_steamid"];
-        $SteamWebAPIResponse = "<p class='text-success'>The SteamID you have provided has been verified by SteamAPI.</p>";
-    } else {
+
+    if ($_GET["manual_steamid"] == "") {
+        $detected_steam_name = "";
         $detected_steam_id = "";
-        $SteamWebAPIResponse = "<p class='text-danger'>The SteamID you have provided cannot be verified by SteamAPI.</p>";
+    } else {
+        require_once "steam/SteamUser.php";
+        $user = new SteamUser($_GET["manual_steamid"]);
+        $detected_steam_name = $user->steamID;
+        if ($detected_steam_name) {
+            $detected_steam_id = $_GET["manual_steamid"];
+            $SteamWebAPIResponse = "<p class='text-success'>The SteamID you have provided has been verified by SteamAPI.</p>";
+        } else {
+            $detected_steam_id = "";
+            $SteamWebAPIResponse = "<p class='text-danger'>The SteamID you have provided cannot be verified by SteamAPI.</p>";
+        }
     }
 }
 $isBanned = IsBanned($detected_steam_id);
@@ -70,13 +77,13 @@ $banned_status = prepBanned($isBanned);
                     <input name="detected_steamid" value="<?php echo $detected_steamid; ?>" hidden></input>
 
                     <input name="manual_steamid" class="form-control" value="<?php
-                        if ($detected_steam_id) {
-                            echo $detected_steam_id;
-                        } else {
-                            echo "";
-                        } ?>" aria-label="" aria-describedby="basic-addon2" <?php if ($detected_steam_id) {
-                            echo "disabled";
-                        } ?>>
+                                                                                if ($detected_steam_id) {
+                                                                                    echo $detected_steam_id;
+                                                                                } else {
+                                                                                    echo "";
+                                                                                } ?>" aria-label="" aria-describedby="basic-addon2" <?php if ($detected_steam_id) {
+                                                                                                                                        echo "disabled";
+                                                                                                                                    } ?>>
                     <div class="input-group-append">
                         <button class="btn btn-secondary" type="submit" <?php if ($detected_steam_id) echo "disabled"; ?>>Submit</button>
                     </div>
@@ -92,7 +99,7 @@ $banned_status = prepBanned($isBanned);
         </button>
         <a type="button" class="btn btn-secondary" data-dismiss="modal" href="applications.php">Go Back</a>
     </div>
-    </div>
+</div>
 </div>
 <br>
 
@@ -242,6 +249,7 @@ $banned_status = prepBanned($isBanned);
                             }
                             ?>
                             <?php if (!$detected_steam_id) {
+                                $detected_steam_id = "";
                                 echo "<input name='badProfileLink' value='1' hidden></input>";
                             } ?>
 
