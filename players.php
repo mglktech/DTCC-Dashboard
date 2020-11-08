@@ -1,6 +1,8 @@
 <?php include 'include/header.php';  ?>
 <?php
 
+
+
 function OldWay()
 {
     $conn = OpenCon();
@@ -12,8 +14,16 @@ function OldWay()
 
 function getRostor()
 {
+    if (isset($_POST['search'])) {
+        $q = $_POST['search'];
+        $sql = "SELECT * FROM `public_players` WHERE (`char_name` like '%$q%')
+        or (steam_name like '%$q%')
+        or (discord_name like '%$q%')";
+    } else {
+        $sql = "SELECT * FROM `public_players` ORDER BY `rank` DESC";
+    }
     include 'include/db_connection.php';
-    $sql = "SELECT * FROM `public_players` ORDER BY `rank` DESC";
+
     return fetchAll($sql);
 }
 
@@ -32,14 +42,16 @@ function getRostor()
         <th>Rank</th>
         <th>Status</th>
         <th>
-            <div class="input-group input-group float-left">
-                <input style="height: 27px;" type="text" class="form-control" placeholder="Search Players...">
-                <div class="input-group-append">
-                <button style="height: 27px;" class="btn btn-secondary player-search" type="button">
-                    <i class="fa fa-search"></i>
-                </button>
+            <form action="players.php" method="post">
+                <div class="input-group input-group float-left">
+                    <input name="search" style="height: 27px;" type="text" class="form-control" placeholder="Search Players...">
+                    <div class="input-group-append">
+                        <button type="submit" style="height: 27px;" class="btn btn-secondary player-search" type="button">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
                 </div>
-            </div>
+            </form>
         </th>
     </tr>
     <?php
