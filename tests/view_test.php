@@ -262,7 +262,7 @@ function CreateQuestionElement($id, $question, $score)
     <div class="row">
         <h1>Test Results</h1>
         <h5 class="w-100 font-italic mb-3 font-weight-normal">did this buttholes pass?</h5>
-        <div class="row">
+        <div class="row w-100">
             <div class="col-md-12">
                 <?php
                 if (isset($rvals['hex']) && passed($rvals['total_score'], $rvals['pass_mark'])) { ?>
