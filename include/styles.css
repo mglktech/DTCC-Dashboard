@@ -159,7 +159,7 @@ a {
 }
 
 .sidebar .nav-link {
-  font-size: 22px;
+  font-size: 18px;
 }
 
 .feather {
@@ -172,7 +172,7 @@ a {
 }
 
 .sidebar-sticky {
-  padding-top: 80px;
+  padding-top: 95px;
   top: 0 !important;
   position: fixed !important;
 }
