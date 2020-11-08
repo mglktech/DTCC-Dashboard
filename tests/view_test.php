@@ -22,6 +22,7 @@ function Get_Test($test_id)
     $sql = "SELECT * FROM `tests` WHERE `id` = '$test_id'";
     $result = fetchRow($sql);
     $student_steamid = $result[2];
+    $comments = $result[9];
     $total_score = $result[5];
     $scores = explode("/", $result[7]);
     //echo print_r($result[7]);
@@ -42,6 +43,7 @@ function Get_Test($test_id)
     $postret['Answers'] = $scores;
     $postret['test_type'] = $test_type;
     $postret['discord_name'] = $discord_name;
+    $postret['comments'] = $comments;
     if ($test_type != 'theory') {
         $postret['hex'] = "steam:" . dechex($student_steamid);
     }
@@ -81,6 +83,7 @@ function POST_Theory()
     $date = time();
     $steamid = $_POST["steamid"];
     $char_name = $_POST["char_name"];
+    $comments = $_POST['comments'];
     $signed_by = $_SESSION["steam_id"];
     $total_score = 0;
     $score_string = "";
@@ -110,7 +113,7 @@ function POST_Theory()
         WHERE `steam_id`='$steamid'";
     }
 
-    $sql = "INSERT INTO `tests`(`steam_id`, `type`, `version`, `score_total`, `score_percent`, `signed_by`,`scores`,`submit_date`) VALUES ('$steamid','theory','0','$total_score','$percentage','$signed_by','$score_string','$date')";
+    $sql = "INSERT INTO `tests`(`steam_id`, `type`, `version`, `score_total`, `score_percent`, `signed_by`,`scores`,`submit_date`,`comments`) VALUES ('$steamid','theory','0','$total_score','$percentage','$signed_by','$score_string','$date','$comments')";
     $response = SqlRun($sql);
     //echo $response . " SQL: " . $sql;
     $postret['char_name'] = $char_name;
@@ -122,6 +125,7 @@ function POST_Theory()
     $postret['test_type'] = $_POST['test_type'];
     $postret['callsign'] = "Not Assigned";
     $postret['signed_by'] = fetchPlayerFormatted($signed_by);
+    $postret['comments'] = $comments;
 
     return $postret;
 }
@@ -133,6 +137,7 @@ function POST_Practical()
     //echo $callsign;
     $date = time();
     $steamid = $_POST["steamid"];
+    $comments = $_POST['comments'];
     $char_name = $_POST["char_name"];
     $signed_by = $_SESSION["steam_id"];
     $total_score = 0;
@@ -177,7 +182,7 @@ function POST_Practical()
         WHERE `steam_id`='$steamid'";
         //echo "You Failed.";
     }
-    $sql = "INSERT INTO `tests`(`steam_id`, `type`, `version`, `score_total`, `score_percent`, `signed_by`,`scores`,`submit_date`) VALUES ('$steamid','practical','0','$total_score','$percentage','$signed_by','$score_string','$date')";
+    $sql = "INSERT INTO `tests`(`steam_id`, `type`, `version`, `score_total`, `score_percent`, `signed_by`,`scores`,`submit_date`,`comments`) VALUES ('$steamid','practical','0','$total_score','$percentage','$signed_by','$score_string','$date','$comments')";
     $response = SqlRun($sql);
     //echo "Tests Database Response: " . $response;
     $char = fetchPlayer($steamid);
@@ -192,6 +197,7 @@ function POST_Practical()
     $postret['callsign'] = $callsign;
     $postret['signed_by'] = fetchPlayerFormatted($signed_by);
     $postret['discord_name'] = $char[5];
+    $postret['comments'] = $comments;
     return $postret;
 }
 
@@ -261,7 +267,7 @@ function CreateQuestionElement($id, $question, $score)
 <div class="container-fluid">
     <div class="row">
         <h1>Test Results</h1>
-        <h5 class="w-100 font-italic mb-3 font-weight-normal">did this buttholes pass?</h5>
+        <h5 class="w-100 font-italic mb-3 font-weight-normal">did this butthole pass?</h5>
         <div class="row w-100">
             <div class="col-md-12">
                 <?php
@@ -333,7 +339,15 @@ function CreateQuestionElement($id, $question, $score)
             <?php if (isset($rvals['hex']) && passed($rvals['total_score'], $rvals['pass_mark'])) {
                 include "../include/inc_view_test_fullpass.php";
             } ?>
+
+
         </div>
-        <a class="btn btn-secondary mb-5" href="table_tests.php">Done</a>
+        <div class="container-fluid">
+            <h5 class="mt-3 mb-1">Comments</h5>
+            <div class="border p-4">
+                <span class="font-weight-normal"><?php echo $rvals['comments']; ?></span>
+            </div>
+        </div>
+        <a class="btn btn-secondary mb-5 btn-large mt-5" href="table_tests.php">Done</a>
     </div>
 </div>
