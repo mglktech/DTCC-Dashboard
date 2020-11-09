@@ -55,7 +55,7 @@ function toDateTime($timestr)
 {
 
   if (isTimestamp($timestr)) {
-    return date("d-M-Y - h:i:s T", $timestr);
+    return date("d-M-Y - h:i:s A T", $timestr);
   } else {
     return "-";
   }
