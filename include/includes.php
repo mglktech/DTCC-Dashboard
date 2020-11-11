@@ -61,6 +61,15 @@ function toDateTime($timestr)
   }
 }
 
+function toTime($timestr)
+{
+  if (isTimestamp($timestr)) {
+    return date("h:i A", $timestr);
+  } else {
+    return "-";
+  }
+}
+
 function isTimestamp($string)
 {
   try {

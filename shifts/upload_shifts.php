@@ -1,4 +1,15 @@
 <?php include "../include/header.php";
+/*
+This page reads a CSV compilation of live-clockin-data and dumps it into shift_records SQL table, ignoring existing values.
+Upon POST of a CSV file, it runs the following functions in order:
+
+TrimRecords
+DumpRawShiftDataToDB
+CreateShifts
+
+CreateShifts has added functionality to automatically reject "in" records that are more than 12 hours from the next "out".
+It will be up to Senior Supervisors to validate each shift on an individual basis. if we feel that the pruned shift could not be valid, we will reject it by hand.
+*/
 include "../include/db_connection.php"; ?>
 <form action="" method="post" enctype="multipart/form-data">
     <input type="file" name="file" accept=".csv">

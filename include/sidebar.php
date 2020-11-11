@@ -18,7 +18,7 @@
                     <span data-feather="user"></span>
                     Tests <span class="sr-only"></span>
                 </a>
-                <a class="nav-link" href="/#">
+                <a class="nav-link" href="/shifts/table_unver_shifts.php">
                     <span data-feather="user"></span>
                     Shifts <span class="sr-only"></span>
                 </a>
