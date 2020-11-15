@@ -12,7 +12,7 @@ It will be up to Senior Supervisors to validate each shift on an individual basi
 */
 include "../include/db_connection.php"; ?>
 <form action="" method="post" enctype="multipart/form-data">
-    <input type="file" name="file" accept=".csv">
+    <input type="file" name="file">
     <input type="submit" name="btn_submit" value="Upload File" />
 </form>
 
@@ -20,6 +20,7 @@ include "../include/db_connection.php"; ?>
 
 function TrimRecords($lines)
 {
+    //var_dump($lines);
     $records = array();
     foreach ($lines as $line) {
         $author = $line[1];
@@ -33,15 +34,16 @@ function TrimRecords($lines)
             $record->steam_name = trim(explode("clocked", $trim1)[0]);
             $record->io = explode("**", $text)[1];
             $records[] = $record;
-            //echo print_r($record);
-            //echo $record->steam_name;
-            //echo $Author . ": " . $text . " (at " . $Datetime . " )";
-            //echo "<br>";
+            echo "<br>";
+            echo print_r($record);
+            echo $record->steam_name;
+            echo $author . ": " . $text . " (at " . $datetime . " )";
         }
     }
     return $records;
-    //var_dump($lines);
 }
+
+
 
 function DumpRawShiftDataToDB($records)
 {
@@ -64,8 +66,11 @@ if (isset($_POST['btn_submit'])) {
     $fh = fopen($_FILES['file']['tmp_name'], 'r');
 
     $lines = array();
-    while (($row = fgetcsv($fh, 100)) !== FALSE) {
+    $HeaderRow = fgetcsv($fh, 1000); // Grab header row and do nothing with it
+    while (($row = fgetcsv($fh, 1000)) != FALSE) {
         $lines[] = $row;
+        //echo "<br> Row = ";
+        //print_r($row);
     }
     $records = TrimRecords($lines);
     DumpRawShiftDataToDB($records);
@@ -87,7 +92,7 @@ function CreateShifts()
     $records_by_server = array();
     foreach ($servers as $s) { // foreach server number
         foreach ($steam_names as $sn) { // foreach player name
-            $sql = "SELECT * FROM `shift_records` WHERE (`steam_name` = '$sn[0]' AND `server` = '$s[0]' AND `signature` IS NULL) ORDER BY `id`";
+            $sql = "SELECT * FROM `shift_records` WHERE (`steam_name` = '$sn[0]' AND `server` = '$s[0]' AND `signed_by` IS NULL) ORDER BY `id`";
             $records = fetchAll($sql);
 
             $PrunedShifts = PruneShiftRecords($records);
@@ -146,7 +151,7 @@ function PruneShift($shift)
     }
     // now deal with rejected rows
     foreach ($RejectRows as $r) {
-        $sql = "UPDATE `shift_records` SET `signature`='Automatic',`outcome`='Reject',`reason`='>12hrsFromOut' WHERE `id` = '$r'";
+        $sql = "UPDATE `shift_records` SET `signed_by`='Automatic',`outcome`='Reject',`reason`='>12hrsFromOut' WHERE `id` = '$r'";
         sqlRun($sql);
         //echo $sql . "<br>";
     }
