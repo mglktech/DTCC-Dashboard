@@ -34,10 +34,10 @@ function TrimRecords($lines)
             $record->steam_name = trim(explode("clocked", $trim1)[0]);
             $record->io = explode("**", $text)[1];
             $records[] = $record;
-            echo "<br>";
-            echo print_r($record);
-            echo $record->steam_name;
-            echo $author . ": " . $text . " (at " . $datetime . " )";
+            // echo "<br>";
+            // echo print_r($record);
+            // echo $record->steam_name;
+            // echo $author . ": " . $text . " (at " . $datetime . " )";
         }
     }
     return $records;
@@ -135,19 +135,23 @@ function PruneShift($shift)
     $PrunedShift->InRows = array();
     $PrunedShift->InTimes = array();
     $RejectRows = array();
-
-    foreach ($shift->InTimes as $ind => $in) {
-        $compare = $shift->OutTime - $in;
-        echo "COMPARE = " . $compare . "<br>";
-        if ($compare < $ServerResetFrequency) // IF in is less than 12 hours from Out
-        {
-            echo $shift->InRows[$ind] . " PASS <br>";
-            $PrunedShift->InRows[] = $shift->InRows[$ind];
-            $PrunedShift->InTimes[] = $in;
-        } else {
-            echo $shift->InRows[$ind] . " FAIL <br>";
-            $RejectRows[] = $shift->InRows[$ind];
+    if (isset($shift->InTimes)) {
+        foreach ($shift->InTimes as $ind => $in) {
+            $compare = $shift->OutTime - $in;
+            echo "COMPARE = " . $compare . "<br>";
+            if ($compare < $ServerResetFrequency) // IF in is less than 12 hours from Out
+            {
+                echo $shift->InRows[$ind] . " PASS <br>";
+                $PrunedShift->InRows[] = $shift->InRows[$ind];
+                $PrunedShift->InTimes[] = $in;
+            } else {
+                echo $shift->InRows[$ind] . " FAIL <br>";
+                $RejectRows[] = $shift->InRows[$ind];
+            }
         }
+    } else { // if OutRow found with no InRows
+        $sql = "UPDATE `shift_records` SET `signed_by`='Automatic',`outcome`='Reject',`reason`='Highlife_Server_Error' WHERE `id` = '$shift->OutRow'";
+        sqlRun($sql);
     }
     // now deal with rejected rows
     foreach ($RejectRows as $r) {
