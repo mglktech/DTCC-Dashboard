@@ -136,20 +136,25 @@ function PruneShift($shift)
     $PrunedShift->InTimes = array();
     $RejectRows = array();
     if (isset($shift->InTimes)) {
-        foreach ($shift->InTimes as $ind => $in) {
-            $compare = $shift->OutTime - $in;
-            echo "COMPARE = " . $compare . "<br>";
-            if ($compare < $ServerResetFrequency) // IF in is less than 12 hours from Out
-            {
-                echo $shift->InRows[$ind] . " PASS <br>";
-                $PrunedShift->InRows[] = $shift->InRows[$ind];
-                $PrunedShift->InTimes[] = $in;
-            } else {
-                echo $shift->InRows[$ind] . " FAIL <br>";
-                $RejectRows[] = $shift->InRows[$ind];
+        if (count($shift->InTimes) > 0) {
+            foreach ($shift->InTimes as $ind => $in) {
+                $compare = $shift->OutTime - $in;
+                echo "COMPARE = " . $compare . "<br>";
+                if ($compare < $ServerResetFrequency) // IF in is less than 12 hours from Out
+                {
+                    echo $shift->InRows[$ind] . " PASS <br>";
+                    $PrunedShift->InRows[] = $shift->InRows[$ind];
+                    $PrunedShift->InTimes[] = $in;
+                } else {
+                    echo $shift->InRows[$ind] . " FAIL <br>";
+                    $RejectRows[] = $shift->InRows[$ind];
+                }
             }
+        } else { // if OutRow found with no InRows
+            $sql = "UPDATE `shift_records` SET `signed_by`='Automatic',`outcome`='Reject',`reason`='Highlife_Server_Error' WHERE `id` = '$shift->OutRow'";
+            sqlRun($sql);
         }
-    } else { // if OutRow found with no InRows
+    } else {
         $sql = "UPDATE `shift_records` SET `signed_by`='Automatic',`outcome`='Reject',`reason`='Highlife_Server_Error' WHERE `id` = '$shift->OutRow'";
         sqlRun($sql);
     }

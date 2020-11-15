@@ -1,7 +1,7 @@
 <?php
 include "../include/header.php";
 include "../include/db_connection.php";
-$sql = "SELECT DISTINCT `steam_name` FROM `shift_records` WHERE `signed_by` IS NULL";
+$sql = "SELECT DISTINCT `steam_name` FROM `shift_records` WHERE `io`='out' and  `signed_by` IS NULL";
 $result = fetchAll($sql);
 if ($result) {
     //$tblCol_steam_names = $result;
@@ -9,7 +9,7 @@ if ($result) {
     $tblCol_steam_names = array();
     foreach ($result as $steam_name) {
 
-        $sql = "SELECT COUNT(`steam_name`) FROM `shift_records` WHERE `steam_name` = '$steam_name[0]' AND `signed_by` IS NULL";
+        $sql = "SELECT COUNT(`steam_name`) FROM `shift_records` WHERE (`steam_name` = '$steam_name[0]' AND `signed_by` IS NULL AND `io` = 'out')";
         $numrecs = fetchRow($sql)[0];
         if ($numrecs > 1) {
             $tblCol_steam_names[] = $steam_name[0];
