@@ -54,8 +54,15 @@ function DumpRawShiftDataToDB($records)
         $sv = $record->server;
         $sn = $record->steam_name;
         $io = $record->io;
-        $sql = "INSERT IGNORE INTO `shift_records` (`id`,`timestamp`,`server`,`steam_name`,`io`) VALUES('$id','$ts','$sv','$sn','$io')";
-        $responses[] = sqlRun($sql);
+        // first query db for existing values
+        $sql = "SELECT * FROM `shift_records` WHERE (`timestamp`='$ts' and `server` = '$sv' and `steam_name` = '$sn' and `io` = '$io')";
+        $r = fetchAll($sql);
+        //echo "<br>" . $sql . "<br>";
+        if (count($r) == 0) {
+            echo "<br>Adding new shift data for: " . $sn . "...";
+            $sql = "INSERT IGNORE INTO `shift_records` (`timestamp`,`server`,`steam_name`,`io`) VALUES('$ts','$sv','$sn','$io')";
+            $responses[] = sqlRun($sql);
+        }
     }
     return $responses;
 }
@@ -150,18 +157,23 @@ function PruneShift($shift)
                     $RejectRows[] = $shift->InRows[$ind];
                 }
             }
-        } else { // if OutRow found with no InRows
-            $sql = "UPDATE `shift_records` SET `signed_by`='Automatic',`outcome`='Reject',`reason`='Highlife_Server_Error' WHERE `id` = '$shift->OutRow'";
-            sqlRun($sql);
         }
-    } else {
+        if (count($shift->InTimes) == 0) { // if OutRow found with no InRows
+            $sql = "UPDATE `shift_records` SET `signed_by`='Automatic',`outcome`='Reject',`reason`='Highlife_Server_Error' WHERE `id` = '$shift->OutRow'";
+            $res = sqlRun($sql);
+            echo "<br> THROWING SHIFT #" . $shift->OutRow;
+        }
+    }
+    if (!isset($shift->InTimes)) {
         $sql = "UPDATE `shift_records` SET `signed_by`='Automatic',`outcome`='Reject',`reason`='Highlife_Server_Error' WHERE `id` = '$shift->OutRow'";
         sqlRun($sql);
+        echo "<br> THROWING SHIFT #" . $shift->OutRow;
     }
     // now deal with rejected rows
     foreach ($RejectRows as $r) {
         $sql = "UPDATE `shift_records` SET `signed_by`='Automatic',`outcome`='Reject',`reason`='>12hrsFromOut' WHERE `id` = '$r'";
         sqlRun($sql);
+        echo "<br> THROWING SHIFT #" . $shift->OutRow;
         //echo $sql . "<br>";
     }
     // now return pruned shifts
