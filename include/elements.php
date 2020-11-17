@@ -24,6 +24,35 @@ function SpanIsAlive($IsAlive)
     }
 }
 
+
+
+function Tablefy($headers, $body)
+{
+    if ($body) {
+        echo "<table class='table table-striped blue-header'>";
+        echo "<thead>";
+        echo "<tr>";
+        foreach ($headers as $h) {
+            echo "<th>" . $h . "</th>";
+        }
+        echo "</tr>";
+        echo "</thead>";
+        echo "<tbody>";
+        foreach ($body as $row) {
+            echo "<tr>";
+            foreach ($row as $d) {
+                echo "<td>" . $d . "</td>";
+            }
+            echo "</tr>";
+        }
+
+        echo "</tbody>";
+        echo "</table>";
+    } else {
+        echo "Table is empty";
+    }
+}
+
 function SpanBtnLink($label, $link)
 {
     return "<a class='btn btn-info' href='$link' target='_blank'>$label</a>";

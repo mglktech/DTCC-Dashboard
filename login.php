@@ -33,7 +33,7 @@ include 'include/_header.php';
 
 <h4>Please input your 6 digit code so we know who you are.</h4>
 <form action="" method="post">
-    <input type="text" name="txtInput" />
+    <input type="password" name="txtInput" />
     <input type="submit" name="Login" class="btn btn-secondary" value="Login">
 </form>
 <?php include 'include/footer.php'; ?>
