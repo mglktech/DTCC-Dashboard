@@ -24,7 +24,7 @@ function getRostor()
         or (steam_name like '%$q%')
         or (discord_name like '%$q%')";
     } else {
-        $sql = "SELECT * FROM `public_players` ORDER BY `rank` DESC";
+        $sql = "SELECT * FROM `public_players` ORDER BY -`callsign_id` DESC";
     }
 
     return Query($sql);
