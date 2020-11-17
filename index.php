@@ -1,5 +1,11 @@
-<?php include_once "include/header.php"; ?>
+<?php include_once "include/header.php";
 
-Nothing to see here... (yet)
+if ($_SESSION['steam_id'] = '76561197995263974' || $_SESSION['steam_id'] = '76561198050836459') {
 
-<?php include_once "include/footer.php"; ?>
+    include "include/inc_index_senior.php";
+}
+
+
+
+
+include_once "include/footer.php";

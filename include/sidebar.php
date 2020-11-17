@@ -2,7 +2,7 @@
     <div class="sidebar-sticky">
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link" href="/#">
+                <a class="nav-link" href="/index.php">
                     <span data-feather="home"></span>
                     Home <span class="sr-only"></span>
                 </a>
@@ -18,7 +18,7 @@
                     <span data-feather="user"></span>
                     Tests <span class="sr-only"></span>
                 </a>
-                <a class="nav-link" href="/#">
+                <a class="nav-link" href="">
                     <span data-feather="user"></span>
                     Shifts <span class="sr-only"></span>
                 </a>

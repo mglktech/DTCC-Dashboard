@@ -55,10 +55,31 @@ function toDateTime($timestr)
 {
 
   if (isTimestamp($timestr)) {
-    return date("d-M-Y - h:i:s T", $timestr);
+    return date("d-M-Y - h:i:s A T", $timestr);
   } else {
     return "-";
   }
+}
+
+function toTime($timestr)
+{
+  if (isTimestamp($timestr)) {
+    return date("h:i A", $timestr);
+  } else {
+    return "-";
+  }
+}
+
+function toDurationDays($timestr)
+{
+
+  return gmdate('z\d\a\y\s, G\h\r\s \a\n\d i\m\i\n\s', $timestr);
+}
+
+function toDurationHours($timestr)
+{
+
+  return gmdate('G\h\r\s i\m\i\n\s', $timestr);
 }
 
 function isTimestamp($string)

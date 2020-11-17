@@ -1,8 +1,10 @@
 <?php include "include/header.php";
 include "include/elements.php";
-include "include/db_connection.php";
+
+include "include/sqlconnection.php";
 
 if (isset($_POST['applyStrike'])) {
+
     ApplyStrike($_POST['reason'], $_POST['severity']);
 }
 
@@ -22,60 +24,76 @@ function ApplyStrike($reason, $severity)
     $steamid = $_GET['steamid'];
     $signed_by = $_SESSION['steam_id'];
     $sql = "INSERT INTO strikes (`steam_id`, `severity`, `strike_desc`, `signed_by`, `issue_date`, `end_date`) VALUES('$steamid','$severity','$reason','$signed_by','$dateNow','$endDate')";
-    $r = sqlRun($sql);
-    echo $r . " SQL: " . $sql;
+    Query($sql);
+
+
+    //echo $r . " SQL: " . $sql;
 }
 
 if (isset($_GET['steamid'])) {
     $steamid = $_GET['steamid'];
     $sql = "SELECT * from public_players where steam_id = '$steamid'";
-    $player = FetchRow($sql);
-    $char_name = $player[0] . " | " . $player[1];
+    $player = Query($sql)[0];
+    $char_name = $player->char_name;
+    if ($player->callsign != null) {
+        $char_name = $player->callsign . " | " . $player->char_name;
+    }
+
     //$steamid = $_GET['steamid'] or $player[2];
-    $steam_name = $player[3];
-    $discord_name = $player[4];
-    $phone_number = $player[5];
-    $rank = $player[6];
-    $rank_label = $player[7];
-    $status = $player[8];
-    $zone = $player[9];
-    $alive = IsAlive($player[1]);
+    $steam_name = $player->steam_name;
+    $discord_name = $player->discord_name;
+    $phone_number = $player->phone_number;
+    $rank = $player->rank;
+    $rank_label = $player->rank_label;
+    $status = $player->status;
+    $zone = $player->timezone;
+
+    $alive = IsAlive($player->char_name);
     $link = new stdClass();
     $link->label = "Whitelist";
     $link->href = "https://highliferoleplay.net/whitelisting/index.php";
     $hex = "steam:" . dechex($steamid);
 }
 
+function getSumShifts($steam_id)
+{
+    $sql = "SELECT SUM(`duration`) as `sum` FROM `public_verified_shifts` WHERE `steam_id`='$steam_id'";
+    return Query($sql)[0]->sum;
+}
+
+function getShiftData($steam_id)
+{
+    $sql = "SELECT * FROM `public_verified_shifts` WHERE `steam_id` = '$steam_id'";
+    return Query($sql);
+}
+
 function getTests($steam_id)
 {
     $sql = "SELECT * FROM `test_history` WHERE `steam_id` = '$steam_id'";
-    return fetchAll($sql);
+    return Query($sql);
 }
 
 function getApps($steam_id)
 {
 
     $sql = "SELECT * FROM `app_history` WHERE `steam_id` = '$steam_id'";
-    return fetchAll($sql);
+    return Query($sql);
 }
 function getStrikes($steam_id)
 {
     $sql = "SELECT * FROM `public_strikes` WHERE `steam_id` = '$steam_id'";
-    return fetchAll($sql);
+    return Query($sql);
 }
 
 function getMetas($type, $ver)
 {
     $sql = "SELECT `pass_mark`,`max_score` FROM `tests_meta` WHERE `type`='$type' AND `version`='$ver'";
-    $result = fetchRow($sql);
-    $ret['pass_mark'] = $result[0];
-    $ret['max_score'] = $result[1];
-    return $ret;
+    return Query($sql)[0];
 }
 
 function PassFail($ret, $score_percent)
 {
-    $pass_percent = (round($ret['pass_mark'] / $ret['max_score'], 2));
+    $pass_percent = (round($ret->pass_mark / $ret->max_score, 2));
     //echo $score_percent . "/" . $pass_percent . "<br>";
     if ($score_percent >= $pass_percent) {
         return "PASS";
@@ -83,14 +101,16 @@ function PassFail($ret, $score_percent)
         return "FAIL";
     }
 }
+
 ?>
 
-<div class="container-fluid">
+
+<div class="container-fluid border">
     <!-- APPLICATION FORM -->
     <div class="row">
         <div class="col rounded p-0 pb-3">
-        <h1>Player</h1>
-        <h5 class="font-italic mb-3 font-weight-normal">gimme the deets</h5>
+            <h1>Player Profile</h1>
+            <h5 class="font-italic mb-3 font-weight-normal">Much Info. Very Detail.</h5>
             <div class="container-fluid p-0">
                 <div class="row">
                     <div class="col-md-6">
@@ -119,92 +139,88 @@ function PassFail($ret, $score_percent)
                         <h5 class="mb-1">Application History</h5>
                         <div>
                             <?php $tableData = getApps($steamid);
-                            if ($tableData) { ?>
-                                <table class="table table-striped blue-header">
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Status</th>
-                                        <th>Signed By</th>
-                                        <th></th>
-                                    </tr>
-                                    <?php
-                                    foreach ($tableData as $row) {
-                                        echo "<tr>";
-                                        echo "<td>" . toDate($row[1]) . "</td>";
-                                        echo "<td>" . $row[4] . "</td>";
-                                        echo "<td>" . $row[6] . " | " .  $row[5] . "</td>";
-                                        echo "<td><a class='btn btn-outline-secondary' href='/view_app.php?appid=" . $row[3] . "'>View</a></td>";
-                                        echo "</tr>";
-                                    }
-                                    ?>
-                                </table>
-                            <?php } else {
-                                echo "Table is empty";
+                            $thead = ["Date", "Status", "Signed By", ""];
+                            $tbody = array();
+                            if ($tableData) {
+                                foreach ($tableData as $row) {
+                                    $tRow = array();
+                                    $tRow[] = toDate($row->app_timestamp);
+                                    $tRow[] = $row->status;
+                                    $tRow[] = $row->callsign . " | " .  $row->signed_by;
+                                    $tRow[] = "<a class='btn btn-outline-secondary' href='/view_app.php?appid=" . $row->app_id . "'>View</a>";
+                                    $tbody[] = $tRow;
+                                }
                             }
+
+                            Tablefy($thead, $tbody);
                             ?>
                         </div>
                         <h5 class="mt-3 mb-1">Completed Tests:</h5>
                         <div>
                             <?php $tableData = getTests($steamid);
-                            if ($tableData) { ?>
-                                <table class="table table-striped blue-header">
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Type</th>
-                                        <th>Status</th>
-                                        <th>Signed By</th>
-                                        <th></th>
-                                    </tr>
-                                    <?php
-                                    foreach ($tableData as $row) {
-                                        echo "<tr>";
-                                        echo "<td>" . toDateS($row[9]) . "</td>";
-                                        echo "<td>" . $row[2] . "</td>";
-                                        echo "<td>" . PassFail(getMetas($row[2], $row[3]), $row[4]) . "</td>";
-                                        echo "<td>" . $row[7] . " | " .  $row[6] . "</td>";
-                                        echo "<td><a class='btn btn-outline-secondary' href='../tests/view_test.php?test_id=" . $row[0] . "'>View</a></td>";
-                                        echo "</tr>";
-                                    }
-                                    ?>
-                                </table>
-                            <?php } else {
-                                echo "Table is empty";
+                            $thead = ["Date", "Type", "Status", "Signed By", ""];
+                            $tbody = array();
+                            if ($tableData) {
+                                foreach ($tableData as $row) {
+                                    $tRow = array();
+                                    $tRow[] =  toDateS($row->submit_date);
+                                    $tRow[] = $row->type;
+                                    $tRow[] = PassFail(getMetas($row->type, $row->version), $row->score_percent);
+                                    $tRow[] = $row->callsign . " | " .  $row->signed_by;
+                                    $tRow[] = "<a class='btn btn-outline-secondary' href='../tests/view_test.php?test_id=" . $row->id . "'>View</a>";
+                                    $tbody[] = $tRow;
+                                }
                             }
+
+                            Tablefy($thead, $tbody);
+
                             ?>
                         </div>
                         <h5 class="mt-3 mb-1">Strikes:</h5>
-                            <div>
-                                <?php $tableData = getStrikes($steamid);
-                                if ($tableData) { ?>
-                                    <table class="table table-striped blue-header">
-                                        <tr>
-                                            <th>Start Date</th>
-                                            <th>Severity</th>
-                                            <th>End Date</th>
-                                            <th>Signed By</th>
-                                            <th></th>
-                                        </tr>
-                                        <?php
-                                        foreach ($tableData as $row) {
-                                            echo "<tr>";
-                                            echo "<td>" . toDateS($row[8]) . "</td>";
-                                            echo "<td>" . $row[4] . "</td>";
-                                            echo "<td>" . toDateS($row[9]) . "</td>";
-                                            echo "<td>" . $row[6] . " | " .  $row[7] . "</td>";
-                                            echo "<td><a class='btn btn-outline-secondary' href='../tests/view_strike.php?strike_id=" . $row[0] . "'>View</a></td>";
-                                            echo "</tr>";
-                                        }
-                                        ?>
-                                    </table>
-                                <?php } else {
-                                    echo "Table is empty";
+                        <div>
+                            <?php $tableData = getStrikes($steamid);
+                            $thead = ["Start Date", "Severity", "End Date", "Signed By", ""];
+                            $tbody = array();
+                            if ($tableData) {
+                                foreach ($tableData as $row) {
+                                    $tRow = array();
+                                    $tRow[] = toDateS($row->issue_date);
+                                    $tRow[] = $row->severity;
+                                    $tRow[] = toDateS($row->end_date);
+                                    $tRow[] = $row->signed_callsign . " | " .  $row->signed_by;
+                                    $tRow[] = "<a class='btn btn-outline-secondary' href='../tests/view_strike.php?strike_id=" . $row->id . "'>View</a>";
+                                    $tbody[] = $tRow;
                                 }
-                                ?>
-                            </div>
+                            }
+                            Tablefy($thead, $tbody);
+
+                            ?>
+
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row">
+        Shift Data<br>
+        Total time on shift: <?php echo toDurationDays(getSumShifts($steamid)); ?><br>
+        <?php $tData = getShiftData($steamid);
+        $thead = ["Date", "Time In", "Time Out", "Duration"];
+        $tbody = array();
+        if ($tData) {
+            foreach ($tData as $row) {
+                $tRow = array();
+                $tRow[] = toDateS($row->time_in); // Date
+                $tRow[] = toTime($row->time_in);
+                $tRow[] = toTime($row->time_out);
+                $tRow[] = toDurationHours($row->duration);
+                $tbody[] = $tRow;
+            }
+        }
+        Tablefy($thead, $tbody);
+        ?>
+
     </div>
 </div>
 <!-- END OF VIEW_PLAYER -->

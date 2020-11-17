@@ -23,15 +23,15 @@ function PassFail($ret, $score_percent)
     }
 }
 
-$sql = "SELECT `steam_id`,`char_name`,`discord_name`,`phone_number`,`last_seen` FROM `players` WHERE `status` = 'Needs Theory'";
+$sql = "SELECT `steam_id`,`char_name`,`discord_name`,`phone_number`,`last_seen` FROM `players` WHERE `status` = 'Needs Theory' ORDER BY `last_seen`";
 $applicants_theory = fetchAll($sql);
 //print_r($ranks_array);
 // output data of each row
 
-$sql = "SELECT `steam_id`,`char_name`,`discord_name`,`phone_number`,`last_seen` FROM `players` WHERE `status` = 'Needs Practical'";
+$sql = "SELECT `steam_id`,`char_name`,`discord_name`,`phone_number`,`last_seen` FROM `players` WHERE `status` = 'Needs Practical' ORDER BY `last_seen`";
 $applicants_practical = fetchAll($sql);
 
-$sql = "SELECT * FROM `test_history`";
+$sql = "SELECT * FROM `test_history` ORDER BY `submit_date` DESC";
 $test_history = fetchAll($sql);
 /* test_history = 
 student_name
