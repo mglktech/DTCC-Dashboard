@@ -55,6 +55,18 @@ if (isset($_GET['steamid'])) {
     $hex = "steam:" . dechex($steamid);
 }
 
+function getSumShifts($steam_id)
+{
+    $sql = "SELECT SUM(`duration`) as `sum` FROM `public_verified_shifts` WHERE `steam_id`='$steam_id'";
+    return Query($sql)[0]->sum;
+}
+
+function getShiftData($steam_id)
+{
+    $sql = "SELECT * FROM `public_verified_shifts` WHERE `steam_id` = '$steam_id'";
+    return Query($sql);
+}
+
 function getTests($steam_id)
 {
     $sql = "SELECT * FROM `test_history` WHERE `steam_id` = '$steam_id'";
@@ -97,8 +109,8 @@ function PassFail($ret, $score_percent)
     <!-- APPLICATION FORM -->
     <div class="row">
         <div class="col rounded p-0 pb-3">
-            <h1>Player</h1>
-            <h5 class="font-italic mb-3 font-weight-normal">gimme the deets</h5>
+            <h1>Player Profile</h1>
+            <h5 class="font-italic mb-3 font-weight-normal">Much Info. Very Detail.</h5>
             <div class="container-fluid p-0">
                 <div class="row">
                     <div class="col-md-6">
@@ -192,6 +204,23 @@ function PassFail($ret, $score_percent)
     </div>
     <div class="row">
         Shift Data<br>
+        Total time on shift: <?php echo toDurationDays(getSumShifts($steamid)); ?><br>
+        <?php $tData = getShiftData($steamid);
+        $thead = ["Date", "Time In", "Time Out", "Duration"];
+        $tbody = array();
+        if ($tData) {
+            foreach ($tData as $row) {
+                $tRow = array();
+                $tRow[] = toDateS($row->time_in); // Date
+                $tRow[] = toTime($row->time_in);
+                $tRow[] = toTime($row->time_out);
+                $tRow[] = toDurationHours($row->duration);
+                $tbody[] = $tRow;
+            }
+        }
+        Tablefy($thead, $tbody);
+        ?>
+
     </div>
 </div>
 <!-- END OF VIEW_PLAYER -->

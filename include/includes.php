@@ -70,6 +70,18 @@ function toTime($timestr)
   }
 }
 
+function toDurationDays($timestr)
+{
+
+  return gmdate('z\d\a\y\s, G\h\r\s \a\n\d i\m\i\n\s', $timestr);
+}
+
+function toDurationHours($timestr)
+{
+
+  return gmdate('G\h\r\s i\m\i\n\s', $timestr);
+}
+
 function isTimestamp($string)
 {
   try {

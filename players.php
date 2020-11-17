@@ -10,6 +10,11 @@ function getCountDrivers()
     $sql = "SELECT COUNT(`steam_id`) as `count` FROM `public_players` WHERE `status`='Active' ORDER BY `rank` DESC";
     return Query($sql)[0]->count;
 }
+function getCountRecruits()
+{
+    $sql = "SELECT COUNT(`steam_id`) as `count` FROM `public_players` WHERE `rank`='Recruit'";
+    return Query($sql)[0]->count;
+}
 
 function getRostor()
 {
@@ -31,8 +36,8 @@ function getRostor()
 ?>
 
 <h1>Roster</h1>
-<h5 class="font-italic mb-3 font-weight-normal">my minions!</h5>
-<h6 class="font-italic mb-3 font-weight-normal">Rostor Count: <?php echo getCountDrivers(); ?></h6>
+<h5 class="font-italic mb-3 font-weight-normal">My Minions!</h5>
+<h6 class="mb-1 font-weight-normal"> <?php echo getCountDrivers(); ?> Active Drivers, <?php echo getCountRecruits(); ?> Recruits</h6>
 <table class="table table-striped blue-header roster-table">
     <tr>
         <th>Callsign</th>
