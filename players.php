@@ -1,15 +1,14 @@
 <?php include 'include/header.php';  ?>
 <?php
+include "include/sqlconnection.php";
 
 
 
-function OldWay()
+
+function getCountDrivers()
 {
-    $conn = OpenCon();
-    $ranks_array = fetchAll("SELECT `display_name`,`placement` FROM `ranks`");
-    $sql = "SELECT `steam_id`,`char_name`,`phone_number`,`rank` FROM `players` WHERE `status` IS NOT NULL ORDER BY `rank` DESC";
-    $result = $conn->query($sql);
-    CloseCon($conn);
+    $sql = "SELECT COUNT(`steam_id`) as `count` FROM `public_players` WHERE `status`='Active' ORDER BY `rank` DESC";
+    return Query($sql)[0]->count;
 }
 
 function getRostor()
@@ -22,9 +21,8 @@ function getRostor()
     } else {
         $sql = "SELECT * FROM `public_players` ORDER BY `rank` DESC";
     }
-    include 'include/db_connection.php';
 
-    return fetchAll($sql);
+    return Query($sql);
 }
 
 //print_r($ranks_array);
@@ -34,6 +32,7 @@ function getRostor()
 
 <h1>Roster</h1>
 <h5 class="font-italic mb-3 font-weight-normal">my minions!</h5>
+<h6 class="font-italic mb-3 font-weight-normal">Rostor Count: <?php echo getCountDrivers(); ?></h6>
 <table class="table table-striped blue-header roster-table">
     <tr>
         <th>Callsign</th>
@@ -59,12 +58,12 @@ function getRostor()
     if ($table) {
         foreach ($table as $row) {
             echo "<tr>";
-            echo "<td>" . $row[0] . "</td>";
-            echo "<td>" . $row[1] . "</td>";
-            echo "<td>" . $row[4] . "</td>";
-            echo "<td>" . $row[7] . "</td>";
-            echo "<td>" . $row[8] . "</td>";
-            echo "<td><a class='btn btn-secondary view-player' href='/view_player.php?steamid=" . $row[2] . "'>View Player</button></td>";
+            echo "<td>" . $row->callsign . "</td>";
+            echo "<td>" . $row->char_name . "</td>";
+            echo "<td>" . $row->discord_name . "</td>";
+            echo "<td>" . $row->rank_label . "</td>";
+            echo "<td>" . $row->status . "</td>";
+            echo "<td><a class='btn btn-secondary view-player' href='/view_player.php?steamid=" . $row->steam_id . "'>View Player</button></td>";
             echo "</tr>";
         }
     } else {
