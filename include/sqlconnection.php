@@ -5,8 +5,9 @@ function Query($sql)
 {
     $response = array();
     $conn = OpenCon();
-    $stmt = $conn->prepare($sql);
-    if ($result = $conn->query($sql)) {
+    //$stmt = $conn->prepare($sql);
+    $result = $conn->query($sql);
+    if ($result) {
 
         if (!is_bool($result)) {
             while ($obj = $result->fetch_object()) {
@@ -15,7 +16,7 @@ function Query($sql)
             $result->close();
         }
     }
-    if (!$conn->query($sql)) {
+    if (!$result) {
         //printf("Error message: %s\n", $conn->error);
         LogError($sql, $conn->error);
     }

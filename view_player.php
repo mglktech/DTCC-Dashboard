@@ -4,6 +4,7 @@ include "include/elements.php";
 include "include/sqlconnection.php";
 
 if (isset($_POST['applyStrike'])) {
+
     ApplyStrike($_POST['reason'], $_POST['severity']);
 }
 
@@ -24,6 +25,8 @@ function ApplyStrike($reason, $severity)
     $signed_by = $_SESSION['steam_id'];
     $sql = "INSERT INTO strikes (`steam_id`, `severity`, `strike_desc`, `signed_by`, `issue_date`, `end_date`) VALUES('$steamid','$severity','$reason','$signed_by','$dateNow','$endDate')";
     Query($sql);
+
+
     //echo $r . " SQL: " . $sql;
 }
 
@@ -86,7 +89,9 @@ function PassFail($ret, $score_percent)
         return "FAIL";
     }
 }
+
 ?>
+
 
 <div class="container-fluid border">
     <!-- APPLICATION FORM -->
@@ -122,92 +127,71 @@ function PassFail($ret, $score_percent)
                         <h5 class="mb-1">Application History</h5>
                         <div>
                             <?php $tableData = getApps($steamid);
-                            if ($tableData) { ?>
-                                <table class="table table-striped blue-header">
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Status</th>
-                                        <th>Signed By</th>
-                                        <th></th>
-                                    </tr>
-                                    <?php
-                                    foreach ($tableData as $row) {
-                                        echo "<tr>";
-                                        echo "<td>" . toDate($row->app_timestamp) . "</td>";
-                                        echo "<td>" . $row->status . "</td>";
-                                        echo "<td>" . $row->callsign . " | " .  $row->signed_by . "</td>";
-                                        echo "<td><a class='btn btn-outline-secondary' href='/view_app.php?appid=" . $row->app_id . "'>View</a></td>";
-                                        echo "</tr>";
-                                    }
-                                    ?>
-                                </table>
-                            <?php } else {
-                                echo "Table is empty";
+                            $thead = ["Date", "Status", "Signed By", ""];
+                            $tbody = array();
+                            if ($tableData) {
+                                foreach ($tableData as $row) {
+                                    $tRow = array();
+                                    $tRow[] = toDate($row->app_timestamp);
+                                    $tRow[] = $row->status;
+                                    $tRow[] = $row->callsign . " | " .  $row->signed_by;
+                                    $tRow[] = "<a class='btn btn-outline-secondary' href='/view_app.php?appid=" . $row->app_id . "'>View</a>";
+                                    $tbody[] = $tRow;
+                                }
                             }
+
+                            Tablefy($thead, $tbody);
                             ?>
                         </div>
                         <h5 class="mt-3 mb-1">Completed Tests:</h5>
                         <div>
                             <?php $tableData = getTests($steamid);
-                            if ($tableData) { ?>
-                                <table class="table table-striped blue-header">
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Type</th>
-                                        <th>Status</th>
-                                        <th>Signed By</th>
-                                        <th></th>
-                                    </tr>
-                                    <?php
-                                    foreach ($tableData as $row) {
-                                        echo "<tr>";
-                                        echo "<td>" . toDateS($row->submit_date) . "</td>";
-                                        echo "<td>" . $row->type . "</td>";
-                                        echo "<td>" . PassFail(getMetas($row->type, $row->version), $row->score_percent) . "</td>";
-                                        echo "<td>" . $row->callsign . " | " .  $row->signed_by . "</td>";
-                                        echo "<td><a class='btn btn-outline-secondary' href='../tests/view_test.php?test_id=" . $row->id . "'>View</a></td>";
-                                        echo "</tr>";
-                                    }
-                                    ?>
-                                </table>
-                            <?php } else {
-                                echo "Table is empty";
+                            $thead = ["Date", "Type", "Status", "Signed By", ""];
+                            $tbody = array();
+                            if ($tableData) {
+                                foreach ($tableData as $row) {
+                                    $tRow = array();
+                                    $tRow[] =  toDateS($row->submit_date);
+                                    $tRow[] = $row->type;
+                                    $tRow[] = PassFail(getMetas($row->type, $row->version), $row->score_percent);
+                                    $tRow[] = $row->callsign . " | " .  $row->signed_by;
+                                    $tRow[] = "<a class='btn btn-outline-secondary' href='../tests/view_test.php?test_id=" . $row->id . "'>View</a>";
+                                    $tbody[] = $tRow;
+                                }
                             }
+
+                            Tablefy($thead, $tbody);
+
                             ?>
                         </div>
                         <h5 class="mt-3 mb-1">Strikes:</h5>
                         <div>
                             <?php $tableData = getStrikes($steamid);
-                            if ($tableData) { ?>
-                                <table class="table table-striped blue-header">
-                                    <tr>
-                                        <th>Start Date</th>
-                                        <th>Severity</th>
-                                        <th>End Date</th>
-                                        <th>Signed By</th>
-                                        <th></th>
-                                    </tr>
-                                    <?php
-                                    foreach ($tableData as $row) {
-                                        echo "<tr>";
-                                        echo "<td>" . toDateS($row->issue_date) . "</td>";
-                                        echo "<td>" . $row->severity . "</td>";
-                                        echo "<td>" . toDateS($row->end_date) . "</td>";
-                                        echo "<td>" . $row->signed_callsign . " | " .  $row->signed_by . "</td>";
-                                        echo "<td><a class='btn btn-outline-secondary' href='../tests/view_strike.php?strike_id=" . $row->id . "'>View</a></td>";
-                                        echo "</tr>";
-                                    }
-                                    ?>
-                                </table>
-                            <?php } else {
-                                echo "Table is empty";
+                            $thead = ["Start Date", "Severity", "End Date", "Signed By", ""];
+                            $tbody = array();
+                            if ($tableData) {
+                                foreach ($tableData as $row) {
+                                    $tRow = array();
+                                    $tRow[] = toDateS($row->issue_date);
+                                    $tRow[] = $row->severity;
+                                    $tRow[] = toDateS($row->end_date);
+                                    $tRow[] = $row->signed_callsign . " | " .  $row->signed_by;
+                                    $tRow[] = "<a class='btn btn-outline-secondary' href='../tests/view_strike.php?strike_id=" . $row->id . "'>View</a>";
+                                    $tbody[] = $tRow;
+                                }
                             }
+                            Tablefy($thead, $tbody);
+
                             ?>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row">
+        Shift Data<br>
     </div>
 </div>
 <!-- END OF VIEW_PLAYER -->
