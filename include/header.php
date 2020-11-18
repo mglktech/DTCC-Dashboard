@@ -5,7 +5,7 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 
-if (!isset($_SESSION["steam_id"])) {
+if (!isset($_SESSION['steam_id'])) {
     //$_SESSION["redirect"] = $_SERVER['REQUEST_URI'];
     //echo "not logged in";
     header("Location: ../login.php");
@@ -18,10 +18,11 @@ include "includes.php";
         <a class="navbar-brand col-sm-3 col-md-2 pl-3 p-1" href="#"><img src="/images/logo.png"></a>
         <ul class="navbar-nav px-3">
             <li class="nav-item text-nowrap">
-                <span style="color: rgba(255, 255, 255, 0.5)" id="SteamName"><?php echo $_SESSION["char_name"]; ?>&nbsp;
-                    <img id="DisplayImg" style="height: 32px; width: 32px" src="<?php echo $_SESSION['profile_pic'] ?>" />
-                    |
-                </span><a style="display: inline-block" class="nav-link" href="../logout.php">Sign out</a>
+                <span style="color: rgba(255, 255, 255, 0.5)" id="SteamID">ID: <?php echo $_SESSION["steam_id"]; ?>&nbsp;
+                    <span style="color: rgba(255, 255, 255, 0.5)" id="SteamName">NAME: <?php echo $_SESSION["char_name"]; ?>&nbsp;
+                        <img id="DisplayImg" style="height: 32px; width: 32px" src="<?php echo $_SESSION['profile_pic'] ?>" />
+                        |
+                    </span><a style="display: inline-block" class="nav-link" href="../logout.php">Sign out</a>
             </li>
         </ul>
 
