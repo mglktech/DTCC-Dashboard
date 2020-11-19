@@ -1,14 +1,14 @@
 <?php include '../include/header.php';  ?>
 
 <?php
-include '../include/db_connection.php';
+include '../include/sqlconnection.php';
 
 function getMetas($type, $ver)
 {
     $sql = "SELECT `pass_mark`,`max_score` FROM `tests_meta` WHERE `type`='$type' AND `version`='$ver'";
-    $result = fetchRow($sql);
-    $ret['pass_mark'] = $result[0];
-    $ret['max_score'] = $result[1];
+    $result = Query($sql)[0];
+    $ret['pass_mark'] = $result->pass_mark;
+    $ret['max_score'] = $result->max_score;
     return $ret;
 }
 
@@ -24,15 +24,15 @@ function PassFail($ret, $score_percent)
 }
 
 $sql = "SELECT `steam_id`,`char_name`,`discord_name`,`phone_number`,`last_seen` FROM `players` WHERE `status` = 'Needs Theory' ORDER BY `last_seen`";
-$applicants_theory = fetchAll($sql);
+$applicants_theory = Query($sql);
 //print_r($ranks_array);
 // output data of each row
 
 $sql = "SELECT `steam_id`,`char_name`,`discord_name`,`phone_number`,`last_seen` FROM `players` WHERE `status` = 'Needs Practical' ORDER BY `last_seen`";
-$applicants_practical = fetchAll($sql);
+$applicants_practical = Query($sql);
 
 $sql = "SELECT * FROM `test_history` ORDER BY `submit_date` DESC";
-$test_history = fetchAll($sql);
+$test_history = Query($sql);
 /* test_history = 
 student_name
 type
@@ -81,10 +81,10 @@ callsign
                 if ($applicants_theory) {
                     foreach ($applicants_theory as $row) {
                         echo "<tr>";
-                        echo "<td>" . $row[1] . "</td>";
-                        echo "<td>" . $row[2] . "</td>";
-                        echo "<td>" . toDateS($row[4]) . "</td>";
-                        echo "<td><a class='btn btn-primary' href='take_test.php?type=theory&steamid=" . $row[0] . "'>Take Test</button></td>";
+                        echo "<td>" . $row->char_name . "</td>";
+                        echo "<td>" . $row->discord_name . "</td>";
+                        echo "<td>" . toDateS($row->last_seen) . "</td>";
+                        echo "<td><a class='btn btn-primary' href='take_test.php?type=theory&steamid=" . $row->steam_id . "'>Take Test</button></td>";
                         echo "</tr>";
                     }
                 }
@@ -109,11 +109,11 @@ callsign
                 if ($applicants_practical) {
                     foreach ($applicants_practical as $row) {
                         echo "<tr>";
-                        echo "<td>" . $row[1] . "</td>";
-                        echo "<td>" . $row[2] . "</td>";
-                        echo "<td>" . $row[3] . "</td>";
-                        echo "<td>" . toDateS($row[4]) . "</td>";
-                        echo "<td><a class='btn btn-primary' href='take_test.php?type=practical&&steamid=" . $row[0] . "'>Take Test</button></td>";
+                        echo "<td>" . $row->char_name . "</td>";
+                        echo "<td>" . $row->discord_name . "</td>";
+                        echo "<td>" . $row->phone_number . "</td>";
+                        echo "<td>" . toDateS($row->last_seen) . "</td>";
+                        echo "<td><a class='btn btn-primary' href='take_test.php?type=practical&&steamid=" . $row->steam_id . "'>Take Test</button></td>";
                         echo "</tr>";
                     }
                 }
@@ -136,7 +136,7 @@ callsign
                 <?php
 
                 foreach ($test_history as $row) {
-                    $ret = getMetas($row[2], $row[3]);
+                    $ret = getMetas($row->type, $row->version);
                     /* $row = 
 student_name
 type
@@ -147,14 +147,14 @@ signed_by
 callsign
 */
 
-                    $super_line = $row[7] . " | " . $row[6];
+                    $super_line = $row->callsign . " | " . $row->signed_by;
                     echo "<tr>";
-                    echo "<td>" . $row[1] . "</td>";
-                    echo "<td>" . $row[2] . "</td>";
-                    echo "<td>" . ($row[4] * 100) . "%</td>";
+                    echo "<td>" . $row->student_name . "</td>";
+                    echo "<td>" . $row->type . "</td>";
+                    echo "<td>" . ($row->score_percent * 100) . "%</td>";
                     echo "<td>" . $super_line . "</td>";
-                    echo "<td>" . PassFail($ret, $row[4]) . "</td>";
-                    echo "<td><a class='btn btn-primary' href='view_test.php?test_id=" . $row[0] . "'>View Test</button></td>";
+                    echo "<td>" . PassFail($ret, $row->score_percent) . "</td>";
+                    echo "<td><a class='btn btn-primary' href='view_test.php?test_id=" . $row->id . "'>View Test</button></td>";
                     echo "</tr>";
                 } ?>
             </table>

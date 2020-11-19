@@ -15,6 +15,11 @@ if (isset($_GET["test_id"])) {
     $rvals = Get_Test($_GET["test_id"]);
 }
 
+function getPlayer()
+{
+    
+
+}
 
 function Get_Test($test_id)
 {

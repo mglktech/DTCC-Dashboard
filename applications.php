@@ -8,7 +8,7 @@ function CreateTable($tableType)
         $table = Query($sql);
     }
     if ($tableType == "all") {
-        $sql = "SELECT * FROM `app_history`";
+        $sql = "SELECT * FROM `app_history` ORDER BY `signed_timestamp` DESC LIMIT 20";
         //$sql = "SELECT `char_name`,`callsign`,`rank` FROM players WHERE steam_id = '$steam_id'";
         // needs to have way of ordering apps by super submit date
 
