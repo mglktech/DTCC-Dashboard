@@ -12,7 +12,7 @@ function getCountDrivers()
 }
 function getCountRecruits()
 {
-    $sql = "SELECT COUNT(`steam_id`) as `count` FROM `public_players` WHERE `rank`='Recruit'";
+    $sql = "SELECT COUNT(`steam_id`) as `count` FROM `public_players` WHERE `rank_label`='Recruit'";
     return Query($sql)[0]->count;
 }
 
