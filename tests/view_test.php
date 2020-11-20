@@ -83,7 +83,7 @@ function POST_Theory()
     $date = time();
     $steamid = $_POST["steamid"];
     $char_name = $_POST["char_name"];
-    $comments = $_POST['comments'];
+    $comments = quotefix($_POST['comments']);
     $signed_by = $_SESSION["steam_id"];
     $total_score = 0;
     $score_string = "";
@@ -137,7 +137,7 @@ function POST_Practical()
     //echo $callsign;
     $date = time();
     $steamid = $_POST["steamid"];
-    $comments = $_POST['comments'];
+    $comments = quotefix($_POST['comments']);
     $char_name = $_POST["char_name"];
     $signed_by = $_SESSION["steam_id"];
     $total_score = 0;

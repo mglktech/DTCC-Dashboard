@@ -12,5 +12,10 @@ foreach ($result as $row) {
     $tblBody[] = $tblRow;
 }
 
-Tablefy($tblHeaders, $tblBody);
-include_once "include/footer.php";
+?>
+
+<h3>Players who have not sent a new application</h3>
+<?php Tablefy($tblHeaders, $tblBody); ?>
+
+
+<?php include_once "include/footer.php"; ?>
