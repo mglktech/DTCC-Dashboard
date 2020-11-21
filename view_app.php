@@ -1,6 +1,6 @@
-
 <?php include "include/header.php"; ?>
 
+<!-- must first include appid from html request -->
 <?php
 
 
