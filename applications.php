@@ -12,7 +12,7 @@ function CreateTable($tableType)
         //$sql = "SELECT `char_name`,`callsign`,`rank` FROM players WHERE steam_id = '$steam_id'";
         // needs to have way of ordering apps by super submit date
 
-        $table = Query($sql); 
+        $table = Query($sql);
     }
 
     return $table;
@@ -86,7 +86,7 @@ function CreateTable($tableType)
                         $super_line = $row->callsign . " | " . $row->signed_by;
                         echo "<tr>";
                         echo "<td>" . $row->app_char_name . "</td>";
-                        echo "<td>" . toDate($row->signed_timestamp) . "</td>";
+                        echo "<td>" . toDateS($row->signed_timestamp) . "</td>";
                         echo "<td>" . $row->phone_number . "</td>";
                         echo "<td>" . $super_line . "</td>";
                         echo "<td>" . $row->status . "</td>";
