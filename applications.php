@@ -12,7 +12,7 @@ function CreateTable($tableType)
         //$sql = "SELECT `char_name`,`callsign`,`rank` FROM players WHERE steam_id = '$steam_id'";
         // needs to have way of ordering apps by super submit date
 
-        $table = Query($sql);
+        $table = Query($sql); 
     }
 
     return $table;
