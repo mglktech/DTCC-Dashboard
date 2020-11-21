@@ -17,7 +17,7 @@ function CreateQuestionnaireElement($id, $data)
     echo "<div class='col'>";
     echo "<h5 class='mt-3'>" . $vis_id . ". " . $data[$id][1] . "</h5>";
     echo "<i><h6>" . $data[$id][2] . "</h6></i><br>";
-    echo "<div class='input-group mb-3'>
+    echo "<div class='test-question input-group mb-3'>
   <input type='range' min='0' max='5' value='0' step='1' name='A[]' oninput='UpdateElem(this)' class='slider w-25' id='RangeSlider'>
   <div class='input-group-append'>
     <input class='output w-25' type='text' value='0' disabled>

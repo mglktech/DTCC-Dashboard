@@ -105,7 +105,7 @@ function PassFail($ret, $score_percent)
 ?>
 
 
-<div class="container-fluid border">
+<div class="container-fluid">
     <!-- APPLICATION FORM -->
     <div class="row">
         <div class="col rounded p-0 pb-3">
@@ -118,7 +118,6 @@ function PassFail($ret, $score_percent)
                         CreateInputElemFull(SpanPrepend("Name: "), SpanMiddleDefault($char_name), SpanIsAlive($alive));
                         CreateInputElem("Rank:", $rank_label, "");
                         CreateInputElem("Status:", $status, "");
-                        echo "<br>";
                         CreateInputElem("Steam Name:", $steam_name, "");
                         CreateInputElem("SteamID:", $steamid, "");
                         CreateInputBtnElem("Steam Hex:", $hex, $link);
@@ -202,9 +201,9 @@ function PassFail($ret, $score_percent)
             </div>
         </div>
     </div>
-    <div class="row">
-        Shift Data<br>
-        Total time on shift: <?php echo toDurationDays(getSumShifts($steamid)); ?><br>
+    <div class="row pb-5">
+        <h3 class="d-block w-100">Shift Data</h3><br>
+        <h5 class="font-italic mb-3 font-weight-normal">Total time on shift: <strong><?php echo toDurationDays(getSumShifts($steamid)); ?></strong></h5>
         <?php $tData = getShiftData($steamid);
         $thead = ["Date", "Time In", "Time Out", "Duration"];
         $tbody = array();

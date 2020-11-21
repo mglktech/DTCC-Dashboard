@@ -37,7 +37,7 @@ function getRostor()
 
 <h1>Roster</h1>
 <h5 class="font-italic mb-3 font-weight-normal">My Minions!</h5>
-<h6 class="mb-1 font-weight-normal"> <?php echo getCountDrivers(); ?> Active Drivers, <?php echo getCountRecruits(); ?> Recruits</h6>
+<h5 class="mb-1 font-weight-normal font-weight-bold"> <?php echo getCountDrivers(); ?> Active Drivers, <?php echo getCountRecruits(); ?> Recruits</h5>
 <table class="table table-striped blue-header roster-table">
     <tr>
         <th>Callsign</th>
