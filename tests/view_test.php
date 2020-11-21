@@ -263,15 +263,13 @@ function CreateQuestionElement($id, $question, $score)
 
 
 ?>
-<div class="col-md-6 text-center">
 
-</div>
 <div class="container-fluid">
     <div class="row">
         <h1>Test Results</h1>
         <h5 class="w-100 font-italic mb-3 font-weight-normal">did this butthole pass?</h5>
-        <div class="row w-100">
-            <div class="col-md-12">
+
+            <div class="col-md-12 px-0">
                 <?php
                 if (isset($rvals['hex']) && passed($rvals['total_score'], $rvals['pass_mark'])) { ?>
                     <div class="row">
@@ -342,10 +340,8 @@ function CreateQuestionElement($id, $question, $score)
                 include "../include/inc_view_test_fullpass.php";
             } ?>
 
-
-        </div>
-        <div class="container-fluid">
-            <h5 class="mt-3 mb-1">Comments</h5>
+        <div class="container-fluid px-0">
+            <h5 class="h5-header-label mb-0 w-100 text-center">Comments</h5>
             <div class="border p-4">
                 <span class="font-weight-normal"><?php echo $rvals['comments']; ?></span>
             </div>

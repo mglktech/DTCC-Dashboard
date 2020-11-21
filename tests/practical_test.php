@@ -53,7 +53,7 @@ function CollectCallsigns($rank, $region)
             for ($i = 0; $i < count($data); $i++) {
                 CreateQuestionnaireElement($i, $data);
             } ?>
-            <div class="form-group col-3">
+            <div class="form-group col-3 px-0">
                 <label for="callsign">
                     <h3>Select Callsign</h3>
                 </label>

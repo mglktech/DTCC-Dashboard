@@ -258,7 +258,7 @@ div.containerLogin p {
   transform: translate(-50%, -50%)
 }
 
-.table, .input-group, .h5-header-label, .text-background-grey, .border {
+.table, .input-group, .h5-header-label, .text-background-grey, .border, .row.bg-light {
   -webkit-box-shadow: 2px 2px 5px 0px rgba(50, 50, 50, 0.15) !important;
   -moz-box-shadow:    2px 2px 5px 0px rgba(50, 50, 50, 0.15) !important;
   box-shadow:         2px 2px 5px 0px rgba(50, 50, 50, 0.15) !important;
