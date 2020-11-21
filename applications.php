@@ -86,7 +86,7 @@ function CreateTable($tableType)
                         $super_line = $row->callsign . " | " . $row->signed_by;
                         echo "<tr>";
                         echo "<td>" . $row->app_char_name . "</td>";
-                        echo "<td>" . toDateS($row->signed_timestamp) . "</td>";
+                        echo "<td>" . toDate($row->signed_timestamp) . "</td>";
                         echo "<td>" . $row->phone_number . "</td>";
                         echo "<td>" . $super_line . "</td>";
                         echo "<td>" . $row->status . "</td>";
