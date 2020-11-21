@@ -3,6 +3,11 @@ include "../include/elements.php";
 
 include_once '../include/db_connection.php';
 
+function quotefix($str)
+{
+    return str_replace("'", "''", "$str");
+}
+
 if (isset($_POST["test_type"])) {
     if ($_POST["test_type"] == "theory") {
         $rvals = POST_Theory();
