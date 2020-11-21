@@ -147,7 +147,7 @@ $appdata = Query("SELECT * FROM applications_v0 WHERE app_id = $appid")[0];
 // print_r($appdata[0]);
 $id = $appdata->app_id;
 
-// $timestamp = $appdata[1];
+// $timestamp = $appdata[1]; 
 $char_name = $appdata->char_name;
 $phone_number = $appdata->phone_number;
 $steam_name = $appdata->detected_steam_name;
