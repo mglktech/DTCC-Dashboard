@@ -44,3 +44,25 @@ function LogError($statement, $error)
     $resp = Query($sql);
     printf("SQL Error detected. Error ID: %s\n", $resp[0]->id);
 }
+
+function q_fetchPlayer($steam_id)
+{
+    $sql = "SELECT
+    callsigns.label AS callsign,
+    players.char_name AS char_name,
+    players.rank AS rank,
+    players.steam_id AS steam_id,
+    players.steam_name AS steam_name,
+    players.discord_name AS discord_name
+FROM
+    players
+LEFT JOIN callsigns ON players.steam_id = callsigns.assigned_steam_id
+WHERE players.steam_id = '$steam_id'";
+    return Query($sql)[0];
+}
+
+function q_fetchPlayerFormatted($steam_id)
+{
+    $player = q_fetchPlayer($steam_id);
+    return $player->callsign . " | " . $player->char_name;
+}

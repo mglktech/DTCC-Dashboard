@@ -35,11 +35,13 @@ function Get_Test($test_id)
     $test_ver = $result[4];
     $signed_by = $result[8];
     $metas = getMetas($test_type, $test_ver);
-    $score_percent = $result[6];
-    $char = fetchPlayer($student_steamid);
-    $char_name = $char[1];
-    $callsign = $char[0];
-    $discord_name = $char[5];
+
+    $score_percent = $result->score_percent;
+    $char = q_fetchPlayer($student_steamid);
+    $char_name = $char->char_name;
+    $callsign = $char->callsign;
+    $discord_name = $char->discord_name;
+
     $postret['char_name'] = $char_name;
     $postret['max_score'] = $metas['max_score'];
     $postret['total_score'] = $total_score;
@@ -54,7 +56,7 @@ function Get_Test($test_id)
     }
 
     $postret['callsign'] = $callsign;
-    $postret['signed_by'] = fetchPlayerFormatted($signed_by);
+    $postret['signed_by'] = q_fetchPlayerFormatted($signed_by);
 
     return $postret;
 }
@@ -98,8 +100,8 @@ function POST_Theory()
         $total_score += $answer;
     }
     $metas = getMetas('theory', '0');
-    $pass_mark = $metas['pass_mark'];
-    $max_score = $metas['max_score'];
+    $pass_mark = $metas->pass_mark;
+    $max_score = $metas->max_score;
     $percentage = round(($total_score / $max_score), 2);
 
     if ($total_score >= $pass_mark) {
@@ -129,7 +131,7 @@ function POST_Theory()
     $postret['Answers'] = $_POST['A'];
     $postret['test_type'] = $_POST['test_type'];
     $postret['callsign'] = "Not Assigned";
-    $postret['signed_by'] = fetchPlayerFormatted($signed_by);
+    $postret['signed_by'] = q_fetchPlayerFormatted($signed_by);
     $postret['comments'] = $comments;
 
     return $postret;
@@ -188,7 +190,9 @@ function POST_Practical()
         //echo "You Failed.";
     }
     $sql = "INSERT INTO `tests`(`steam_id`, `type`, `version`, `score_total`, `score_percent`, `signed_by`,`scores`,`submit_date`,`comments`) VALUES ('$steamid','practical','0','$total_score','$percentage','$signed_by','$score_string','$date','$comments')";
-    $response = SqlRun($sql);
+
+    $response = Query($sql);
+
     //echo "Tests Database Response: " . $response;
     $char = fetchPlayer($steamid);
     $postret['char_name'] = $char_name;
@@ -200,7 +204,7 @@ function POST_Practical()
     $postret['test_type'] = $_POST['test_type'];
     $postret['hex'] = "steam:" . dechex($steamid);
     $postret['callsign'] = $callsign;
-    $postret['signed_by'] = fetchPlayerFormatted($signed_by);
+    $postret['signed_by'] = q_fetchPlayerFormatted($signed_by);
     $postret['discord_name'] = $char[5];
     $postret['comments'] = $comments;
     return $postret;

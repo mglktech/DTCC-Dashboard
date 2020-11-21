@@ -84,9 +84,11 @@ function CreateTable($tableType)
                         // row 3 is equal to signed_by steamid. grab name here;
                         $super_line = $row[6] . " | " . $row[5];
                         echo "<tr>";
-                        echo "<td>" . $row[0] . "</td>";
-                        echo "<td>" . toDate($row[1]) . "</td>";
-                        echo "<td>" . $row[2] . "</td>";
+
+                        echo "<td>" . $row->app_char_name . "</td>";
+                        echo "<td>" . toDate($row->signed_timestamp) . "</td>";
+                        echo "<td>" . $row->phone_number . "</td>";
+
                         echo "<td>" . $super_line . "</td>";
                         echo "<td>" . $row[4] . "</td>";
                         echo "<td><a class='btn btn-outline-secondary' href='/view_app.php?appid=" . $row[3] . "'>View</a></td>";
