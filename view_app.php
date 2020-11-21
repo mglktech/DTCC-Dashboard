@@ -1,8 +1,23 @@
-<?php include "include/header.php"; ?>
-
-<!-- must first include appid from html request -->
 <?php
+include "include/header.php";
+include "include/sqlconnection.php";
 
+
+if (isset($_POST['leaveNote'])) {
+    $time = time();
+    $doc_type = "application";
+    $doc_id = $_POST['app_id'];
+    $steam_id = $_POST['signed_by'];
+    $message = quotefix($_POST['message']);
+    $sql = "INSERT INTO `private_notes`(`doc_id`, `doc_type`, `steam_id`, `timestamp`, `message`) VALUES ('$doc_id','$doc_type','$steam_id','$time','$message')";
+    Query($sql);
+}
+
+function prepareNotes($doc_id)
+{
+    $sql = "SELECT * FROM `notes` WHERE `doc_id` = '$doc_id' ORDER BY `timestamp` DESC";
+    return Query($sql);
+}
 
 function PrepareSteamURL($steam_link)
 {
@@ -41,8 +56,8 @@ function chkPost($id)
 
 function UpdateDB($sql)
 {
-    include_once "include/db_connection.php";
-    $response = SqlRun($sql);
+
+    $response = Query($sql);
     return $response;
 }
 
@@ -76,10 +91,11 @@ if (isset($_POST["SubmitApp"])) {
          `signed_by`='$signed_by',
          `status`='$status',
          `status_desc`='',
-         `additional_info`='' 
+         `additional_info`='',
+         `signed_timestamp`='$date'
          WHERE `app_id`='$appid'";
         $response = UpdateDB($sql);
-       // echo "Database Response: " . $response . " SQL: " . $sql;
+        // echo "Database Response: " . $response . " SQL: " . $sql;
     }
 
     if ($_POST["SubmitApp"] == "deny") {
@@ -94,7 +110,7 @@ if (isset($_POST["SubmitApp"])) {
         $reapplySwitch = chkPostBool("reapplyDaysSwitch");
         $reapplyDays = chkPost("reapplyDaysAmount");
         $status_desc =  $isBanned . "/" . $badCharName . "/" . $badPNum . "/" . $badDiscord . "/" . $badLink . "/" . $badBackstory . "/" . $badReason . "/" . $reapplySwitch . "/" . $reapplyDays;
-        $additionalInfo = chkPost("additionalInformation");
+        $additionalInfo = quotefix(chkPost("additionalInformation"));
         $status = "deny";
         $sql = "UPDATE `applications_v0`
          SET `steam_id`='$detected_steam_id',
@@ -102,7 +118,8 @@ if (isset($_POST["SubmitApp"])) {
          `signed_by`='$signed_by',
          `status`='$status',
          `status_desc`='$status_desc',
-         `additional_info`='$additionalInfo' 
+         `additional_info`='$additionalInfo',
+         `signed_timestamp`='$date'
          WHERE `app_id`='$appid'";
         $response = UpdateDB($sql);
         //echo "Database Response: " . $response . " SQL: " . $sql;
@@ -125,30 +142,31 @@ if (isset($_POST["SubmitApp"])) {
 }
 
 
-include_once "include/db_connection.php";
-$appdata = fetchRow("SELECT * FROM applications_v0 WHERE app_id = $appid");
+
+$appdata = Query("SELECT * FROM applications_v0 WHERE app_id = $appid")[0];
 // print_r($appdata[0]);
-$id = $appdata[0];
+$id = $appdata->app_id;
 
 // $timestamp = $appdata[1];
-$char_name = $appdata[2];
-$phone_number = $appdata[3];
-$steam_name = $appdata[10];
-$discord_name = $appdata[5];
-$steam_link = $appdata[6];
-$backstory = $appdata[7];
-$reason = $appdata[8];
-$signed_by = $appdata[11];
-$status = $appdata[12];
-$status_desc = $appdata[13];
-$additionalInfo = $appdata[14];
-if ($appdata[15] == 0) {
-    $timestamp = $appdata[1];
+$char_name = $appdata->char_name;
+$phone_number = $appdata->phone_number;
+$steam_name = $appdata->detected_steam_name;
+$discord_name = $appdata->discord_name;
+$steam_link = $appdata->steam_link;
+$backstory = $appdata->char_backstory;
+$reason = $appdata->char_reason;
+$signed_by = $appdata->signed_by;
+$status = $appdata->status;
+$status_desc = $appdata->status_desc;
+$additionalInfo = $appdata->additional_info;
+
+if ($appdata->app_timestamp == 0) {
+    $timestamp = toDateS(strToTime($appdata->timestamp));
 }
-if ($appdata[15] != 0) {
-    $timestamp = date("d-M-Y", round($appdata[15] / 1000));
+if ($appdata->app_timestamp != 0) {
+    $timestamp = toDate($appdata->app_timestamp);
 }
-$zone = $appdata[16];
+$zone = $appdata->app_zoneOffset;
 $player = PrepareSteamURL($steam_link);
 if ($player) {
     $detected_steam_name = $player->steamID;
@@ -157,6 +175,28 @@ if ($player) {
 }
 $alive = IsAlive($char_name);
 
+// Notes
+
+function CreateNotesTable($appid)
+{
+    $str_heap = array();
+    $tbl_head = ["Notes"];
+    $data = prepareNotes($appid);
+    if ($data) {
+
+
+        foreach ($data as $row) {
+            $str_stack = array();
+            $str = $row->char_name . ": " . $row->message . " -" . ToDateS($row->timestamp);
+            $str_stack[] = $str;
+            $str_heap[] = $str_stack; // one dimensional array...
+        }
+    } else {
+        $str_heap = [["No Notes..."]];
+    }
+
+    return Tablefy($tbl_head, $str_heap);
+}
 
 /*
 build accept button with validation modal
@@ -190,6 +230,7 @@ include "include/elements.php";
                         CreateInputElem("Discord:", $discord_name, "");
                         CreateInputElem("Timezone:", $zone, "");
                         CreateInputElemFull(SpanPrepend("Steam Link: "), SpanMiddleDefault($steam_link), SpanBtnLink("Go", $steam_link)); ?>
+
                     </div>
                     <div class="col-md-6">
                         <h5 class="mb-1">Backstory:</h5>
@@ -201,6 +242,13 @@ include "include/elements.php";
                         <div class="border p-4">
                             <span class="font-weight-normal"><?php echo $reason; ?></span>
                         </div>
+
+                        <div class="">
+
+                            <span class="font-weight-normal"><?php CreateNotesTable($appid); ?></span>
+                            <button class="btn bg-secondary text-light" data-toggle="modal" data-target="#NoteModal">Add Note</button>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -216,6 +264,51 @@ include "include/elements.php";
     }
     ?>
 
+</div>
+<div class="modal fade" id="NoteModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <form action="" method="post">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Adding note for <?php echo $char_name ?></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h6>
+                        Leave a Note for other supervisors to see!
+                    </h6>
+                    <h6 class="">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="input-group">
+                                    <textarea name="message" class="form-control" aria-label="With textarea"></textarea>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+                    </h6>
+                    <h6 class="mb-3">
+
+                    </h6>
+                </div>
+                <div class="modal-footer">
+
+                    <input name="leaveNote" value="1" hidden></input>
+                    <input name="signed_by" value="<?php echo $_SESSION["steam_id"]; ?>" hidden></input>
+                    <input name="app_id" value="<?php echo $appid; ?>" hidden></input>
+                    <button type="submit" class="btn btn-success">Leave Note</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Go Back</button>
+
+
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
 
 <?php include_once "include/footer.php"; ?>

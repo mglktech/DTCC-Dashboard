@@ -11,7 +11,7 @@ if ($_SESSION['steam_id'] == '76561197995263974' || $_SESSION['steam_id'] == '76
 
 function sqlCollectTotals()
 {
-    return Query("SELECT DISTINCT a.steam_id, a.callsign, a.char_name, (SELECT SUM(b.duration) FROM public_verified_shifts b WHERE b.steam_id=a.steam_id) duration FROM public_verified_shifts a order by duration desc");
+    return Query("SELECT DISTINCT a.steam_id, a.callsign, a.char_name, (SELECT SUM(b.duration) FROM public_verified_shifts b WHERE b.steam_id=a.steam_id) duration FROM public_verified_shifts a  where a.callsign is not null order by duration desc");
 }
 
 // function CollectTotals()
