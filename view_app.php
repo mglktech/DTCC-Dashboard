@@ -230,7 +230,6 @@ include "include/elements.php";
                         CreateInputElem("Discord:", $discord_name, "");
                         CreateInputElem("Timezone:", $zone, "");
                         CreateInputElemFull(SpanPrepend("Steam Link: "), SpanMiddleDefault($steam_link), SpanBtnLink("Go", $steam_link)); ?>
-
                     </div>
                     <div class="col-md-6">
                         <h5 class="mb-1">Backstory:</h5>
