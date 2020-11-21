@@ -1,18 +1,17 @@
 <?php include 'include/header.php';
-include "include/sqlconnection.php";
+
 function CreateTable($tableType)
 {
-
+    include_once 'include/db_connection.php';
     if ($tableType == "unread") {
         $sql = "SELECT * FROM `unread_apps`";
-        $table = Query($sql);
+        $table = fetchAll($sql);
     }
     if ($tableType == "all") {
-        $sql = "SELECT * FROM `app_history` ORDER BY `signed_timestamp` DESC LIMIT 20";
+        $sql = "SELECT * FROM `app_history`";
         //$sql = "SELECT `char_name`,`callsign`,`rank` FROM players WHERE steam_id = '$steam_id'";
-        // needs to have way of ordering apps by super submit date
 
-        $table = Query($sql);
+        $table = fetchAll($sql);
     }
 
     return $table;
@@ -51,11 +50,11 @@ function CreateTable($tableType)
 
                     foreach ($tableData as $row) {
                         echo "<tr>";
-                        echo "<td>" . toDate($row->app_timestamp) . "</td>";
-                        echo "<td>" . $row->char_name . "</td>";
-                        echo "<td>" . $row->discord_name . "</td>";
+                        echo "<td>" . toDate($row[4]) . "</td>";
+                        echo "<td>" . $row[1] . "</td>";
+                        echo "<td>" . $row[2] . "</td>";
 
-                        echo "<td><a class='btn btn-info' href='/view_app.php?appid=" . $row->app_id . "'>View Application</a></td>";
+                        echo "<td><a class='btn btn-info' href='/view_app.php?appid=" . $row[0] . "'>View Application</a></td>";
                         echo "</tr>";
                     }
 
@@ -83,14 +82,14 @@ function CreateTable($tableType)
 
                     foreach ($tableData as $row) {
                         // row 3 is equal to signed_by steamid. grab name here;
-                        $super_line = $row->callsign . " | " . $row->signed_by;
+                        $super_line = $row[6] . " | " . $row[5];
                         echo "<tr>";
-                        echo "<td>" . $row->app_char_name . "</td>";
-                        echo "<td>" . toDateS($row->signed_timestamp) . "</td>";
-                        echo "<td>" . $row->phone_number . "</td>";
+                        echo "<td>" . $row[0] . "</td>";
+                        echo "<td>" . toDate($row[1]) . "</td>";
+                        echo "<td>" . $row[2] . "</td>";
                         echo "<td>" . $super_line . "</td>";
-                        echo "<td>" . $row->status . "</td>";
-                        echo "<td><a class='btn btn-outline-secondary' href='/view_app.php?appid=" . $row->app_id . "'>View</a></td>";
+                        echo "<td>" . $row[4] . "</td>";
+                        echo "<td><a class='btn btn-outline-secondary' href='/view_app.php?appid=" . $row[3] . "'>View</a></td>";
                         echo "</tr>";
                     } ?>
                 </table>

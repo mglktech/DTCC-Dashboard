@@ -1,14 +1,16 @@
-
-
+.disabled {
+  pointer-events: none;
+  cursor: not-allowed;
+}
 
 .table th {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 700;
 }
 
 .table td {
-  font-size: 14px;
-  padding: 5px !important;
+  font-size: 16px;
+  padding: 10px !important;
   vertical-align: unset !important;
 }
 
@@ -16,7 +18,7 @@
   background-color: #272b30;
   border-color: #272b30;
   color: #fff;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .table td .btn:hover {

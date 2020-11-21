@@ -1,26 +1,26 @@
-<?php
+<?php include_once "db_connection.php";
 
 function FormatCopyPasta($status_desc, $signed_by, $char_name, $additionalInfo)
 {
-
+    include_once "db_connection.php";
     echo "Hello " . $char_name . ".<br>";
     echo "Unfortunately, your application for Downtown Cab Co. has been Rejected.<br>";
     echo "The reason(s) given are as follows:<br><br>";
     $reasons = explode("/", $status_desc);
     if ($reasons[0] == 1) {
-        echo "You have been Banned from Downtown Cab Co.<br><br>";
+        echo "You have been barred from using DTCC Services.<br><br>";
     }
     if ($reasons[1] == 1) {
-        echo "Your Character Name cannot be found.<br>";
+        echo "Your Character Name is invalid.<br>";
     }
     if ($reasons[2]) {
         echo "Your Phone Number is invalid.<br>";
     }
     if ($reasons[3]) {
-        echo "We wouldn't find your Discord Username<br>";
+        echo "Your Discord Username is incorrect.<br>";
     }
     if ($reasons[4]) {
-        echo "We couldn't find your SteamID from the provided URL. (Do you have your profile set to private?)<br>";
+        echo "We cannot find your SteamID from the provided URL. (Do you have your profile set to private?)<br>";
     }
     if ($reasons[5]) {
         echo "Your Backstory is invalid.<br>";
