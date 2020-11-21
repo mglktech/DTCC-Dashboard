@@ -35,7 +35,7 @@ function Get_Test($test_id)
     $signed_by = $result->signed_by;
     $metas = getMetas($test_type, $test_ver);
     $score_percent = $result->score_percent;
-    $char = fetchPlayer($student_steamid);
+    $char = q_fetchPlayer($student_steamid);
     $char_name = $char->char_name;
     $callsign = $char->callsign;
     $discord_name = $char->discord_name;
@@ -53,7 +53,7 @@ function Get_Test($test_id)
     }
 
     $postret['callsign'] = $callsign;
-    $postret['signed_by'] = fetchPlayerFormatted($signed_by);
+    $postret['signed_by'] = q_fetchPlayerFormatted($signed_by);
 
     return $postret;
 }
@@ -126,7 +126,7 @@ function POST_Theory()
     $postret['Answers'] = $_POST['A'];
     $postret['test_type'] = $_POST['test_type'];
     $postret['callsign'] = "Not Assigned";
-    $postret['signed_by'] = fetchPlayerFormatted($signed_by);
+    $postret['signed_by'] = q_fetchPlayerFormatted($signed_by);
     $postret['comments'] = $comments;
 
     return $postret;
@@ -197,7 +197,7 @@ function POST_Practical()
     $postret['test_type'] = $_POST['test_type'];
     $postret['hex'] = "steam:" . dechex($steamid);
     $postret['callsign'] = $callsign;
-    $postret['signed_by'] = fetchPlayerFormatted($signed_by);
+    $postret['signed_by'] = q_fetchPlayerFormatted($signed_by);
     $postret['discord_name'] = $char[5];
     $postret['comments'] = $comments;
     return $postret;

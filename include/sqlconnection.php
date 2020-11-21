@@ -45,7 +45,7 @@ function LogError($statement, $error)
     printf("SQL Error detected. Error ID: %s\n", $resp[0]->id);
 }
 
-function fetchPlayer($steam_id)
+function q_fetchPlayer($steam_id)
 {
     $sql = "SELECT
     callsigns.label AS callsign,
@@ -61,8 +61,8 @@ WHERE players.steam_id = '$steam_id'";
     return Query($sql)[0];
 }
 
-function fetchPlayerFormatted($steam_id)
+function q_fetchPlayerFormatted($steam_id)
 {
-    $player = fetchPlayer($steam_id);
+    $player = q_fetchPlayer($steam_id);
     return $player->callsign . " | " . $player->char_name;
 }
