@@ -3,9 +3,9 @@ function IsBanned($steam_id)
 {
     include_once "db_connection.php";
     $sql = "SELECT `status` FROM `players` WHERE `steam_id` = '$steam_id'";
-    $status_prepare = Query($sql)[0];
+    $status_prepare = fetchRow($sql);
     if ($status_prepare) {
-        if ($status_prepare->status == "BANNED") {
+        if ($status_prepare[0] == "BANNED") {
             return true;
         } else {
             return false;

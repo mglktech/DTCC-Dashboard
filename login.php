@@ -26,7 +26,6 @@ if (isset($_POST["Login"])) {
 
 function DoLogin($code)
 {
-    $code = quotefix($code); // security
     return Query("SELECT * FROM `players` WHERE `code` = '$code'")[0];
 }
 include 'include/_header.php';
