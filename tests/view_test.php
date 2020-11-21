@@ -185,7 +185,7 @@ function POST_Practical()
         //echo "You Failed.";
     }
     $sql = "INSERT INTO `tests`(`steam_id`, `type`, `version`, `score_total`, `score_percent`, `signed_by`,`scores`,`submit_date`,`comments`) VALUES ('$steamid','practical','0','$total_score','$percentage','$signed_by','$score_string','$date','$comments')";
-    $response = Query($Sql);
+    $response = Query($sql);
     //echo "Tests Database Response: " . $response;
     $char = fetchPlayer($steamid);
     $postret['char_name'] = $char_name;
