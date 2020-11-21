@@ -162,10 +162,10 @@ $status_desc = $appdata->status_desc;
 $additionalInfo = $appdata->additional_info;
 
 if ($appdata->app_timestamp == 0) {
-    $timestamp = $appdata[1];
+    $timestamp = toDateS(strToTime($appdata->timestamp));
 }
 if ($appdata->app_timestamp != 0) {
-    $timestamp = date("d-M-Y", round($appdata->app_timestamp / 1000));
+    $timestamp = toDate($appdata->app_timestamp);
 }
 $zone = $appdata->app_zoneOffset;
 $player = PrepareSteamURL($steam_link);
@@ -183,11 +183,17 @@ function CreateNotesTable($appid)
     $str_heap = array();
     $tbl_head = ["Notes"];
     $data = prepareNotes($appid);
-    foreach ($data as $row) {
-        $str_stack = array();
-        $str = $row->char_name . ": " . $row->message . " -" . ToDateS($row->timestamp);
-        $str_stack[] = $str;
-        $str_heap[] = $str_stack; // one dimensional array...
+    if ($data) {
+
+
+        foreach ($data as $row) {
+            $str_stack = array();
+            $str = $row->char_name . ": " . $row->message . " -" . ToDateS($row->timestamp);
+            $str_stack[] = $str;
+            $str_heap[] = $str_stack; // one dimensional array...
+        }
+    } else {
+        $str_heap = [["No Notes..."]];
     }
 
     return Tablefy($tbl_head, $str_heap);
@@ -225,7 +231,7 @@ include "include/elements.php";
                         CreateInputElem("Discord:", $discord_name, "");
                         CreateInputElem("Timezone:", $zone, "");
                         CreateInputElemFull(SpanPrepend("Steam Link: "), SpanMiddleDefault($steam_link), SpanBtnLink("Go", $steam_link)); ?>
-                        <button class="btn btn-lg bg-secondary text-light" data-toggle="modal" data-target="#NoteModal">Add Note</button>
+
                     </div>
                     <div class="col-md-6">
                         <h5 class="mb-1">Backstory:</h5>
@@ -237,9 +243,11 @@ include "include/elements.php";
                         <div class="border p-4">
                             <span class="font-weight-normal"><?php echo $reason; ?></span>
                         </div>
-                        <h5 class="mt-3 mb-1">Notes</h5>
-                        <div class="border p-4">
+
+                        <div class="">
+
                             <span class="font-weight-normal"><?php CreateNotesTable($appid); ?></span>
+                            <button class="btn bg-secondary text-light" data-toggle="modal" data-target="#NoteModal">Add Note</button>
                         </div>
 
                     </div>
