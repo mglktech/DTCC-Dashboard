@@ -16,7 +16,7 @@ if (isset($_GET["test_id"])) {
 }
 
 function getPlayer()
-{
+{ // code updated
 }
 
 function Get_Test($test_id)
