@@ -1,4 +1,3 @@
-<!-- must first include appid from html request -->
 <?php
 include "include/header.php";
 include "include/sqlconnection.php";
