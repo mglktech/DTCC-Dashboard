@@ -95,8 +95,8 @@ function POST_Theory()
         $total_score += $answer;
     }
     $metas = getMetas('theory', '0');
-    $pass_mark = $metas['pass_mark'];
-    $max_score = $metas['max_score'];
+    $pass_mark = $metas->pass_mark;
+    $max_score = $metas->max_score;
     $percentage = round(($total_score / $max_score), 2);
 
     if ($total_score >= $pass_mark) {
