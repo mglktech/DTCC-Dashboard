@@ -23,7 +23,15 @@ if (isset($_POST['steam_url'])) {
     // echo $phone_number;
     // echo $backstory;
     // echo $reason;
-    $sql = "INSERT INTO `applications_v0`(`char_name`, `phone_number`, `discord_name`, `steam_link`, `char_backstory`, `char_reason`,`app_timestamp`,`app_zoneOffset`) VALUES ('$char_name','$phone_number','$discord_name','$steam_url','$backstory','$reason','$timestamp','$timeOffset')";
+    $sql = "INSERT INTO `applications_v0`(
+        `char_name`, 
+    `phone_number`, 
+    `discord_name`, 
+    `steam_link`, 
+    `char_backstory`, 
+    `char_reason`,
+    `app_timestamp`,
+    `app_zoneOffset`) VALUES ('$char_name','$phone_number','$discord_name','$steam_url','$backstory','$reason','$timestamp','$timeOffset')";
     $response = SqlRun($sql);
     echo $response;
     echo " SQL: " . $sql;

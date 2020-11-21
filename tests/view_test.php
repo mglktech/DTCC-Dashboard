@@ -1,7 +1,12 @@
 <?php include '../include/header.php';
 include "../include/elements.php";
 
-include '../include/sqlconnection.php';
+include_once '../include/db_connection.php';
+
+function quotefix($str)
+{
+    return str_replace("'", "''", "$str");
+}
 
 if (isset($_POST["test_type"])) {
     if ($_POST["test_type"] == "theory") {
@@ -15,34 +20,32 @@ if (isset($_GET["test_id"])) {
     $rvals = Get_Test($_GET["test_id"]);
 }
 
-function getPlayer()
-{
-}
 
 function Get_Test($test_id)
 {
 
     $sql = "SELECT * FROM `tests` WHERE `id` = '$test_id'";
-    $result = Query($sql)[0];
-    //print_r($result);
-    $student_steamid = $result->steam_id;
-    $comments = $result->comments;
-    $total_score = $result->score_total;
-    $scores = explode("/", $result->scores);
+    $result = fetchRow($sql);
+    $student_steamid = $result[2];
+    $comments = $result[9];
+    $total_score = $result[5];
+    $scores = explode("/", $result[7]);
     //echo print_r($result[7]);
-    $test_type = $result->type;
-    $test_ver = $result->version;
-    $signed_by = $result->signed_by;
+    $test_type = $result[3];
+    $test_ver = $result[4];
+    $signed_by = $result[8];
     $metas = getMetas($test_type, $test_ver);
+
     $score_percent = $result->score_percent;
     $char = q_fetchPlayer($student_steamid);
     $char_name = $char->char_name;
     $callsign = $char->callsign;
     $discord_name = $char->discord_name;
+
     $postret['char_name'] = $char_name;
-    $postret['max_score'] = $metas->max_score;
+    $postret['max_score'] = $metas['max_score'];
     $postret['total_score'] = $total_score;
-    $postret['pass_mark'] = $metas->pass_mark;
+    $postret['pass_mark'] = $metas['pass_mark'];
     $postret['percentage'] = $score_percent;
     $postret['Answers'] = $scores;
     $postret['test_type'] = $test_type;
@@ -65,10 +68,10 @@ function getQuestions($tbl)
         $sql = "SELECT `question` FROM `theory_test_data_v0`";
     }
     if ($tbl == "practical") {
-        $sql = "SELECT `question` FROM `practical_test_data_v0`";
+        $sql = "SELECT `question_title` FROM `practical_test_data_v0`";
     }
     if ($sql) {
-        return Query($sql);
+        return fetchAll($sql);
     } else {
         return null;
     }
@@ -76,8 +79,10 @@ function getQuestions($tbl)
 function getMetas($type, $ver)
 {
     $sql = "SELECT `pass_mark`,`max_score` FROM `tests_meta` WHERE `type`='$type' AND `version`='$ver'";
-    $result = Query($sql)[0];
-    return $result;
+    $result = fetchRow($sql);
+    $ret['pass_mark'] = $result[0];
+    $ret['max_score'] = $result[1];
+    return $ret;
 }
 
 function POST_Theory()
@@ -85,7 +90,7 @@ function POST_Theory()
     $date = time();
     $steamid = $_POST["steamid"];
     $char_name = $_POST["char_name"];
-    $comments = $_POST['comments'];
+    $comments = quotefix($_POST['comments']);
     $signed_by = $_SESSION["steam_id"];
     $total_score = 0;
     $score_string = "";
@@ -103,9 +108,9 @@ function POST_Theory()
 
         //echo "congrats, you passed!";
         $sql = "UPDATE `players`
-        SET `status`='Needs Practical', `last_seen`='$date'
-        WHERE `steam_id`='$steamid'";
-        $response = Query($sql);
+         SET `status`='Needs Practical', `last_seen`='$date'
+         WHERE `steam_id`='$steamid'";
+        $response = SqlRun($sql);
         //echo "Player Database Response: " . $response;
     }
     if ($total_score < $pass_mark) {
@@ -116,7 +121,7 @@ function POST_Theory()
     }
 
     $sql = "INSERT INTO `tests`(`steam_id`, `type`, `version`, `score_total`, `score_percent`, `signed_by`,`scores`,`submit_date`,`comments`) VALUES ('$steamid','theory','0','$total_score','$percentage','$signed_by','$score_string','$date','$comments')";
-    $response = Query($sql);
+    $response = SqlRun($sql);
     //echo $response . " SQL: " . $sql;
     $postret['char_name'] = $char_name;
     $postret['max_score'] = $max_score;
@@ -139,7 +144,7 @@ function POST_Practical()
     //echo $callsign;
     $date = time();
     $steamid = $_POST["steamid"];
-    $comments = $_POST['comments'];
+    $comments = quotefix($_POST['comments']);
     $char_name = $_POST["char_name"];
     $signed_by = $_SESSION["steam_id"];
     $total_score = 0;
@@ -153,9 +158,9 @@ function POST_Practical()
 
 
     $sql = "SELECT `pass_mark`,`max_score` FROM `tests_meta` WHERE `type`='practical' AND `version`='0'";
-    $result = Query($sql)[0];
-    $pass_mark = $result->pass_mark;
-    $max_score = $result->max_score;
+    $result = fetchRow($sql);
+    $pass_mark = $result[0];
+    $max_score = $result[1];
     $percentage = round(($total_score / $max_score), 2);
 
 
@@ -165,16 +170,16 @@ function POST_Practical()
         $sql = "UPDATE `players`
          SET `status`='Active', `last_seen`='$date' , `rank`='0'
          WHERE `steam_id`='$steamid'";
-        $response = Query($sql);
+        $response = SqlRun($sql);
         //echo "Player Database Response: " . $response;
         $sql = "UPDATE `callsigns`
         SET `assigned_steam_id` = '$steamid'
         WHERE `label` = '$callsign'";
-        $response = Query($sql);
+        $response = SqlRun($sql);
         if ($response = 'failure') {
             $sql = "SELECT `label` FROM `callsigns` WHERE `assigned_steam_id` = '$steamid'";
-            $response = Query($sql)[0];
-            $callsign = $response->label;
+            $response = fetchRow($sql);
+            $callsign = $response[0];
         }
     }
 
@@ -185,7 +190,9 @@ function POST_Practical()
         //echo "You Failed.";
     }
     $sql = "INSERT INTO `tests`(`steam_id`, `type`, `version`, `score_total`, `score_percent`, `signed_by`,`scores`,`submit_date`,`comments`) VALUES ('$steamid','practical','0','$total_score','$percentage','$signed_by','$score_string','$date','$comments')";
+
     $response = Query($sql);
+
     //echo "Tests Database Response: " . $response;
     $char = fetchPlayer($steamid);
     $postret['char_name'] = $char_name;
@@ -330,7 +337,7 @@ function CreateQuestionElement($id, $question, $score)
                             $score = $rvals['Answers'][$key];
                             echo "<tr>";
                             echo "<td class='font-weight-bold'>" . ($key + 1) . "</td>";
-                            echo "<td class='" . pickTWeight($score) . "'>" . $q->question . "</td>";
+                            echo "<td class='" . pickTWeight($score) . "'>" . $q[0] . "</td>";
                             echo "<td class='" . pickBGCol($score) . "'>" . $score . "</td>";
                             echo "</tr>";
                         }
