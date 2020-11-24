@@ -3,7 +3,9 @@
 ?>
 <div class="container border">
     <h6>Senior Supervisor Commands:</h6>
-    <button class="btn bg-danger text-light" data-toggle="modal" data-target="#ResetCodeModal">Password Reset</button>
+
+    <button class="btn bg-danger text-light" data-toggle="modal" data-target="#ResetCodeModal" <?php if ($rank < 2) echo "disabled" ?>>Password Reset</button>
+
 </div>
 <div class="modal fade" id="ResetCodeModal" tabindex="-1" role="dialog" aria-hidden="true">
     <form action="admin/create_temp_code.php" method="post">
