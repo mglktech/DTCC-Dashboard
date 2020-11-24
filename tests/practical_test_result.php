@@ -82,8 +82,8 @@ if (isset($_POST['steamid'])) {
 
         //echo "congrats, you passed!";
         $sql = "UPDATE `players`
-         SET `status`='Active'
-         WHERE `steam_id`='$steamid'";
+        SET `status`='Active'
+        WHERE `steam_id`='$steamid'";
         $response = SqlRun($sql);
         //echo "Player Database Response: " . $response;
     }
@@ -142,6 +142,7 @@ if (isset($_POST['steamid'])) {
                 </tbody>
             </table>
         </div>
+
 
     </div>
     <a class="btn btn-secondary" href="table_tests.php">Done</a>
