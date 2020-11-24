@@ -97,6 +97,7 @@ function q_fetchPlayer($steam_id)
     players.rank AS rank,
     players.steam_id AS steam_id,
     players.steam_name AS steam_name,
+    players.phone_number AS phone_number,
     players.discord_name AS discord_name,
     players.av_icon AS av_icon
 FROM
