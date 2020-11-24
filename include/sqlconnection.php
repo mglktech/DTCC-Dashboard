@@ -1,5 +1,49 @@
 <?php include "db_connection.php";
 
+function set_temp_code($steam_name, $code)
+{
+    //Users are given a Temporary code to log in on forgot password/first use
+    // checks against "code" column of players table
+    //$hash = pass_hash();
+    $code_hash = password_hash($code, PASSWORD_BCRYPT);
+    $sql = "UPDATE players 
+    SET code='$code_hash'
+    WHERE steam_name = '$steam_name'";
+    Query($sql);
+}
+function check_temp_code($steam_name, $code)
+{
+    $sql = "SELECT code FROM players WHERE steam_name='$steam_name'";
+    $response = Query($sql);
+    if ($response) {
+        return password_verify($code, $response[0]->code);
+    } else {
+        return false;
+    }
+}
+
+function set_password($steam_name, $code)
+{
+    //$hash = pass_hash();
+    $code_hash = password_hash($code, PASSWORD_BCRYPT);
+    $sql = "UPDATE players 
+    SET code=NULL,
+    pw_hash='$code_hash'
+    WHERE steam_name = '$steam_name'";
+    Query($sql);
+    return $sql;
+}
+
+function check_password($steam_name, $code)
+{
+    $sql = "SELECT pw_hash FROM players WHERE steam_name='$steam_name'";
+    $response = Query($sql);
+    if ($response) {
+        return password_verify($code, $response[0]->pw_hash);
+    } else {
+        return false;
+    }
+}
 
 function Query($sql)
 {
@@ -53,7 +97,8 @@ function q_fetchPlayer($steam_id)
     players.rank AS rank,
     players.steam_id AS steam_id,
     players.steam_name AS steam_name,
-    players.discord_name AS discord_name
+    players.discord_name AS discord_name,
+    players.av_icon AS av_icon
 FROM
     players
 LEFT JOIN callsigns ON players.steam_id = callsigns.assigned_steam_id
