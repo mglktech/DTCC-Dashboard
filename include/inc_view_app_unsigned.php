@@ -60,7 +60,7 @@ $banned_status = prepBanned($isBanned);
 ?>
 
 <div class="row mt-3">
-    <div class="col border rounded pb-3">
+    <div class="col rounded pb-3">
         <h3 class="mt-1">Additional Data</h3>
         <h6><?php echo $SteamWebAPIResponse; ?></h6>
         <h5 class="mb-3">

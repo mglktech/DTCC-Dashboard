@@ -19,7 +19,7 @@ function CreateQuestionnaireElement($id, $data)
     echo "<div class='col'>";
     echo "<h5 class='mt-3'>" . $vis_id . ". " . $data[$id][1] . "</h5>";
     echo "<i>Expected Answer:</i> <h6>" . $data[$id][2] . "</h6><br>";
-    echo "<div class='input-group mb-3'>
+    echo "<div class='test-question input-group mb-3' >
   <input type='range' min='0' max='5' value='0' step='1' name='A[]' oninput='UpdateElem(this)' class='slider w-25' id='RangeSlider'>
   <div class='input-group-append'>
     <input class='ml-2 output w-25' type='text' value='0' disabled>
@@ -56,8 +56,8 @@ function CreateQuestionnaireElement($id, $data)
                 </div>
                 <textarea name="comments" rows="5" class="form-control" aria-label="With textarea"></textarea>
             </div>
-            <button class="btn btn-success ml-3 mb-5" type="submit">Submit</button>
-            <a class="btn btn-secondary mb-5" href="table_tests.php">Go Back</a>
+            <button class="btn btn-success mb-5 mr-2 mt-3" type="submit">Submit</button>
+            <a class="btn btn-secondary mb-5 mr-2 mt-3" href="table_tests.php">Go Back</a>
         </form>
     </div>
 </div>

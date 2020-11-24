@@ -187,7 +187,7 @@ function CreateNotesTable($appid)
 
         foreach ($data as $row) {
             $str_stack = array();
-            $str = $row->char_name . ": " . $row->message . " -" . ToDateS($row->timestamp);
+            $str = $row->char_name . ": " . $row->message . " - " . ToDateS($row->timestamp);
             $str_stack[] = $str;
             $str_heap[] = $str_stack; // one dimensional array...
         }
@@ -215,39 +215,47 @@ include "include/elements.php";
 <div class="container-fluid">
     <!-- APPLICATION FORM -->
     <div class="row">
-        <div class="col p-0 pb-3 mb-3 rounded">
+        <div class="col p-0 pb-0 mb-0 rounded">
             <h1>Downtown Cab Co. Application</h1>
-            <h5>Version 0</h5>
+            <h5 class="font-italic mb-0 font-weight-normal"><strong>Issued on:</strong> <?php echo $timestamp; ?> - Version: 0.1.0</h5>
             <br>
             <div class="container-fluid p-0">
                 <div class="row">
                     <div class="col-md-6">
                         <?php
-                        CreateInputElemFull(SpanPrepend("Name: "), SpanMiddleDefault($char_name), SpanIsAlive($alive));
-                        CreateInputElem("Date:", $timestamp, "");
-                        CreateInputElem("Steam Name:", $steam_name, "");
-                        CreateInputElem("Phone:", $phone_number, "");
+                        CreateInputElemFull(SpanPrepend("Employee Name: "), SpanMiddleDefault($char_name), SpanIsAlive($alive));
+                        CreateInputElem("Phone Number:", $phone_number, "");
                         CreateInputElem("Discord:", $discord_name, "");
-                        CreateInputElem("Timezone:", $zone, "");
-                        CreateInputElemFull(SpanPrepend("Steam Link: "), SpanMiddleDefault($steam_link), SpanBtnLink("Go", $steam_link)); ?>
+                        ?>
                     </div>
+
                     <div class="col-md-6">
-                        <h5 class="mb-1">Backstory:</h5>
-                        <div class="border p-4">
+                        <?php
+                        CreateInputElem("Steam Name:", $steam_name, "");
+                        CreateInputElem("Timezone:", $zone, "");
+                        CreateInputElemFull(SpanPrepend("Steam Link: "), SpanMiddleDefault($steam_link), SpanBtnLink("Go", $steam_link));
+                        ?>
+                    </div>
+
+                    <div class="col-md-6">
+                        <h5 class="h5-header-label mb-0 w-100 text-center">Character Backstory</h5>
+                        <div class="border p-4 text-background-grey architects-font">
                             <span class="font-weight-normal"><?php echo $backstory; ?></span>
                         </div>
+                    </div>
+
+                    <div class="col-md-6">
                         </h5>
-                        <h5 class="mt-3 mb-1">Why do you want to join Downtown Cab Co?</h5>
-                        <div class="border p-4">
+                        <h5 class="h5-header-label mb-0 w-100 text-center">Reason for Applying</h5>
+                        <div class="border p-4 text-background-grey architects-font">
                             <span class="font-weight-normal"><?php echo $reason; ?></span>
                         </div>
-
-                        <div class="">
-
-                            <span class="font-weight-normal"><?php CreateNotesTable($appid); ?></span>
-                            <button class="btn bg-secondary text-light" data-toggle="modal" data-target="#NoteModal">Add Note</button>
                         </div>
+                    </div>
 
+                    <div class="col-md-12 px-0 pt-3 pb-3">
+                        <span class="font-weight-normal"><?php CreateNotesTable($appid); ?></span>
+                        <button class="btn btn-secondary" data-toggle="modal" data-target="#NoteModal">Add Note</button>
                     </div>
                 </div>
             </div>
@@ -255,14 +263,14 @@ include "include/elements.php";
     </div>
     <!-- END OF APPLICATION -->
 
-    <?php if (!$signed_by) {
+    <?php
+    if (!$signed_by) {
         include("include/inc_view_app_unsigned.php");
     }
     if ($signed_by) {
         include("include/inc_view_app_signed.php");
     }
     ?>
-
 </div>
 <div class="modal fade" id="NoteModal" tabindex="-1" role="dialog" aria-hidden="true">
     <form action="" method="post">
@@ -275,28 +283,16 @@ include "include/elements.php";
                     </button>
                 </div>
                 <div class="modal-body">
-                    <h6>
-                        Leave a Note for other supervisors to see!
-                    </h6>
-                    <h6 class="">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="input-group">
-                                    <textarea name="message" class="form-control" aria-label="With textarea"></textarea>
-                                </div>
+                    <h6>Leave a Note for other supervisors to see!</h6>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="input-group">
+                                <textarea name="message" class="form-control" aria-label="With textarea"></textarea>
                             </div>
-
-
                         </div>
-
-
-                    </h6>
-                    <h6 class="mb-3">
-
-                    </h6>
+                    </div>
                 </div>
                 <div class="modal-footer">
-
                     <input name="leaveNote" value="1" hidden></input>
                     <input name="signed_by" value="<?php echo $_SESSION["steam_id"]; ?>" hidden></input>
                     <input name="app_id" value="<?php echo $appid; ?>" hidden></input>
