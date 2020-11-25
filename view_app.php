@@ -9,7 +9,7 @@ if (isset($_POST['leaveNote'])) {
     $doc_id = $_POST['app_id'];
     $steam_id = $_POST['signed_by'];
     $message = quotefix($_POST['message']);
-    $sql = "INSERT INTO `private_notes`(`doc_id`, `doc_type`, `steam_id`, `timestamp`, `message`) VALUES ('$doc_id','$doc_type','$steam_id','$time','$message')";
+    $sql = "INSERT INTO private_notes (`doc_id`, `doc_type`, `steam_id`, `timestamp`, `message`) VALUES ('$doc_id','$doc_type','$steam_id','$time','$message')";
     Query($sql);
 }
 
@@ -85,7 +85,7 @@ if (isset($_POST["SubmitApp"])) {
     $signed_by = $_SESSION["steam_id"];
     if ($_POST["SubmitApp"] == "approve") {
         $status = "accept";
-        $sql = "UPDATE `applications_v0`
+        $sql = "UPDATE applications_v0
          SET `steam_id`='$detected_steam_id',
          `detected_steam_name`='$detected_steam_name',
          `signed_by`='$signed_by',
@@ -112,7 +112,7 @@ if (isset($_POST["SubmitApp"])) {
         $status_desc =  $isBanned . "/" . $badCharName . "/" . $badPNum . "/" . $badDiscord . "/" . $badLink . "/" . $badBackstory . "/" . $badReason . "/" . $reapplySwitch . "/" . $reapplyDays;
         $additionalInfo = quotefix(chkPost("additionalInformation"));
         $status = "deny";
-        $sql = "UPDATE `applications_v0`
+        $sql = "UPDATE applications_v0
          SET `steam_id`='$detected_steam_id',
          `detected_steam_name`='$detected_steam_name',
          `signed_by`='$signed_by',
@@ -126,12 +126,12 @@ if (isset($_POST["SubmitApp"])) {
     }
     if ($detected_steam_id) {
         if ($isBanned) {
-            $sql = "REPLACE INTO `players`(`steam_id`,`phone_number`,`steam_name`,`discord_name`,`char_name`,`status`,`last_seen`) VALUES('$detected_steam_id','$phone_number','$detected_steam_name','$discord_name','$char_name','BANNED','$date')";
+            $sql = "REPLACE INTO players (`steam_id`,`phone_number`,`steam_name`,`discord_name`,`char_name`,`status`,`last_seen`) VALUES('$detected_steam_id','$phone_number','$detected_steam_name','$discord_name','$char_name','BANNED','$date')";
         } else {
             if ($status == "accept") {
-                $sql = "REPLACE INTO `players`(`steam_id`,`phone_number`,`steam_name`,`discord_name`,`char_name`,`status`,`last_seen`,`timezone`) VALUES('$detected_steam_id','$phone_number','$detected_steam_name','$discord_name','$char_name','Needs Theory','$date','$timezone')";
+                $sql = "REPLACE INTO  players (`steam_id`,`phone_number`,`steam_name`,`discord_name`,`char_name`,`status`,`last_seen`,`timezone`) VALUES('$detected_steam_id','$phone_number','$detected_steam_name','$discord_name','$char_name','Needs Theory','$date','$timezone')";
             } else {
-                $sql = "REPLACE INTO `players`(`steam_id`,`phone_number`,`steam_name`,`discord_name`,`char_name`,`last_seen`) VALUES('$detected_steam_id','$phone_number','$detected_steam_name','$discord_name','$char_name',$date)";
+                $sql = "REPLACE INTO  players (`steam_id`,`phone_number`,`steam_name`,`discord_name`,`char_name`,`last_seen`) VALUES('$detected_steam_id','$phone_number','$detected_steam_name','$discord_name','$char_name',$date)";
             }
         }
         $response = UpdateDB($sql);
@@ -250,27 +250,27 @@ include "include/elements.php";
                         <div class="border p-4 text-background-grey architects-font">
                             <span class="font-weight-normal"><?php echo $reason; ?></span>
                         </div>
-                        </div>
                     </div>
+                </div>
 
-                    <div class="col-md-12 px-0 pt-3 pb-3">
-                        <span class="font-weight-normal"><?php CreateNotesTable($appid); ?></span>
-                        <button class="btn btn-secondary" data-toggle="modal" data-target="#NoteModal">Add Note</button>
-                    </div>
+                <div class="col-md-12 px-0 pt-3 pb-3">
+                    <span class="font-weight-normal"><?php CreateNotesTable($appid); ?></span>
+                    <button class="btn btn-secondary" data-toggle="modal" data-target="#NoteModal">Add Note</button>
                 </div>
             </div>
         </div>
     </div>
-    <!-- END OF APPLICATION -->
+</div>
+<!-- END OF APPLICATION -->
 
-    <?php
-    if (!$signed_by) {
-        include("include/inc_view_app_unsigned.php");
-    }
-    if ($signed_by) {
-        include("include/inc_view_app_signed.php");
-    }
-    ?>
+<?php
+if (!$signed_by) {
+    include("include/inc_view_app_unsigned.php");
+}
+if ($signed_by) {
+    include("include/inc_view_app_signed.php");
+}
+?>
 </div>
 <div class="modal fade" id="NoteModal" tabindex="-1" role="dialog" aria-hidden="true">
     <form action="" method="post">

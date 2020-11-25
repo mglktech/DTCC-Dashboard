@@ -45,6 +45,29 @@ function check_password($steam_name, $code)
     }
 }
 
+function QueryTrigger($sql)
+{
+    $audit_type = explode(" ", $sql)[0];
+    $author = "PROGRAM";
+    if (isset($_SESSION["steam_id"])) {
+        $author = $_SESSION["steam_id"];
+    }
+
+    if ($audit_type == "INSERT" || $audit_type == "DELETE" || $audit_type == "REPLACE") {
+        $target_table = explode(" ", $sql)[2];
+    }
+    if ($audit_type == "UPDATE") {
+        $target_table = explode(" ", $sql)[1];
+    }
+    if (isset($target_table)) {
+        $fixed_sql = quotefix($sql);
+        $audit_sql = "INSERT INTO audit_logs (audit_type,target_table,author,sql_code) VALUES('$audit_type','$target_table','$author','$fixed_sql')";
+        $conn = OpenCon();
+        $conn->query($audit_sql);
+        $conn->close();
+    }
+}
+
 function Query($sql)
 {
     $response = array();
@@ -69,6 +92,7 @@ function Query($sql)
         return $response;
     }
     $conn->close();
+    QueryTrigger($sql);
 }
 function quotefix($str)
 {
@@ -82,9 +106,9 @@ function LogError($statement, $error)
     $client = $_SESSION['steam_id'];
     $statement = quotefix($statement);
     $error = quotefix($error);
-    $sql = "INSERT INTO `sql_errors` (`timestamp`,`client`,`sqlcode`,`errormsg`)VALUES('$time','$client','$statement','$error')";
+    $sql = "INSERT INTO sql_errors (`timestamp`,`client`,`sqlcode`,`errormsg`)VALUES('$time','$client','$statement','$error')";
     $conn->query($sql);
-    $sql = "SELECT `id` FROM `sql_errors` where `timestamp` = '$time' ORDER BY `id`";
+    $sql = "SELECT id FROM `sql_errors` where `timestamp` = '$time' ORDER BY `id`";
     $resp = Query($sql);
     printf("SQL Error detected. Error ID: %s\n", $resp[0]->id);
 }

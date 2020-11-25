@@ -81,7 +81,7 @@ if (isset($_POST['steamid'])) {
     if ($total_score >= $pass_mark) {
 
         //echo "congrats, you passed!";
-        $sql = "UPDATE `players`
+        $sql = "UPDATE players
         SET `status`='Active'
         WHERE `steam_id`='$steamid'";
         $response = SqlRun($sql);
@@ -91,7 +91,7 @@ if (isset($_POST['steamid'])) {
     if ($total_score < $pass_mark) {
         //echo "You Failed.";
     }
-    $sql = "INSERT INTO `tests`(`steam_id`, `type`, `version`, `score_total`, `score_percent`, `signed_by`) VALUES ('$steamid','practical','0','$total_score','$percentage','$signed_by')";
+    $sql = "INSERT INTO tests (`steam_id`, `type`, `version`, `score_total`, `score_percent`, `signed_by`) VALUES ('$steamid','practical','0','$total_score','$percentage','$signed_by')";
     $response = SqlRun($sql);
     //echo "Tests Database Response: " . $response;
 }

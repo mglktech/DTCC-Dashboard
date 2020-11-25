@@ -9,7 +9,7 @@ function POST_shiftdata($data)
     foreach ($data as $row) {
         if ($row->outcome == "Accept") {
 
-            $sql = "INSERT INTO `verified_shifts` (`server`,`steam_id`,`inRow`,`outRow`,`duration`,`signed_by`,`timestamp`) VALUES ('$row->server','$row->steam_id','$row->inRow','$row->outRow','$row->duration','$row->signed_by','$timestamp')";
+            $sql = "INSERT INTO verified_shifts (`server`,`steam_id`,`inRow`,`outRow`,`duration`,`signed_by`,`timestamp`) VALUES ('$row->server','$row->steam_id','$row->inRow','$row->outRow','$row->duration','$row->signed_by','$timestamp')";
             echo "<br>" . $sql;
             sqlRun($sql);
         }
@@ -24,7 +24,7 @@ function POST_shiftdata($data)
 
 function sign_record($id, $sig, $outcome, $reason = NULL)
 {
-    $sql = "UPDATE `shift_records` SET `signed_by`='$sig',`outcome`='$outcome', `reason`='$reason' WHERE `id` = '$id'";
+    $sql = "UPDATE shift_records SET `signed_by`='$sig',`outcome`='$outcome', `reason`='$reason' WHERE `id` = '$id'";
     echo "<br>" . $sql;
     sqlRun($sql);
 }

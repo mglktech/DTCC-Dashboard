@@ -53,7 +53,7 @@ function FetchSteamIDs()
 
 function Update($steamlink, $steamid)
 {
-    $sql = "UPDATE `old_applicants` SET `steam_id`='$steamid' WHERE `steam_link` = '$steamlink'";
+    $sql = "UPDATE old_applicants SET `steam_id`='$steamid' WHERE `steam_link` = '$steamlink'";
     echo "<br>" . $sql;
     Query($sql);
 }

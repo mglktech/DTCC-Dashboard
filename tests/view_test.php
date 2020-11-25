@@ -102,7 +102,7 @@ function POST_Theory()
     if ($total_score >= $pass_mark) {
 
         //echo "congrats, you passed!";
-        $sql = "UPDATE `players`
+        $sql = "UPDATE players
         SET `status`='Needs Practical', `last_seen`='$date'
         WHERE `steam_id`='$steamid'";
         $response = Query($sql);
@@ -110,12 +110,12 @@ function POST_Theory()
     }
     if ($total_score < $pass_mark) {
         //echo "You Failed.";
-        $sql = "UPDATE `players`
+        $sql = "UPDATE players
         SET `last_seen`='$date'
         WHERE `steam_id`='$steamid'";
     }
 
-    $sql = "INSERT INTO `tests`(`steam_id`, `type`, `version`, `score_total`, `score_percent`, `signed_by`,`scores`,`submit_date`,`comments`) VALUES ('$steamid','theory','0','$total_score','$percentage','$signed_by','$score_string','$date','$comments')";
+    $sql = "INSERT INTO tests (`steam_id`, `type`, `version`, `score_total`, `score_percent`, `signed_by`,`scores`,`submit_date`,`comments`) VALUES ('$steamid','theory','0','$total_score','$percentage','$signed_by','$score_string','$date','$comments')";
     $response = Query($sql);
     //echo $response . " SQL: " . $sql;
     $postret['char_name'] = $char_name;
@@ -162,29 +162,29 @@ function POST_Practical()
     if ($total_score >= $pass_mark) {
 
         //echo "congrats, you passed!";
-        $sql = "UPDATE `players`
+        $sql = "UPDATE players
          SET `status`='Active', `last_seen`='$date' , `rank`='0'
          WHERE `steam_id`='$steamid'";
         $response = Query($sql);
         //echo "Player Database Response: " . $response;
-        $sql = "UPDATE `callsigns`
+        $sql = "UPDATE callsigns
         SET `assigned_steam_id` = '$steamid'
         WHERE `label` = '$callsign'";
         $response = Query($sql);
         if ($response = 'failure') {
-            $sql = "SELECT `label` FROM `callsigns` WHERE `assigned_steam_id` = '$steamid'";
+            $sql = "SELECT label FROM `callsigns` WHERE `assigned_steam_id` = '$steamid'";
             $response = Query($sql)[0];
             $callsign = $response->label;
         }
     }
 
     if ($total_score < $pass_mark) {
-        $sql = "UPDATE `players`
+        $sql = "UPDATE players
         SET `last_seen`='$date'
         WHERE `steam_id`='$steamid'";
         //echo "You Failed.";
     }
-    $sql = "INSERT INTO `tests`(`steam_id`, `type`, `version`, `score_total`, `score_percent`, `signed_by`,`scores`,`submit_date`,`comments`) VALUES ('$steamid','practical','0','$total_score','$percentage','$signed_by','$score_string','$date','$comments')";
+    $sql = "INSERT INTO tests (`steam_id`, `type`, `version`, `score_total`, `score_percent`, `signed_by`,`scores`,`submit_date`,`comments`) VALUES ('$steamid','practical','0','$total_score','$percentage','$signed_by','$score_string','$date','$comments')";
     $response = Query($sql);
     //echo "Tests Database Response: " . $response;
     $char = fetchPlayer($steamid);
@@ -269,76 +269,76 @@ function CreateQuestionElement($id, $question, $score)
         <h1>Test Results</h1>
         <h5 class="w-100 font-italic mb-3 font-weight-normal">did this butthole pass?</h5>
 
-            <div class="col-md-12 px-0">
-                <?php
-                if (isset($rvals['hex']) && passed($rvals['total_score'], $rvals['pass_mark'])) { ?>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <?php CreateInputElem("Callsign", $rvals["callsign"], ""); ?>
-                        </div>
-                        <div class="col-md-6">
-                            <?php
-                            $link = new stdClass();
-                            $link->label = "Whitelist";
-                            $link->href = "https://highliferoleplay.net/whitelisting/index.php";
-                            CreateInputBtnElem("Steam Hex:", $rvals['hex'], $link);
-                            ?>
-
-                        </div>
-                    </div>
-                <?php } ?>
+        <div class="col-md-12 px-0">
+            <?php
+            if (isset($rvals['hex']) && passed($rvals['total_score'], $rvals['pass_mark'])) { ?>
                 <div class="row">
                     <div class="col-md-6">
-                        <?php CreateInputElem("Student Name:", $rvals['char_name'], ""); ?>
+                        <?php CreateInputElem("Callsign", $rvals["callsign"], ""); ?>
                     </div>
                     <div class="col-md-6">
-                        <?php CreateInputElem("Signed By: ", $rvals["signed_by"], ""); ?>
-
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <?php CreateInputElem("Test Type", $rvals["test_type"], "v0"); ?>
-                    </div>
-                    <div class="col-md-6">
-                        <?php CreateRichInputElem("Test Result:", CreatePassFail($rvals['total_score'], $rvals['pass_mark']), ($rvals['percentage'] * 100) .  "%"); ?>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <?php CreateInputElem("Total Score:", $rvals['total_score'], "/ " . $rvals['max_score']); ?>
-                    </div>
-                    <div class="col-md-6">
-                        <?php CreateInputElem("Pass Mark:", $rvals['pass_mark'] . "/ " . $rvals['max_score'], (round($rvals['pass_mark'] / $rvals['max_score'], 2) * 100) . "%"); ?>
-                    </div>
-                </div>
-                <table class="table table-striped text-center">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>No.</th>
-                            <th>Questions</th>
-                            <th>Score</th>
-                        </tr>
-                    </thead>
-                    <tbody>
                         <?php
-                        $questions = getQuestions($rvals['test_type']);
-                        foreach ($questions as $key => $q) {
-                            $score = $rvals['Answers'][$key];
-                            echo "<tr>";
-                            echo "<td class='font-weight-bold'>" . ($key + 1) . "</td>";
-                            echo "<td class='" . pickTWeight($score) . "'>" . $q->question . "</td>";
-                            echo "<td class='" . pickBGCol($score) . "'>" . $score . "</td>";
-                            echo "</tr>";
-                        }
+                        $link = new stdClass();
+                        $link->label = "Whitelist";
+                        $link->href = "https://highliferoleplay.net/whitelisting/index.php";
+                        CreateInputBtnElem("Steam Hex:", $rvals['hex'], $link);
                         ?>
-                    </tbody>
-                </table>
+
+                    </div>
+                </div>
+            <?php } ?>
+            <div class="row">
+                <div class="col-md-6">
+                    <?php CreateInputElem("Student Name:", $rvals['char_name'], ""); ?>
+                </div>
+                <div class="col-md-6">
+                    <?php CreateInputElem("Signed By: ", $rvals["signed_by"], ""); ?>
+
+                </div>
             </div>
-            <?php if (isset($rvals['hex']) && passed($rvals['total_score'], $rvals['pass_mark'])) {
-                include "../include/inc_view_test_fullpass.php";
-            } ?>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <?php CreateInputElem("Test Type", $rvals["test_type"], "v0"); ?>
+                </div>
+                <div class="col-md-6">
+                    <?php CreateRichInputElem("Test Result:", CreatePassFail($rvals['total_score'], $rvals['pass_mark']), ($rvals['percentage'] * 100) .  "%"); ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <?php CreateInputElem("Total Score:", $rvals['total_score'], "/ " . $rvals['max_score']); ?>
+                </div>
+                <div class="col-md-6">
+                    <?php CreateInputElem("Pass Mark:", $rvals['pass_mark'] . "/ " . $rvals['max_score'], (round($rvals['pass_mark'] / $rvals['max_score'], 2) * 100) . "%"); ?>
+                </div>
+            </div>
+            <table class="table table-striped text-center">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>No.</th>
+                        <th>Questions</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $questions = getQuestions($rvals['test_type']);
+                    foreach ($questions as $key => $q) {
+                        $score = $rvals['Answers'][$key];
+                        echo "<tr>";
+                        echo "<td class='font-weight-bold'>" . ($key + 1) . "</td>";
+                        echo "<td class='" . pickTWeight($score) . "'>" . $q->question . "</td>";
+                        echo "<td class='" . pickBGCol($score) . "'>" . $score . "</td>";
+                        echo "</tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+        <?php if (isset($rvals['hex']) && passed($rvals['total_score'], $rvals['pass_mark'])) {
+            include "../include/inc_view_test_fullpass.php";
+        } ?>
 
         <div class="container-fluid px-0">
             <h5 class="h5-header-label mb-0 w-100 text-center">Comments</h5>

@@ -23,7 +23,7 @@ if (isset($_POST['steam_url'])) {
     // echo $phone_number;
     // echo $backstory;
     // echo $reason;
-    $sql = "INSERT INTO `applications_v0`(
+    $sql = "INSERT INTO applications_v0 (
         `char_name`, 
     `phone_number`, 
     `discord_name`, 

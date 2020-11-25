@@ -60,7 +60,7 @@ function DumpRawShiftDataToDB($records)
         //echo "<br>" . $sql . "<br>";
         if (count($r) == 0) {
             echo "<br>Adding new shift data for: " . $sn . "...";
-            $sql = "INSERT IGNORE INTO `shift_records` (`timestamp`,`server`,`steam_name`,`io`) VALUES('$ts','$sv','$sn','$io')";
+            $sql = "INSERT IGNORE INTO shift_records (`timestamp`,`server`,`steam_name`,`io`) VALUES('$ts','$sv','$sn','$io')";
             $responses[] = sqlRun($sql);
         }
     }
@@ -159,19 +159,19 @@ function PruneShift($shift)
             }
         }
         if (count($shift->InTimes) == 0) { // if OutRow found with no InRows
-            $sql = "UPDATE `shift_records` SET `signed_by`='Automatic',`outcome`='Reject',`reason`='Highlife_Server_Error' WHERE `id` = '$shift->OutRow'";
+            $sql = "UPDATE shift_records SET `signed_by`='Automatic',`outcome`='Reject',`reason`='Highlife_Server_Error' WHERE `id` = '$shift->OutRow'";
             $res = sqlRun($sql);
             echo "<br> THROWING SHIFT #" . $shift->OutRow;
         }
     }
     if (!isset($shift->InTimes)) {
-        $sql = "UPDATE `shift_records` SET `signed_by`='Automatic',`outcome`='Reject',`reason`='Highlife_Server_Error' WHERE `id` = '$shift->OutRow'";
+        $sql = "UPDATE shift_records SET `signed_by`='Automatic',`outcome`='Reject',`reason`='Highlife_Server_Error' WHERE `id` = '$shift->OutRow'";
         sqlRun($sql);
         echo "<br> THROWING SHIFT #" . $shift->OutRow;
     }
     // now deal with rejected rows
     foreach ($RejectRows as $r) {
-        $sql = "UPDATE `shift_records` SET `signed_by`='Automatic',`outcome`='Reject',`reason`='>12hrsFromOut' WHERE `id` = '$r'";
+        $sql = "UPDATE shift_records SET `signed_by`='Automatic',`outcome`='Reject',`reason`='>12hrsFromOut' WHERE `id` = '$r'";
         sqlRun($sql);
         echo "<br> THROWING SHIFT #" . $shift->OutRow;
         //echo $sql . "<br>";

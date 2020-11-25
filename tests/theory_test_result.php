@@ -1,5 +1,3 @@
-
-
 <?php include '../include/header.php';
 /*
 would be better to concat both results page into one file, declaring test type in top.
@@ -44,7 +42,7 @@ function POST_Theory()
     if ($total_score >= $pass_mark) {
 
         //echo "congrats, you passed!";
-        $sql = "UPDATE `players`
+        $sql = "UPDATE players
          SET `status`='Needs Practical'
          WHERE `steam_id`='$steamid'";
         $response = SqlRun($sql);
@@ -54,7 +52,7 @@ function POST_Theory()
         //echo "You Failed.";
     }
 
-    $sql = "INSERT INTO `tests`(`steam_id`, `type`, `version`, `score_total`, `score_percent`, `signed_by`,`scores`) VALUES ('$steamid','theory','0','$total_score','$percentage','$signed_by','$score_string')";
+    $sql = "INSERT INTO tests (`steam_id`, `type`, `version`, `score_total`, `score_percent`, `signed_by`,`scores`) VALUES ('$steamid','theory','0','$total_score','$percentage','$signed_by','$score_string')";
     $response = SqlRun($sql);
 
     $postret['char_name'] = $char_name;
