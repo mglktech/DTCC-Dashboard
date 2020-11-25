@@ -49,6 +49,7 @@ function QueryTrigger($sql)
 {
     $audit_type = explode(" ", $sql)[0];
     $author = "PROGRAM";
+    $time = time();
     if (isset($_SESSION["steam_id"])) {
         $author = $_SESSION["steam_id"];
     }
@@ -61,7 +62,7 @@ function QueryTrigger($sql)
     }
     if (isset($target_table)) {
         $fixed_sql = quotefix($sql);
-        $audit_sql = "INSERT INTO audit_logs (audit_type,target_table,author,sql_code) VALUES('$audit_type','$target_table','$author','$fixed_sql')";
+        $audit_sql = "INSERT INTO audit_logs (audit_type,target_table,author,sql_code,timestamp) VALUES('$audit_type','$target_table','$author','$fixed_sql','$time')";
         $conn = OpenCon();
         $conn->query($audit_sql);
         $conn->close();
