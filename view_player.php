@@ -11,7 +11,9 @@ if (isset($_GET['steamid'])) {
     $player = Query($sql)[0];
     $char_name = $player->char_name;
     if ($player->callsign != null) {
-        $char_name = $player->callsign . " | " . $player->char_name;
+        $call_char_name = $player->callsign . " | " . $player->char_name;
+    } else {
+        $call_char_name = $player->char_name;
     }
 
     //$steamid = $_GET['steamid'] or $player[2];
@@ -90,7 +92,7 @@ function PassFail($ret, $score_percent)
                 <div class="row">
                     <div class="col-md-6">
                         <?php
-                        CreateInputElemFull(SpanPrepend("Name: "), SpanMiddleDefault($char_name), SpanIsAlive($alive));
+                        CreateInputElemFull(SpanPrepend("Name: "), SpanMiddleDefault($call_char_name), SpanIsAlive($alive));
                         CreateInputElem("Rank:", $rank_label, "");
                         CreateInputElem("Status:", $status, "");
                         CreateInputElem("Steam Name:", $steam_name, "");
@@ -100,10 +102,10 @@ function PassFail($ret, $score_percent)
                         CreateInputElem("Discord:", $discord_name, "");
                         CreateInputElem("Timezone:", $zone, "");
                         ?>
-                        <?php if ($_SESSION['rank'] > $rank) {
+                        <?php if ($_SESSION['rank'] >= 2 && $_SESSION['rank'] > $rank) {
                             include "include/inc_super.php";
                         }
-                        if ($_SESSION['rank'] > 2) {
+                        if ($_SESSION['rank'] >= 3 && $_SESSION['rank'] > $rank) {
                             include "include/inc_sen_super.php";
                         } ?>
                     </div>

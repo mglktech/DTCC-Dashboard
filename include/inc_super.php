@@ -28,7 +28,7 @@ function ApplyStrike($reason, $severity)
 ?>
 <div class="container border">
     <h6>Supervisor Commands:</h6>
-    <button class="btn btn-lg bg-danger text-light mb-3" data-toggle="modal" data-target="#StrikeModal"><i class="fas fa-times"></i> Strike</button>
+    <button class="btn bg-danger text-light mb-3" data-toggle="modal" data-target="#StrikeModal" <?php if ($rank < 0) echo "disabled" ?>><i class="fas fa-times"></i> Strike Employee</button>
 </div>
 <div class="modal fade" id="StrikeModal" tabindex="-1" role="dialog" aria-hidden="true">
     <form action="" method="post">
