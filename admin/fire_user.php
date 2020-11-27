@@ -36,13 +36,13 @@ if (isset($_POST["FireMe"])) {
         $BanFire = "Banned";
         $banned = 1;
     }
-    $sql = "INSERT INTO fired (timestamp,steam_id,reason,signed_by,add_info) VALUES('$timestamp','$steam_id','$reason','$signed_by','$add_info')";
+    $sql = "INSERT INTO fired (timestamp,steam_id,reason,signed_by,add_info,banned) VALUES('$timestamp','$steam_id','$reason','$signed_by','$add_info','$banned')";
     Query($sql);
     $sql = "UPDATE players 
     SET `status`='$BanFire',
     `code` = null,
     `pw_hash` = null,
-    `rank` = '-1'
+    `rank` = '-2'
     WHERE `steam_id` = '$steam_id'";
     Query($sql);
     $sql = "UPDATE callsigns 
@@ -61,6 +61,7 @@ if (isset($_POST["FireMe"])) {
 <div class="container">
     <div class="row">
         <h4><?php echo $_POST["char_name"] ?> has been <?php echo $BanFire ?> from Downtown Cab Co.</h4>
+
     </div>
     <div class="row">
         <div class="col border">

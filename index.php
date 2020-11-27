@@ -7,7 +7,12 @@ if ($_SESSION['steam_id'] == '76561197995263974' || $_SESSION['steam_id'] == '76
     include "include/inc_index_senior.php";
 }
 
-
+function getLastUpdated()
+{
+    $sql = "SELECT MAX(`timestamp`) AS max FROM `public_verified_shifts`";
+    $result = Query($sql)[0]->max;
+    return date("F j, Y, g:i a", $result);
+}
 
 function sqlCollectTotals()
 {
@@ -33,23 +38,26 @@ function sqlCollectTotals()
 //     return $players;
 // }
 ?>
-<div class="row">
-    <div class="col-6 text-center">
-        <h2>Shifts Leaderboard</h2><br>
-        <?php $tData = sqlCollectTotals();
-        $thead = ["", "Name", "Time Clocked In"];
-        $tbody = array();
-        if ($tData) {
-            foreach ($tData as $index => $row) {
-                $tRow = array();
-                $tRow[] = $index + 1;
-                $tRow[] = $row->callsign . " | " . $row->char_name;
-                $tRow[] = toDurationDays($row->duration);
-                $tbody[] = $tRow;
+<div class="container">
+    <div class="row">
+        <div class="col text-center">
+            <h2>Shifts Leaderboard</h2>
+            <h5>Last Updated: <?php echo getLastUpdated(); ?></h5>
+            <?php $tData = sqlCollectTotals();
+            $thead = ["", "Name", "Time Clocked In"];
+            $tbody = array();
+            if ($tData) {
+                foreach ($tData as $index => $row) {
+                    $tRow = array();
+                    $tRow[] = $index + 1;
+                    $tRow[] = $row->callsign . " | " . $row->char_name;
+                    $tRow[] = toDurationDays($row->duration);
+                    $tbody[] = $tRow;
+                }
             }
-        }
-        Tablefy($thead, $tbody);
-        ?>
+            Tablefy($thead, $tbody);
+            ?>
+        </div>
     </div>
 </div>
 <?php
