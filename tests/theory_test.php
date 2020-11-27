@@ -56,7 +56,7 @@ function CreateQuestionnaireElement($id, $data)
                 </div>
                 <textarea name="comments" rows="5" class="form-control" aria-label="With textarea"></textarea>
             </div>
-            <button class="btn btn-success mb-5 mr-2 mt-3" type="submit">Submit</button>
+            <button class="btn btn-success mb-5 mr-2 mt-3" type="submit" <?php if ($_SESSION["rank"] < 2) echo "disabled" ?>>Submit</button>
             <a class="btn btn-secondary mb-5 mr-2 mt-3" href="table_tests.php">Go Back</a>
         </form>
     </div>

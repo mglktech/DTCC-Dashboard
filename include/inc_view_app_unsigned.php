@@ -1,11 +1,11 @@
 <?php
 function IsBanned($steam_id)
 {
-    include_once "db_connection.php";
+    //include_once "db_connection.php";
     $sql = "SELECT `status` FROM `players` WHERE `steam_id` = '$steam_id'";
-    $status_prepare = fetchRow($sql);
-    if ($status_prepare) {
-        if ($status_prepare[0] == "BANNED") {
+    $status = Query($sql)[0]->status;
+    if (isset($status)) {
+        if ($status == "Banned") {
             return true;
         } else {
             return false;
@@ -138,7 +138,7 @@ $banned_status = prepBanned($isBanned);
                     <input name="char_name" value="<?php echo $char_name; ?>" hidden></input>
                     <input name="discord_name" value="<?php echo $discord_name; ?>" hidden></input>
                     <input name="timezone" value="<?php echo $zone; ?>" hidden></input>
-                    <button type="submit" class="btn btn-success">Approve</button>
+                    <button type="submit" class="btn btn-success" <?php if ($_SESSION["rank"] < 2) echo "disabled" ?>>Approve</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Go Back</button>
                 </form>
 
@@ -236,7 +236,7 @@ $banned_status = prepBanned($isBanned);
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-danger">
+                                <button type="submit" class="btn btn-danger" <?php if ($_SESSION["rank"] < 2) echo "disabled" ?>>
                                     Reject Applicant
                                 </button>
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">

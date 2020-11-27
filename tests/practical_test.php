@@ -75,7 +75,7 @@ function CollectCallsigns($rank, $region)
                 </div>
                 <textarea name="comments" rows="5" class="form-control" aria-label="With textarea"></textarea>
             </div>
-            <button class="btn btn-success ml-3 mt-2 mb-5" type="submit">Submit</button>
+            <button class="btn btn-success ml-3 mt-2 mb-5" type="submit" <?php if ($_SESSION["rank"] < 2) echo "disabled" ?>>Submit</button>
             <a class="btn btn-secondary mt-2 mb-5" href="table_tests.php">Go Back</a>
         </form>
     </div>

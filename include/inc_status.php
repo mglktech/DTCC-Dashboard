@@ -1,5 +1,5 @@
 <?php include "header.php" ?>
-<div class="container border">
+<!-- <div class="container border">
     <h6>Send this message to (discord_name)</h6>
     <p>Hello (char_name) <br>
         We regret to inform you that you have been Removed from Downtown Cab Co.<br>
@@ -16,5 +16,5 @@
         Note Contents)
 
     </p>
-</div>
+</div> -->
 <?php include "footer.php";
