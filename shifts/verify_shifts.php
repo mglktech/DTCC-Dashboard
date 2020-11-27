@@ -1,6 +1,6 @@
 <?php
 include "../include/header.php";
-include "../include/db_connection.php";
+include "../include/sqlconnection.php";
 
 function POST_shiftdata($data)
 {
@@ -11,7 +11,7 @@ function POST_shiftdata($data)
 
             $sql = "INSERT INTO verified_shifts (`server`,`steam_id`,`inRow`,`outRow`,`duration`,`signed_by`,`timestamp`) VALUES ('$row->server','$row->steam_id','$row->inRow','$row->outRow','$row->duration','$row->signed_by','$timestamp')";
             echo "<br>" . $sql;
-            sqlRun($sql);
+            Query($sql);
         }
         sign_record($row->inRow, $row->signed_by, $row->outcome);
         sign_record($row->outRow, $row->signed_by, $row->outcome);
@@ -26,7 +26,7 @@ function sign_record($id, $sig, $outcome, $reason = NULL)
 {
     $sql = "UPDATE shift_records SET `signed_by`='$sig',`outcome`='$outcome', `reason`='$reason' WHERE `id` = '$id'";
     echo "<br>" . $sql;
-    sqlRun($sql);
+    Query($sql);
 }
 
 function create_shifts($sn)
@@ -34,44 +34,46 @@ function create_shifts($sn)
     // acquire SteamID of steam_name
 
     // must be organised by servrer
-    $sql = "SELECT DISTINCT `server` FROM `shift_records` WHERE `steam_name` = '$sn'";
-    $result = fetchAll($sql);
+    $sql = "SELECT DISTINCT `server` AS serv FROM `shift_records` WHERE `steam_name` = '$sn'";
+    $result = Query($sql);
     $sv = array();
     foreach ($result as $s) {
-        $sv[] = $s[0]; // pull result into one dimension
+        $sv[] = $s->serv; // pull result into one dimension
     }
     $shifts = array();
     foreach ($sv as $svNo) {
         $sql = "SELECT * FROM `shift_records` WHERE (`steam_name` = '$sn' AND `server` = '$svNo' AND `signed_by` IS NULL) ORDER BY `timestamp`";
-        $records = fetchAll($sql);
+        $records = Query($sql);
         // echo "<br> SN: " . $sn . " SERVER: " . $svNo . " RECORDS: ";
 
         $shift = new stdClass();
         $shift->InRows = array();
         $shift->InTimes = array();
-        foreach ($records as $r) {
-            $id = $r[0];
-            $timestamp = $r[1];
-            $shift->Server = $r[2];
-            $shift->steam_name = $r[3];
-            $io = $r[4];
-            if ($io == "in") {
-                $shift->InRows[] = $id;
-                $shift->InTimes[] = $timestamp;
-            }
-            if ($io == "out") {
-                $shift->OutTime = $timestamp;
-                $shift->OutRow = $id;
-                // echo "<br>";
-                // print_r($shift);
-                array_push($shifts, create_shift($shift));
-                //$shifts[] = $shift;
-                //unset($shift->InRows);
-                //unset($shift->InTimes);
-                //array_splice($shift->InRows, 0);
-                //array_splice($shift->InTimes, 0);
-                $shift->InRows = array();
-                $shift->InTimes = array();
+        if ($records) {
+            foreach ($records as $r) {
+                $id = $r->id;
+                $timestamp = $r->timestamp;
+                $shift->Server = $r->server;
+                $shift->steam_name = $r->steam_name;
+                $io = $r->io;
+                if ($io == "in") {
+                    $shift->InRows[] = $id;
+                    $shift->InTimes[] = $timestamp;
+                }
+                if ($io == "out") {
+                    $shift->OutTime = $timestamp;
+                    $shift->OutRow = $id;
+                    // echo "<br>";
+                    // print_r($shift);
+                    array_push($shifts, create_shift($shift));
+                    //$shifts[] = $shift;
+                    //unset($shift->InRows);
+                    //unset($shift->InTimes);
+                    //array_splice($shift->InRows, 0);
+                    //array_splice($shift->InTimes, 0);
+                    $shift->InRows = array();
+                    $shift->InTimes = array();
+                }
             }
         }
     }
@@ -105,7 +107,7 @@ function create_shift($_shift) // BULLSHIT code to unreference $shift->InRows an
 function get_steamid($sn)
 {
     $sql = "SELECT `steam_id` FROM `players` WHERE `steam_name` = '$sn'";
-    return fetchRow($sql)[0];
+    return Query($sql)[0]->steam_id;
 }
 
 

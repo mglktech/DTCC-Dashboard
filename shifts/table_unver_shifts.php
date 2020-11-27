@@ -1,18 +1,18 @@
 <?php
 include "../include/header.php";
-include "../include/db_connection.php";
-$sql = "SELECT DISTINCT `steam_name` FROM `shift_records` WHERE `signed_by` IS NULL";
-$result = fetchAll($sql);
+include "../include/sqlconnection.php";
+$sql = "SELECT DISTINCT `steam_name` FROM `shift_records` WHERE (`signed_by` IS NULL AND `io` = 'out')";
+$result = Query($sql);
 if ($result) {
     //$tblCol_steam_names = $result;
     $tblCol_num_records = array();
     $tblCol_steam_names = array();
-    foreach ($result as $steam_name) {
+    foreach ($result as $steam_names) {
 
-        $sql = "SELECT COUNT(`steam_name`) FROM `shift_records` WHERE (`steam_name` = '$steam_name[0]' AND `signed_by` IS NULL)";
-        $numrecs = fetchRow($sql)[0];
+        $sql = "SELECT COUNT(`steam_name`) AS cnt FROM `shift_records` WHERE (`steam_name` = '$steam_names->steam_name' AND `signed_by` IS NULL)";
+        $numrecs = Query($sql)[0]->cnt;
         if ($numrecs > 1) {
-            $tblCol_steam_names[] = $steam_name[0];
+            $tblCol_steam_names[] = $steam_names->steam_name;
             $tblCol_num_records[] = $numrecs;
         }
     }
