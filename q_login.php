@@ -65,7 +65,7 @@ if (isset($_POST["Login"])) {
 include "include/_header.php";
 ?>
 <form method="post" target="">
-    <div class="col-3">
+    <div class="col">
         <div class='input-group mb-3 '>
             <div class='input-group-prepend'>
                 <span class='input-group-text bg-secondary text-light'>Username</span>
