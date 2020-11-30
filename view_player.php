@@ -162,7 +162,7 @@ function PassFail($ret, $score_percent)
                                     $tRow[] = $row->severity;
                                     $tRow[] = toDateS($row->end_date);
                                     $tRow[] = $row->signed_callsign . " | " .  $row->signed_by;
-                                    $tRow[] = "<a class='btn btn-outline-secondary' href='../tests/view_strike.php?strike_id=" . $row->id . "'>View</a>";
+                                    $tRow[] = "<button class=' btn btn-outline-secondary' data-toggle='modal' data-target='#viewStrikesModal'>View</button>";
                                     $tbody[] = $tRow;
                                 }
                             }
@@ -199,6 +199,26 @@ function PassFail($ret, $score_percent)
 </div>
 <!-- END OF VIEW_PLAYER -->
 
+<div class="modal fade" id="viewStrikesModal" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><?php echo $char_name; ?>'s Strikes</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <?php include "include/inc_strikes.php"; ?>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Go Back</button>
+            </div>
+        </div>
+    </div>
+
+</div>
 
 
 <?php include "include/footer.php"; ?>
