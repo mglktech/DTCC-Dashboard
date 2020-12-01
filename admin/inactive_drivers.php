@@ -10,14 +10,17 @@ $sql = "SELECT * FROM public_players WHERE last_seen < '$MonthAgo' && rank >'-2'
 $resp = Query($sql);
 $head = ["Name", "Rank", "Last Seen", ""];
 $body = array();
-foreach ($resp as $row) {
-    $r = array();
-    $r[] = $row->callsign . " | " . $row->char_name;
-    $r[] = $row->rank_label;
-    $r[] = toDateS($row->last_seen);
-    $r[] = "<a class='btn btn-secondary view-player' href='/view_player.php?steamid=" . $row->steam_id . "'>View Player</button>";
-    $body[] = $r;
+if ($resp) {
+    foreach ($resp as $row) {
+        $r = array();
+        $r[] = $row->callsign . " | " . $row->char_name;
+        $r[] = $row->rank_label;
+        $r[] = toDateS($row->last_seen);
+        $r[] = "<a class='btn btn-secondary view-player' href='/view_player.php?steamid=" . $row->steam_id . "'>View Player</button>";
+        $body[] = $r;
+    }
 }
+
 ?>
 
 <h3> Inactive Staff (More than a Month ago)</h3>
