@@ -2,7 +2,7 @@
 include "include/sqlconnection.php";
 include "include/elements.php";
 
-if ($_SESSION['steam_id'] == '76561197995263974' || $_SESSION['steam_id'] == '76561198050836459') {
+if ($_SESSION['rank'] > 2) {
 
     include "include/inc_index_senior.php";
 }

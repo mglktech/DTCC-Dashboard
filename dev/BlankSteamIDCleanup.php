@@ -48,6 +48,7 @@ foreach ($res as $row) {
     $body[] = $newRow;
 }
 
-Tablefy($head, $body);
-
+Tablefy($head, $body); ?>
+<a type="button" class="btn btn-secondary" href="../index.php">Go Back</a>
+<?php
 include "../include/footer.php";
