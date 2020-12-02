@@ -12,6 +12,8 @@ if (isset($_POST["test_type"])) {
     }
 }
 if (isset($_GET["test_id"])) {
+    $doc_id = $_GET["test_id"];
+    $doc_type = "test";
     $rvals = Get_Test($_GET["test_id"]);
 }
 
@@ -261,7 +263,7 @@ function CreateQuestionElement($id, $question, $score)
     echo "</div></div></div>";
 }
 
-
+$char_name = $rvals['char_name'];
 ?>
 
 <div class="container-fluid">
@@ -345,7 +347,15 @@ function CreateQuestionElement($id, $question, $score)
             <div class="border p-4">
                 <span class="font-weight-normal"><?php echo $rvals['comments']; ?></span>
             </div>
+            <div>
+                <?php include "../include/inc_notes.php"; ?>
+                <span class="font-weight-normal"><?php CreateNotesTable($doc_id, $doc_type); ?></span>
+                <button class="btn btn-secondary" data-toggle="modal" data-target="#NoteModal">Add Note</button>
+            </div>
         </div>
+
         <a class="btn btn-secondary mb-5 btn-large mt-5" href="table_tests.php">Done</a>
     </div>
 </div>
+
+<?php include "../include/footer.php";
