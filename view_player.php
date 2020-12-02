@@ -7,6 +7,7 @@ include "include/sqlconnection.php";
 
 if (isset($_GET['steamid'])) {
     $steamid = $_GET['steamid'];
+    $doc_id = $steamid;
     $sql = "SELECT * from public_players where steam_id = '$steamid'";
     $player = Query($sql)[0];
     $char_name = $player->char_name;
@@ -30,6 +31,7 @@ if (isset($_GET['steamid'])) {
     $link->label = "Whitelist";
     $link->href = "https://highliferoleplay.net/whitelisting/index.php";
     $hex = "steam:" . dechex($steamid);
+    $doc_type = "player";
 }
 
 function getSumShifts($steam_id)
@@ -97,7 +99,10 @@ function PassFail($ret, $score_percent)
                         CreateInputElem("Status:", $status, "");
                         CreateInputElem("Steam Name:", $steam_name, "");
                         CreateInputElem("SteamID:", $steamid, "");
-                        CreateInputBtnElem("Steam Hex:", $hex, $link);
+                        if ($_SESSION['rank'] >= 3 && $_SESSION['rank'] > $rank) {
+                            CreateInputBtnElem("Steam Hex:", $hex, $link);
+                        }
+
                         CreateInputElem("Phone:", $phone_number, "");
                         CreateInputElem("Discord:", $discord_name, "");
                         CreateInputElem("Timezone:", $zone, "");
@@ -170,6 +175,11 @@ function PassFail($ret, $score_percent)
 
                             ?>
 
+                        </div>
+                        <div>
+                            <?php include "include/inc_notes.php"; ?>
+                            <span class="font-weight-normal"><?php CreateNotesTable($doc_id, $doc_type); ?></span>
+                            <button class="btn btn-secondary" data-toggle="modal" data-target="#NoteModal">Add Note</button>
                         </div>
                     </div>
                 </div>
