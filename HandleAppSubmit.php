@@ -1,9 +1,6 @@
-<?php include "include/db_connection.php";
+<?php include "include/sqlconnection.php";
 
-function quotefix($str)
-{
-    return str_replace("'", "''", "$str");
-}
+
 
 
 if (isset($_POST['steam_url'])) {
@@ -31,8 +28,9 @@ if (isset($_POST['steam_url'])) {
     `char_backstory`, 
     `char_reason`,
     `app_timestamp`,
-    `app_zoneOffset`) VALUES ('$char_name','$phone_number','$discord_name','$steam_url','$backstory','$reason','$timestamp','$timeOffset')";
-    $response = SqlRun($sql);
+    `app_zoneOffset`,
+    `applicant_dob`) VALUES ('$char_name','$phone_number','$discord_name','$steam_url','$backstory','$reason','$timestamp','$timeOffset','$dob')";
+    $response = Query($sql);
     echo $response;
     echo " SQL: " . $sql;
 }

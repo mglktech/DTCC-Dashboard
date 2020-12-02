@@ -225,6 +225,7 @@ function display_selectbox($vals)
         <button name="submit" type="submit" class="btn btn-success">Submit</button>
     </form>
 <?php } ?>
+<a class='btn btn-outline-secondary' href='table_unver_shifts.php'>Back</a>
 <script>
     document.addEventListener("DOMContentLoaded", updateDurations());
 

@@ -129,7 +129,7 @@ if (isset($_POST["SubmitApp"])) {
 
 
 
-$appdata = Query("SELECT * FROM applications_v0 WHERE app_id = $doc_id")[0];
+$appdata = Query("SELECT * FROM applications_v0 WHERE app_id = '$doc_id'")[0];
 // print_r($appdata[0]);
 $id = $appdata->app_id;
 
