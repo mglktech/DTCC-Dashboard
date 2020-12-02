@@ -357,3 +357,5 @@ $char_name = $rvals['char_name'];
         <a class="btn btn-secondary mb-5 btn-large mt-5" href="table_tests.php">Done</a>
     </div>
 </div>
+
+<?php include "../include/footer.php";
