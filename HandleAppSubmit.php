@@ -12,7 +12,7 @@ if (isset($_POST['steam_url'])) {
     $reason = quotefix($_POST['reason']);
     $timestamp = quotefix($_POST['app_timestamp']);
     $timeOffset = quotefix($_POST['app_zoneOffset']);
-
+    $dob = quotefix($_POST['applicant_dob']);
 
     // echo $steam_url;
     // echo $discord_name;
