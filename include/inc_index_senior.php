@@ -5,6 +5,7 @@
 <?php } ?>
 <h6> SS commands</h6>
 <a class='btn btn-secondary mt-1 mb-3' href='/admin/inactive_drivers.php'>Inactive Staff List</a></a><br>
+<a class='btn btn-secondary mt-1 mb-3' href='/admin/whitelisting.php'>Needs Whitelisting</a></a><br>
 <button class="btn bg-danger text-light mb-3" data-toggle="modal" data-target="#chkUpdateSteamDetails">Refresh Steam Names</button>
 <button class="btn bg-danger text-light mb-3" data-toggle="modal" data-target="#chkCleanBlankShifts">Clean Blank Shifts</button>
 

@@ -47,8 +47,8 @@ function UpdateDB($sql)
     return $response;
 }
 
-if (isset($_GET["appid"])) {
-    $doc_id = $_GET["appid"];
+if (isset($_GET["doc_id"])) {
+    $doc_id = $_GET["doc_id"];
 }
 
 if (isset($_POST["SubmitApp"])) {
@@ -61,7 +61,7 @@ if (isset($_POST["SubmitApp"])) {
     if ($tz == "Eastern (US/Canada)") {
         $timezone = "EST";
     }
-    $doc_id = $_POST['appid'];
+    $doc_id = $_POST['doc_id'];
     $isBanned = FALSE;
     $detected_steam_id = $_POST["detected_steam_id"];
     $detected_steam_name = $_POST['detected_steam_name'];

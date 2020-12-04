@@ -73,7 +73,7 @@ $banned_status = prepBanned($isBanned);
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="inputGroup-sizing-default">SteamID64:</span>
                     </div>
-                    <input name="appid" value="<?php echo $appid; ?>" hidden></input>
+                    <input name="doc_id" value="<?php echo $doc_id; ?>" hidden></input>
                     <input name="detected_steamid" value="<?php echo $detected_steamid; ?>" hidden></input>
 
                     <input name="manual_steamid" class="form-control" value="<?php
@@ -131,7 +131,7 @@ $banned_status = prepBanned($isBanned);
             <div class="modal-footer">
                 <form action="/view_app.php" method="post">
                     <input name="SubmitApp" value="approve" hidden></input>
-                    <input name="appid" value="<?php echo $appid; ?>" hidden></input>
+                    <input name="doc_id" value="<?php echo $doc_id; ?>" hidden></input>
                     <input name="detected_steam_name" value="<?php echo $detected_steam_name; ?>" hidden></input>
                     <input name="detected_steam_id" value="<?php echo $detected_steam_id; ?>" hidden></input>
                     <input name="phone_number" value="<?php echo $phone_number; ?>" hidden></input>
@@ -253,7 +253,7 @@ $banned_status = prepBanned($isBanned);
                                 echo "<input name='badProfileLink' value='1' hidden></input>";
                             } ?>
 
-                            <input name="appid" value="<?php echo $appid; ?>" hidden></input>
+                            <input name="doc_id" value="<?php echo $doc_id; ?>" hidden></input>
                             <input name="detected_steam_name" value="<?php echo $detected_steam_name; ?>" hidden></input>
                             <input name="detected_steam_id" value="<?php echo $detected_steam_id; ?>" hidden></input>
                             <input name="phone_number" value="<?php echo $phone_number; ?>" hidden></input>

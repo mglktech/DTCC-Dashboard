@@ -19,7 +19,7 @@
                     <span data-feather="file-text"></span>
                     Tests <span class="sr-only"></span>
                 </a>
-                <a class="nav-link" href="">
+                <a class="nav-link" href="/shifts/shifts_index.php">
                     <span data-feather="clock"></span>
                     Shifts <span class="sr-only"></span>
                 </a>

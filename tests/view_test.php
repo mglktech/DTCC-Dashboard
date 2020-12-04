@@ -279,11 +279,12 @@ $char_name = $rvals['char_name'];
                         <?php CreateInputElem("Callsign", $rvals["callsign"], ""); ?>
                     </div>
                     <div class="col-md-6">
-                        <?php
-                        $link = new stdClass();
-                        $link->label = "Whitelist";
-                        $link->href = "https://highliferoleplay.net/whitelisting/index.php";
-                        CreateInputBtnElem("Steam Hex:", $rvals['hex'], $link);
+                        <?php if ($_SESSION["rank"] >= 3) {
+                            $link = new stdClass();
+                            $link->label = "Whitelist";
+                            $link->href = "https://highliferoleplay.net/whitelisting/index.php";
+                            CreateInputBtnElem("Steam Hex:", $rvals['hex'], $link);
+                        }
                         ?>
 
                     </div>
