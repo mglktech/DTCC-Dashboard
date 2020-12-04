@@ -1,13 +1,7 @@
-<?php if ($_SESSION['steam_id'] == '76561197995263974' || $_SESSION['steam_id'] == '76561198050836459') { ?>
-    <h6>"Special" commands:</h6>
-    <a class='btn btn-secondary mt-1 mb-1' href='/shifts/upload_shifts.php'>Upload Shift Data</a><br>
-    <a class='btn btn-secondary mt-1 mb-1' href='/shifts/table_unver_shifts.php'>Verify Shifts</a><br>
-<?php } ?>
 <h6> SS commands</h6>
 <a class='btn btn-secondary mt-1 mb-3' href='/admin/inactive_drivers.php'>Inactive Staff List</a></a><br>
 <a class='btn btn-secondary mt-1 mb-3' href='/admin/whitelisting.php'>Needs Whitelisting</a></a><br>
-<button class="btn bg-danger text-light mb-3" data-toggle="modal" data-target="#chkUpdateSteamDetails">Refresh Steam Names</button>
-<button class="btn bg-danger text-light mb-3" data-toggle="modal" data-target="#chkCleanBlankShifts">Clean Blank Shifts</button>
+
 
 <div class="modal fade" id="chkUpdateSteamDetails" tabindex="-1" role="dialog" aria-hidden="true">
 

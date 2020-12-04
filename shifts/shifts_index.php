@@ -84,4 +84,12 @@ function sqlCollectTotalShiftTimes($timeframe)
 </div>
 
 <?php
+if ($_SESSION["rank"] >= 3) {
+?>
+    Senior Supervisor Commands:<br>
+    <button class="btn bg-danger text-light mb-2" data-toggle="modal" data-target="#chkUpdateSteamDetails">Refresh Steam Names</button>
+    <button class="btn bg-danger text-light mb-2" data-toggle="modal" data-target="#chkCleanBlankShifts">Clean Blank Shifts</button>
+    <a class='btn btn-secondary  mb-2' href='/shifts/upload_shifts.php'>Upload Shift Data</a>
+    <a class='btn btn-secondary  mb-2' href='/shifts/table_unver_shifts.php'>Verify Shifts</a>
+<?php }
 include "../include/footer.php";
