@@ -55,7 +55,7 @@ function CreateTable($tableType)
                         echo "<td>" . $row->char_name . "</td>";
                         echo "<td>" . $row->discord_name . "</td>";
 
-                        echo "<td><a class='btn btn-info' href='/view_app.php?appid=" . $row->app_id . "'>View Application</a></td>";
+                        echo "<td><a class='btn btn-info' href='/view_app.php?doc_id=" . $row->app_id . "'>View Application</a></td>";
                         echo "</tr>";
                     }
 
@@ -90,7 +90,7 @@ function CreateTable($tableType)
                         echo "<td>" . $row->phone_number . "</td>";
                         echo "<td>" . $super_line . "</td>";
                         echo "<td>" . $row->status . "</td>";
-                        echo "<td><a class='btn btn-outline-secondary' href='/view_app.php?appid=" . $row->app_id . "'>View</a></td>";
+                        echo "<td><a class='btn btn-outline-secondary' href='/view_app.php?doc_id=" . $row->app_id . "'>View</a></td>";
                         echo "</tr>";
                     } ?>
                 </table>
