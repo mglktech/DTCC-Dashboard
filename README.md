@@ -8,4 +8,4 @@ That being said, Highlife Roleplay's Downtown Cab Co are using a live version of
 Feel free to use any of this code for your own purpose, create as many forks as you like.
 If you are able to learn a thing or two about basic PHP and SQL using this code then good for you. I am happy.
 
-# This is NOT a release
+# This is NOT a finished project.
