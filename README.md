@@ -8,5 +8,5 @@ That being said, Highlife Roleplay's Downtown Cab Co are using a live version of
 Feel free to use any of this code for your own purpose, create as many forks as you like.
 If you are able to learn a thing or two about basic PHP and SQL using this code then good for you. I am happy.
 
-This is NOT a finished project, and will require you to build an SQL database with your own connections if you wish to use this code in it's entirety
+This is NOT a finished project, and will require you to build an SQL database with your own connections if you wish to use this code in it's entirety.
 Blueprints for the SQL database have not been released yet.
