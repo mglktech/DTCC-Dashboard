@@ -42,6 +42,7 @@ function Get_Test($test_id)
     $callsign = $char->callsign;
     $discord_name = $char->discord_name;
     $postret['char_name'] = $char_name;
+    $postret['ver'] = $test_ver;
     $postret['max_score'] = $metas->max_score;
     $postret['total_score'] = $total_score;
     $postret['pass_mark'] = $metas->pass_mark;
@@ -60,15 +61,11 @@ function Get_Test($test_id)
     return $postret;
 }
 
-function getQuestions($tbl)
+function getQuestions($tbl, $ver)
 {
+    $sql = "SELECT question, max_points FROM test_questions WHERE type = '$tbl' and version = '$ver' ORDER BY q_number";
 
-    if ($tbl == "theory") {
-        $sql = "SELECT `question` FROM `theory_test_data_v0`";
-    }
-    if ($tbl == "practical") {
-        $sql = "SELECT `question` FROM `practical_test_data_v0`";
-    }
+
     if ($sql) {
         return Query($sql);
     } else {
@@ -96,7 +93,7 @@ function POST_Theory()
         $score_string .= $answer . "/";
         $total_score += $answer;
     }
-    $metas = getMetas('theory', '0');
+    $metas = getMetas('theory', '1');
     $pass_mark = $metas->pass_mark;
     $max_score = $metas->max_score;
     $percentage = round(($total_score / $max_score), 2);
@@ -117,7 +114,7 @@ function POST_Theory()
         WHERE `steam_id`='$steamid'";
     }
 
-    $sql = "INSERT INTO tests (`steam_id`, `type`, `version`, `score_total`, `score_percent`, `signed_by`,`scores`,`submit_date`,`comments`) VALUES ('$steamid','theory','0','$total_score','$percentage','$signed_by','$score_string','$date','$comments')";
+    $sql = "INSERT INTO tests (`steam_id`, `type`, `version`, `score_total`, `score_percent`, `signed_by`,`scores`,`submit_date`,`comments`) VALUES ('$steamid','theory','1','$total_score','$percentage','$signed_by','$score_string','$date','$comments')";
     $response = Query($sql);
     //echo $response . " SQL: " . $sql;
     $postret['char_name'] = $char_name;
@@ -130,6 +127,7 @@ function POST_Theory()
     $postret['callsign'] = "Not Assigned";
     $postret['signed_by'] = q_fetchPlayerFormatted($signed_by);
     $postret['comments'] = $comments;
+    $postret['ver'] = 1;
 
     return $postret;
 }
@@ -202,6 +200,7 @@ function POST_Practical()
     $postret['signed_by'] = q_fetchPlayerFormatted($signed_by);
     $postret['discord_name'] = $char[5];
     $postret['comments'] = $comments;
+    $postret['ver'] = 0;
     return $postret;
 }
 
@@ -224,44 +223,46 @@ function CreatePassFail($total_score, $pass_mark)
     }
 }
 
-function pickBGCol($num)
+function pickBGCol($num, $max)
 {
-    if ($num <= 1) {
+    $perc = $num / $max;
+    if ($perc <= 0.33) {
         return "bg-danger";
     }
-    if ($num > 1 && $num < 5) {
+    if ($perc > 0.33 && $perc < 1) {
         return "bg-warning";
     }
-    if ($num == 5) {
+    if ($perc == 1) {
         return "bg-success";
     }
 }
 
-function pickTWeight($num)
+function pickTWeight($num, $max)
 {
-    if ($num <= 1) {
+    $perc = $num / $max;
+    if ($perc <= 0.33) {
         return "font-weight-bold";
     }
-    if ($num > 1 && $num < 5) {
+    if ($perc > 0.33 && $perc < 1) {
         return "font-weight-normal";
     }
-    if ($num == 5) {
+    if ($perc == 1) {
         return "font-weight-light";
     }
 }
 
-function CreateQuestionElement($id, $question, $score)
-{
+// function CreateQuestionElement($id, $question, $score)
+// {
 
-    $vis_id = $id + 1;
+//     $vis_id = $id + 1;
 
-    echo "<div class='container border mt-1 mb-1 " . pickBGCol($score) . "'>";
-    echo "<div class='row mb-3'>";
-    echo "<div class='col'>";
-    echo "<h6>" . $vis_id . ". " . $question[0] . "</h6>";
-    echo "<h6>Score: " . $score . "</h6>";
-    echo "</div></div></div>";
-}
+//     echo "<div class='container border mt-1 mb-1 " . pickBGCol($score) . "'>";
+//     echo "<div class='row mb-3'>";
+//     echo "<div class='col'>";
+//     echo "<h6>" . $vis_id . ". " . $question[0] . "</h6>";
+//     echo "<h6>Score: " . $score . "</h6>";
+//     echo "</div></div></div>";
+// }
 
 $char_name = $rvals['char_name'];
 ?>
@@ -326,13 +327,13 @@ $char_name = $rvals['char_name'];
                 </thead>
                 <tbody>
                     <?php
-                    $questions = getQuestions($rvals['test_type']);
+                    $questions = getQuestions($rvals['test_type'], $rvals['ver']);
                     foreach ($questions as $key => $q) {
                         $score = $rvals['Answers'][$key];
                         echo "<tr>";
                         echo "<td class='font-weight-bold'>" . ($key + 1) . "</td>";
-                        echo "<td class='" . pickTWeight($score) . "'>" . $q->question . "</td>";
-                        echo "<td class='" . pickBGCol($score) . "'>" . $score . "</td>";
+                        echo "<td class='" . pickTWeight($score, $q->max_points) . "'>" . $q->question . "</td>";
+                        echo "<td class='" . pickBGCol($score, $q->max_points) . "'>" . $score . "</td>";
                         echo "</tr>";
                     }
                     ?>
