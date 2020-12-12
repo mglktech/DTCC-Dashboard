@@ -21,4 +21,4 @@ if (isset($_GET['type'])) {
 
 
 
-<?php include_once "../include/footer.php"; ?>
+<?php include "../include/footer.php"; ?>

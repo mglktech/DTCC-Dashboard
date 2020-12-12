@@ -1,3 +1,10 @@
+<div><button class="btn btn-secondary" onclick="goBack()">Go Back</button></div>
+
+<script>
+  function goBack() {
+    window.history.back();
+  }
+</script>
 </main>
 </div>
 </div>

@@ -68,7 +68,7 @@ $banned_status = prepBanned($isBanned);
         </h5>
 
         <h5 class="mb-3">
-            <form action="/view_app.php" method="get">
+            <form action="/applications/view_app.php" method="get">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="inputGroup-sizing-default">SteamID64:</span>
@@ -90,17 +90,15 @@ $banned_status = prepBanned($isBanned);
                 </div>
             </form>
         </h5>
-
         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#acceptmodal" <?php if (!$detected_steam_id | $isBanned) echo "disabled"; ?>>
             Approve Application
         </button>
         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#denyModal">
             Reject Application
         </button>
-        <a type="button" class="btn btn-secondary" data-dismiss="modal" href="applications.php">Go Back</a>
     </div>
 </div>
-</div>
+
 <br>
 
 
@@ -129,7 +127,7 @@ $banned_status = prepBanned($isBanned);
                 </h6>
             </div>
             <div class="modal-footer">
-                <form action="/view_app.php" method="post">
+                <form action="/applications/view_app.php" method="post">
                     <input name="SubmitApp" value="approve" hidden></input>
                     <input name="doc_id" value="<?php echo $doc_id; ?>" hidden></input>
                     <input name="detected_steam_name" value="<?php echo $detected_steam_name; ?>" hidden></input>
@@ -138,7 +136,7 @@ $banned_status = prepBanned($isBanned);
                     <input name="char_name" value="<?php echo $char_name; ?>" hidden></input>
                     <input name="discord_name" value="<?php echo $discord_name; ?>" hidden></input>
                     <input name="timezone" value="<?php echo $zone; ?>" hidden></input>
-                    <button type="submit" class="btn btn-success" <?php if ($_SESSION["rank"] < 2) echo "disabled" ?>>Approve</button>
+                    <button type="submit" class="btn btn-success" <?php if ($_SESSION["rank"] < 2 || strlen(trim($detected_steam_name)) <= 0) echo "disabled" ?>>Approve</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Go Back</button>
                 </form>
 
@@ -166,7 +164,7 @@ $banned_status = prepBanned($isBanned);
                                 Are you sure you want to reject this applicant?
                             </h5>
                         </div>
-                        <form class="row mx-0 w-100" action="/view_app.php" method="post">
+                        <form class="row mx-0 w-100" action="/applications/view_app.php" method="post">
 
                             <div class="col-md-6 mt-2">
                                 <h5>Reasons for denial</h5>
@@ -264,6 +262,6 @@ $banned_status = prepBanned($isBanned);
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
+</div>

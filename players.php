@@ -18,13 +18,13 @@ function getCountRecruits()
 
 function getRostor()
 {
-    if (isset($_POST['search'])) {
-        $q = $_POST['search'];
+    if (isset($_GET['search'])) {
+        $q = $_GET['search'];
         $sql = "SELECT * FROM `public_players` WHERE (`char_name` like '%$q%')
         or (steam_name like '%$q%')
         or (discord_name like '%$q%')";
     } else {
-        $sql = "SELECT * FROM `public_players` ORDER BY -`callsign_id` DESC";
+        $sql = "SELECT * FROM `public_players` WHERE `rank`>=-1 ORDER BY -`callsign_id` DESC";
     }
 
     return Query($sql);
@@ -46,7 +46,7 @@ function getRostor()
         <th>Rank</th>
         <th>Status</th>
         <th>
-            <form action="players.php" method="post">
+            <form action="players.php" method="get">
                 <div class="input-group input-group float-left">
                     <input name="search" style="height: 27px;" type="text" class="form-control" placeholder="Search Players...">
                     <div class="input-group-append">
