@@ -28,7 +28,7 @@ function getAvatars($steam_id)
 
 function BeginSession($player, $temp)
 {
-    getAvatars($player->steam_id);
+    //getAvatars($player->steam_id);
     session_start();
     $_SESSION['steam_id'] = $player->steam_id;
     $_SESSION['steam_name'] = $player->steam_name;
