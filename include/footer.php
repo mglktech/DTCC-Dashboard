@@ -1,5 +1,9 @@
-<div><button class="btn btn-secondary" onclick="goBack()">Go Back</button></div>
+<?php
+$pages_noback = ["q_login.php"]; ?>
 
+<?php if (!in_array(basename($_SERVER['PHP_SELF']), $pages_noback)) { ?>
+  <div><button class="btn btn-secondary" onclick="goBack()">Go Back</button></div>
+<?php } ?>
 <script>
   function goBack() {
     window.history.back();

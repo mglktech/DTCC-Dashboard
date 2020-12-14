@@ -1,7 +1,7 @@
 <?php
 include "../include/header.php";
 include "../include/sqlconnection.php";
-
+include "../steam/SteamWebAPI_Simple.php";
 
 $doc_type = "application";
 
@@ -17,23 +17,23 @@ function AppStillUnsigned($doc_id)
 }
 
 
-function PrepareSteamURL($steam_link)
-{
-    require_once "../steam/SteamUser.php";
+// function PrepareSteamURL($steam_link)
+// {
+//     include "steam/SteamWebApi_Simple.php";
 
 
-    $split = explode("/", $steam_link);
-    if (count($split) >= 4) {
-        $user = new SteamUser($split[4]);
-    } else {
-        $user = NULL;
-    }
-    return $user;
+//     $split = explode("/", $steam_link);
+//     if (count($split) >= 4) {
+//         $user = new SteamUser($split[4]);
+//     } else {
+//         $user = NULL;
+//     }
+//     return $user;
 
-    // auto-checks for vanity url
-    //print_r($user);
+//     // auto-checks for vanity url
+//     //print_r($user);
 
-}
+// }
 
 function chkPostBool($id)
 {
@@ -163,6 +163,11 @@ $status = $appdata->status;
 $status_desc = $appdata->status_desc;
 $additionalInfo = $appdata->additional_info;
 
+$detected_steam_id = ResolveSteamID($steam_link);
+$detected_steam_name = GetSteamDetails($detected_steam_id)->steam_name;
+$steam_name = $detected_steam_name;
+
+
 if ($appdata->app_timestamp == 0) {
     $timestamp = toDateS(strToTime($appdata->timestamp));
 }
@@ -170,12 +175,6 @@ if ($appdata->app_timestamp != 0) {
     $timestamp = toDate($appdata->app_timestamp);
 }
 $zone = $appdata->app_zoneOffset;
-$player = PrepareSteamURL($steam_link);
-if ($player) {
-    $detected_steam_name = $player->steamID;
-    $detected_steam_id = $player->steamID64;
-    $steam_name = $player->steamID;
-}
 $alive = IsAlive($char_name);
 
 // Notes

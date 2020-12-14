@@ -1,7 +1,7 @@
 <?php
 include "include/sqlconnection.php";
 include "include/elements.php";
-
+include "steam/SteamWebAPI_Simple.php";
 function getSteamID($steam_name)
 {
     $sql = "SELECT steam_id FROM players WHERE steam_name='$steam_name'";
@@ -13,18 +13,18 @@ function getSteamID($steam_name)
     }
 }
 
-function getAvatars($steam_id)
-{
-    require_once "steam/SteamUser.php";
-    $user = new SteamUser($steam_id);
-    //$_SESSION['profile_pic'] = $user->avatarIcon;
-    $avIcon = $user->avatarIcon;
-    $avMedium = $user->avatarMedium;
-    $avFull = $user->avatarFull;
-    $sql = "UPDATE players
-    SET av_icon='$avIcon',av_medium='$avMedium',av_full='$avFull' WHERE steam_id='$steam_id'";
-    Query($sql);
-}
+// function getAvatars($steam_id)
+// {
+//     require_once "steam/SteamUser.php";
+//     $user = new SteamUser($steam_id);
+//     //$_SESSION['profile_pic'] = $user->avatarIcon;
+//     $avIcon = $user->avatarIcon;
+//     $avMedium = $user->avatarMedium;
+//     $avFull = $user->avatarFull;
+//     $sql = "UPDATE players
+//     SET av_icon='$avIcon',av_medium='$avMedium',av_full='$avFull' WHERE steam_id='$steam_id'";
+//     Query($sql);
+// }
 
 function BeginSession($player, $temp)
 {
