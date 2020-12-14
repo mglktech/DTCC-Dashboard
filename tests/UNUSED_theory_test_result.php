@@ -4,9 +4,9 @@ would be better to concat both results page into one file, declaring test type i
 */
 include "../include/elements.php";
 
-include_once '../include/db_connection.php';
-$sql = "SELECT `question` FROM `theory_test_data_v0` WHERE 1";
-$questions = fetchAll($sql);
+include_once '../include/sqlconnection.php';
+$sql = "SELECT question FROM test_questions WHERE type = 'theory' and version = '1' ORDER BY q_number";
+$questions = Query($sql);
 
 if (isset($_POST['steamid'])) {
     $rvals = POST_Theory();
@@ -16,10 +16,8 @@ if (isset($_POST['steamid'])) {
 function getMetas($type, $ver)
 {
     $sql = "SELECT `pass_mark`,`max_score` FROM `tests_meta` WHERE `type`='$type' AND `version`='$ver'";
-    $result = fetchRow($sql);
-    $ret['pass_mark'] = $result[0];
-    $ret['max_score'] = $result[1];
-    return $ret;
+    $result = Query($sql)[0];
+    return $result;
 }
 
 function POST_Theory()
@@ -34,9 +32,9 @@ function POST_Theory()
         $score_string .= $answer . "/";
         $total_score += $answer;
     }
-    $metas = getMetas('theory', '0');
-    $pass_mark = $metas['pass_mark'];
-    $max_score = $metas['max_score'];
+    $metas = getMetas('theory', 1);
+    $pass_mark = $metas->pass_mark;
+    $max_score = $metas->max_score;
     $percentage = round(($total_score / $max_score), 2);
 
     if ($total_score >= $pass_mark) {
@@ -45,15 +43,15 @@ function POST_Theory()
         $sql = "UPDATE players
          SET `status`='Needs Practical'
          WHERE `steam_id`='$steamid'";
-        $response = SqlRun($sql);
+        Query($sql);
         //echo "Player Database Response: " . $response;
     }
     if ($total_score < $pass_mark) {
         //echo "You Failed.";
     }
 
-    $sql = "INSERT INTO tests (`steam_id`, `type`, `version`, `score_total`, `score_percent`, `signed_by`,`scores`) VALUES ('$steamid','theory','0','$total_score','$percentage','$signed_by','$score_string')";
-    $response = SqlRun($sql);
+    $sql = "INSERT INTO tests (`steam_id`, `type`, `version`, `score_total`, `score_percent`, `signed_by`,`scores`) VALUES ('$steamid','theory','1','$total_score','$percentage','$signed_by','$score_string')";
+    Query($sql);
 
     $postret['char_name'] = $char_name;
     $postret['max_score'] = $max_score;
@@ -127,7 +125,7 @@ function CreateQuestionElement($id, $question, $score)
             <?php CreateInputElem("Student Name:", $rvals['char_name'], ""); ?>
             <div class="row">
                 <div class="col-md-6">
-                    <?php CreateInputElem("Test Type", 'Theory', "v0"); ?>
+                    <?php CreateInputElem("Test Type", 'Theory', "v1"); ?>
                 </div>
                 <div class="col-md-6">
                     <?php CreateRichInputElem("Test Result:", CreatePassFail($rvals['total_score'], $rvals['pass_mark']), ($rvals['percentage'] * 100) .  "%"); ?>
@@ -155,7 +153,7 @@ function CreateQuestionElement($id, $question, $score)
                         $score = $_POST["A"][$key];
                         echo "<tr>";
                         echo "<td class='font-weight-bold'>" . ($key + 1) . "</td>";
-                        echo "<td class='" . pickTWeight($score) . "'>" . $q[0] . "</td>";
+                        echo "<td class='" . pickTWeight($score) . "'>" . $q->question . "</td>";
                         echo "<td class='" . pickBGCol($score) . "'>" . $score . "</td>";
                         echo "</tr>";
                     }

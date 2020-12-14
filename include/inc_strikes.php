@@ -8,8 +8,8 @@ if ($strikes) {
         $row = array();
         $row[] = toDateS($s->issue_date);
         $row[] = $s->severity;
-        $row[] = $s->strike_desc;
-        $row[] = $s->signed_callsign . " | " . $s->signed_by;
+        $row[] = quotefix($s->strike_desc);
+        $row[] = quotefix($s->signed_callsign . " | " . $s->signed_by);
         $row[] = toDateS($s->end_date);
         $body[] = $row;
     }
