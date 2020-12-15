@@ -24,6 +24,5 @@ if ($resp) {
 ?>
 
 <h3> Inactive Staff (More than a Month ago)</h3>
-<?php Tablefy($head, $body); ?>
-<a type="button" class="btn btn-secondary" href="../index.php">Go Back</a>
-<?php include "../include/footer.php";
+<?php Tablefy($head, $body);
+include "../include/footer.php";
