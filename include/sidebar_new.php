@@ -28,6 +28,10 @@
                     <li><a href="/tests/table_needs_practical.php">Practical</a></li>
                     <li><a href="/tests/table_tests_archive.php">Tests Archive</a></li>
                 </ul>
+                <a class="nav-link" href="/shifts/shifts_index.php">
+                    <span data-feather="clock"></span>
+                    Shifts <span class="sr-only"></span>
+                </a>
 
             </li>
         </ul>
