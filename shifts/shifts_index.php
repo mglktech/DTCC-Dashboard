@@ -17,13 +17,13 @@ function getLastUpdated()
 function sqlCollectTotalShiftTimes($timeframe)
 {
     if ($timeframe == "all-time") {
-        $sql = "SELECT DISTINCT a.steam_id, a.callsign, a.char_name, (SELECT SUM(b.duration) FROM public_verified_shifts b WHERE b.steam_id=a.steam_id) duration FROM public_verified_shifts a  where a.callsign is not null order by duration desc LIMIT 10";
+        $sql = "SELECT DISTINCT a.steam_id, a.callsign, a.char_name, a.rank, (SELECT SUM(b.duration) FROM public_verified_shifts b WHERE b.steam_id=a.steam_id) duration FROM public_verified_shifts a  where a.callsign is not null order by duration desc";
     }
     if ($timeframe == "this-week") {
         $curtime = time();
         $oneWeek = 604800; //one week in seconds
         $WeekAgo = $curtime - $oneWeek;
-        $sql = "SELECT DISTINCT a.steam_id, a.callsign, a.char_name, (SELECT SUM(b.duration) FROM public_verified_shifts b WHERE b.steam_id=a.steam_id and b.time_out > '$WeekAgo') duration FROM public_verified_shifts a  where a.callsign is not null order by duration desc LIMIT 10";
+        $sql = "SELECT DISTINCT a.steam_id, a.callsign, a.char_name, a.rank, (SELECT SUM(b.duration) FROM public_verified_shifts b WHERE b.steam_id=a.steam_id and b.time_out > '$WeekAgo') duration FROM public_verified_shifts a  where a.callsign is not null order by duration desc LIMIT 10";
     }
 
     return Query($sql);
@@ -66,14 +66,16 @@ function sqlCollectTotalShiftTimes($timeframe)
         </div>
         <div class="tab-pane fade" id="AllTime" role="tabpanel" aria-labelledby="AllTime-tab">
             <?php $tData = sqlCollectTotalShiftTimes("all-time");
-            $thead = ["", "Name", "Time Clocked In"];
+            $thead = ["", "Name", "Rank", "Time Clocked In", ""];
             $tbody = array();
             if ($tData) {
                 foreach ($tData as $index => $row) {
                     $tRow = array();
                     $tRow[] = $index + 1;
                     $tRow[] = $row->callsign . " | " . $row->char_name;
+                    $tRow[] = $row->rank;
                     $tRow[] = toDurationDays($row->duration);
+                    $tRow[] = "<a class='btn btn-outline-secondary' href='/view_player.php?steamid=" . $row->steam_id . "'>View Player</a>";
                     $tbody[] = $tRow;
                 }
             }

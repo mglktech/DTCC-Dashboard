@@ -200,6 +200,6 @@ function EXPORT_DATABASE($host, $user, $pass, $name,       $tables = false, $bac
     // header("Content-disposition: attachment; filename=\"" . $backup_name . "\"");
     // echo $content;
 
-    return [$backup_name,$content];
+    return [$backup_name, $content];
     exit;
 }

@@ -4,16 +4,11 @@ include "../include/sqlconnection.php";
 //first collect $sheet as a POST
 $sheet = $_POST["sheet"];
 // then, collect $db_table
-$db_table = PopulateTable();
+print_r($_POST["sheet"]);
 // then, sync table with sheet
-SyncAll($db_table, $sheet);
 
-function PopulateTable($type = "applications_v0")
-{
-    $sql = "SELECT * FROM $type";
-    return Query($sql);
-}
-function SyncAll($db_table, $sheet)
+
+function SyncAll($sheet)
 {
     /*
         we want the database to contain everything from the sheet, and if something's missing, add it in as a new app.
@@ -28,7 +23,25 @@ function SyncAll($db_table, $sheet)
         (set db timestamp to sheet timestamp)
         set sheet appid to db appid
     */
-    echo json_decode($sheet);
+    // $RowIDs = array();
+
+    // foreach ($sheet as $key => $row) {
+    //     $char_name = $row[1];
+    //     $discord_name = $row[2];
+    //     $steam_link = $row[3];
+    //     $phone_number = $row[4];
+    //     $backstory    = $row[5];
+    //     $reason = $row[6];
+    //     $sql = "SELECT app_id FROM applications_v0 WHERE char_name='$char_name'
+    //     AND discord_name = '$discord_name' AND steam_link='$steam_link' AND phone_number='$phone_number' AND backstory='$backstory' AND reason='$reason'";
+    //     $result = Query($sql);
+    //     if ($result) {
+    //         $app_id =  $result[1]->app_id;
+    //         $RowIDs[] = [$key, $app_id];
+    //     }
+    // }
+    // echo $RowIDs;
+    echo json_encode($sheet);
 }
 
 function FirstTime_SyncAll($db_table, $sheet)
