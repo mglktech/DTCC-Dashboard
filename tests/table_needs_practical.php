@@ -11,7 +11,7 @@ foreach ($result as $row) {
     $tblRow[] = $row->char_name;
     $tblRow[] = $row->discord_name;
     $tblRow[] = $row->phone_number;
-    $tblRow[] = $row->last_seen;
+    $tblRow[] = toDateS($row->last_seen);
     $tblRow[] = "<a class='btn btn-primary' href='take_test.php?type=practical&&steamid=" . $row->steam_id . "'>Take Test</button>";
     $tblBody[] = $tblRow;
 }

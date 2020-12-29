@@ -126,7 +126,7 @@ function PassFail($ret, $score_percent)
                                     $tRow[] = toDate($row->app_timestamp);
                                     $tRow[] = $row->status;
                                     $tRow[] = $row->callsign . " | " .  $row->signed_by;
-                                    $tRow[] = "<a class='btn btn-outline-secondary' href='/view_app.php?appid=" . $row->app_id . "'>View</a>";
+                                    $tRow[] = "<a class='btn btn-outline-secondary' href='/applications/view_app.php?doc_id=" . $row->app_id . "'>View</a>";
                                     $tbody[] = $tRow;
                                 }
                             }
