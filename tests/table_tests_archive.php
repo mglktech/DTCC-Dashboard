@@ -35,7 +35,10 @@ if (isset($_GET['search'])) {
     $q = $_GET['search'];
     $sql = "SELECT * FROM `test_history` WHERE (`student_name` like '%$q%')";
 } else {
-    $sql = "SELECT * FROM `test_history` ORDER BY `submit_date` DESC LIMIT 25";
+    $limit = 25;
+    $count = Query("SELECT count(*) AS `count` FROM test_history")[0]->count;
+    $obj = CreatePaginateObj($count, $limit);
+    $sql = "SELECT * FROM `test_history` ORDER BY `submit_date` DESC LIMIT $obj->start,$limit";
 }
 
 $result = Query($sql);
@@ -68,5 +71,6 @@ foreach ($result as $row) {
 <h5 class="font-italic mb-3 font-weight-normal">Why so serious?</h5>
 <?php
 Tablefy($tblHeaders, $tblBody);
+Paginate($obj);
 
 include '../include/footer.php';

@@ -133,3 +133,54 @@ function CreateInputBtnElem($prepend, $middle, $link)
     }
     echo "</div>";
 }
+
+function CreatePaginateObj($count, $limit)
+{
+    isset($_GET['page']) ? $page = quotefix($_GET['page']) : $page = 1;
+    if ($page > 1) {
+        $start = ($page * $limit) - $limit;
+    } else {
+        $start = 0;
+    }
+    $totalPages = ceil($count / $limit);
+    $obj = new stdClass();
+    $obj->start = $start;
+    $obj->totalPages = $totalPages;
+    $obj->page = $page;
+    $obj->count = $count;
+    $obj->limit = $limit;
+    return $obj;
+}
+
+function Paginate($obj)
+{
+    //$obj = CreatePaginateObj($count, $limit);
+
+    echo " <nav> <ul class='pagination'>";
+    echo "<li class='page-item";
+    if ($obj->page == 1) {
+        echo " disabled";
+    }
+    echo "'>";
+
+
+    echo "<a class='page-link' href='?page=" . ($obj->page - 1) . "' tabindex='-1'>Previous</a></li>";
+
+    for ($i = 1; $i <= $obj->totalPages; $i++) {
+        echo "<li class='page-item";
+        if ($obj->page == $i) {
+            echo " active";
+        }
+        echo "'> <a class='page-link' href='?page=" . $i . "'>" . $i . "</a></li>";
+    }
+    echo "<li class='page-item";
+    if ($obj->page == $obj->totalPages) {
+        echo " disabled";
+    }
+    echo "'>";
+    echo "<a class='page-link' href='?page=" . ($obj->page + 1) . "' tabindex='-1'>Next</a>";
+    echo "</li></ul></nav>";
+    // echo $obj->totalPages . " total pages <br>";
+    // echo $obj->count . " counted <br>";
+    // echo "limit " . $obj->limit . "<br>";
+}

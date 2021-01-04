@@ -8,7 +8,7 @@ function CreateTable($tableType)
         $table = Query($sql);
     }
     if ($tableType == "all") {
-        $sql = "SELECT * FROM `app_history` ORDER BY `signed_timestamp` DESC LIMIT 20";
+        $sql = "SELECT * FROM `app_history` LIMIT 2 ORDER BY `signed_timestamp` DESC ";
         //$sql = "SELECT `char_name`,`callsign`,`rank` FROM players WHERE steam_id = '$steam_id'";
         // needs to have way of ordering apps by super submit date
 
@@ -17,6 +17,20 @@ function CreateTable($tableType)
 
     return $table;
 }
+
+function paginate($table_name, $limit)
+{
+    $sql = "SELECT COUNT(*) AS `count` FROM $table_name";
+    $count = Query($sql)[0]->count;
+    isset($_GET['page']) ? $page = quotefix($_GET['page']) : $page = 0;
+    if ($page > 1) {
+        $start = ($page * $limit) - $limit;
+    } else {
+        $start = 0;
+    }
+    $totalPages = ceil($count / $limit);
+}
+
 ?>
 
 <h1>Applications</h1>

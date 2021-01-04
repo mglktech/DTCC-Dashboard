@@ -1,8 +1,8 @@
 <?php
-$pages_noback = ["q_login.php","index.php"]; ?>
+$pages_noback = ["q_login.php", "index.php", "shifts_index.php", "shifts_index_AllTime.php", "shifts_index_PastMonth.php", "shifts_index_PastWeek.php"]; ?>
 
 <?php if (!in_array(basename($_SERVER['PHP_SELF']), $pages_noback)) { ?>
-  <div><button class="btn btn-secondary" onclick="goBack()">Go Back</button></div>
+  <div><button class="btn btn-secondary mt-3 mb-3" onclick="goBack()">Go Back</button></div>
 <?php } ?>
 <script>
   function goBack() {

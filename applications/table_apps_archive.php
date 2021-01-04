@@ -2,15 +2,26 @@
 include "../include/sqlconnection.php";
 include "../include/elements.php";
 
-function CreateTableArchive()
+
+
+
+
+
+
+
+function CreateTableArchive($start, $limit)
 {
+
+
+
     if (isset($_GET['search'])) {
-        $q = $_GET['search'];
+        $q = quotefix($_GET['search']);
         $sql = "SELECT * FROM `app_history` WHERE (`app_char_name` like '%$q%')
     or (app_steam_name like '%$q%')
     or (app_discord_name like '%$q%')";
     } else {
-        $sql = "SELECT * FROM `app_history` ORDER BY `signed_timestamp` DESC LIMIT 20";
+
+        $sql = "SELECT * FROM `app_history` ORDER BY `signed_timestamp` DESC LIMIT $start,$limit";
     }
     $searchbar = "<form action='table_apps_archive.php' method='get'>
     <div class='input-group input-group float-left'>
@@ -39,10 +50,24 @@ function CreateTableArchive()
     return Tablefy($tblHeaders, $tblBody);
 }
 ?>
+
+<?php
+$limit = 25;
+$count = Query("SELECT count(*) AS `count` FROM app_history")[0]->count;
+$obj = CreatePaginateObj($count, $limit);
+
+?>
+
 <h1>Applications Archive</h1>
 <h5 class="mb-3 font-weight-normal"><i>Previously Signed Applications</i></h5>
 <div class="container-fluid-p0">
-    <?php CreateTableArchive(); ?>
+    <?php CreateTableArchive($obj->start, $limit);
+    Paginate($obj);
+
+    ?>
+
+
+
 </div>
 
 

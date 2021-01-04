@@ -148,35 +148,36 @@ if (isset($_POST["SubmitApp"])) {
 
 $appdata = Query("SELECT * FROM applications_v0 WHERE app_id = '$doc_id'")[0];
 // print_r($appdata[0]);
-$id = $appdata->app_id;
+if ($appdata) {
+    $id = $appdata->app_id;
 
-// $timestamp = $appdata[1]; 
-$char_name = $appdata->char_name;
-$phone_number = $appdata->phone_number;
-$steam_name = $appdata->detected_steam_name;
-$discord_name = $appdata->discord_name;
-$steam_link = $appdata->steam_link;
-$backstory = $appdata->char_backstory;
-$reason = $appdata->char_reason;
-$signed_by = $appdata->signed_by;
-$status = $appdata->status;
-$status_desc = $appdata->status_desc;
-$additionalInfo = $appdata->additional_info;
+    // $timestamp = $appdata[1]; 
+    $char_name = $appdata->char_name;
+    $phone_number = $appdata->phone_number;
+    $steam_name = $appdata->detected_steam_name;
+    $discord_name = $appdata->discord_name;
+    $steam_link = $appdata->steam_link;
+    $backstory = $appdata->char_backstory;
+    $reason = $appdata->char_reason;
+    $signed_by = $appdata->signed_by;
+    $status = $appdata->status;
+    $status_desc = $appdata->status_desc;
+    $additionalInfo = $appdata->additional_info;
 
-$detected_steam_id = ResolveSteamID($steam_link);
-$detected_steam_name = GetSteamDetails($detected_steam_id)->steam_name;
-$steam_name = $detected_steam_name;
+    $detected_steam_id = ResolveSteamID($steam_link);
+    $detected_steam_name = GetSteamDetails($detected_steam_id)->steam_name;
+    $steam_name = $detected_steam_name;
 
 
-if ($appdata->app_timestamp == 0) {
-    $timestamp = toDateS(strToTime($appdata->timestamp));
+    if ($appdata->app_timestamp == 0) {
+        $timestamp = toDateS(strToTime($appdata->timestamp));
+    }
+    if ($appdata->app_timestamp != 0) {
+        $timestamp = toDate($appdata->app_timestamp);
+    }
+    $zone = $appdata->app_zoneOffset;
+    $alive = IsAlive($char_name);
 }
-if ($appdata->app_timestamp != 0) {
-    $timestamp = toDate($appdata->app_timestamp);
-}
-$zone = $appdata->app_zoneOffset;
-$alive = IsAlive($char_name);
-
 // Notes
 
 
@@ -196,68 +197,73 @@ otherwise, disable accept button
 include "../include/elements.php";
 include "../include/inc_notes.php";
 
-
+if (isset($appdata->app_id)) {
 ?>
-<div class="container-fluid">
-    <!-- APPLICATION FORM -->
-    <div class="row">
-        <div class="col p-0 pb-0 mb-0 rounded">
-            <h1>Downtown Cab Co. Application</h1>
-            <h5 class="font-italic mb-0 font-weight-normal"><strong>Issued on:</strong> <?php echo $timestamp; ?> - Version: 0.1.0</h5>
-            <br>
-            <div class="container-fluid p-0">
-                <div class="row">
-                    <div class="col-md-6">
-                        <?php
-                        CreateInputElemFull(SpanPrepend("Employee Name: "), SpanMiddleDefault($char_name), SpanIsAlive($alive));
-                        CreateInputElem("Phone Number:", $phone_number, "");
-                        CreateInputElem("Discord:", $discord_name, "");
-                        ?>
-                    </div>
+    <div class="container-fluid">
+        <!-- APPLICATION FORM -->
+        <div class="row">
+            <div class="col p-0 pb-0 mb-0 rounded">
+                <h1>Downtown Cab Co. Application</h1>
+                <h5 class="font-italic mb-0 font-weight-normal"><strong>Issued on:</strong> <?php echo $timestamp; ?> - Version: 0.1.0</h5>
+                <br>
+                <div class="container-fluid p-0">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?php
+                            CreateInputElemFull(SpanPrepend("Employee Name: "), SpanMiddleDefault($char_name), SpanIsAlive($alive));
+                            CreateInputElem("Phone Number:", $phone_number, "");
+                            CreateInputElem("Discord:", $discord_name, "");
+                            ?>
+                        </div>
 
-                    <div class="col-md-6">
-                        <?php
-                        CreateInputElem("Steam Name:", $steam_name, "");
-                        CreateInputElem("Timezone:", $zone, "");
-                        CreateInputElemFull(SpanPrepend("Steam Link: "), SpanMiddleDefault($steam_link), SpanBtnLink("Go", $steam_link));
-                        ?>
-                    </div>
+                        <div class="col-md-6">
+                            <?php
+                            CreateInputElem("Steam Name:", $steam_name, "");
+                            CreateInputElem("Timezone:", $zone, "");
+                            CreateInputElemFull(SpanPrepend("Steam Link: "), SpanMiddleDefault($steam_link), SpanBtnLink("Go", $steam_link));
+                            ?>
+                        </div>
 
-                    <div class="col-md-6">
-                        <h5 class="h5-header-label mb-0 w-100 text-center">Character Backstory</h5>
-                        <div class="border p-4 text-background-grey architects-font">
-                            <span class="font-weight-normal"><?php echo $backstory; ?></span>
+                        <div class="col-md-6">
+                            <h5 class="h5-header-label mb-0 w-100 text-center">Character Backstory</h5>
+                            <div class="border p-4 text-background-grey architects-font">
+                                <span class="font-weight-normal"><?php echo $backstory; ?></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            </h5>
+                            <h5 class="h5-header-label mb-0 w-100 text-center">Reason for Applying</h5>
+                            <div class="border p-4 text-background-grey architects-font">
+                                <span class="font-weight-normal"><?php echo $reason; ?></span>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="col-md-6">
-                        </h5>
-                        <h5 class="h5-header-label mb-0 w-100 text-center">Reason for Applying</h5>
-                        <div class="border p-4 text-background-grey architects-font">
-                            <span class="font-weight-normal"><?php echo $reason; ?></span>
-                        </div>
+                    <div class="col-md-12 px-0 pt-3 pb-3">
+                        <span class="font-weight-normal"><?php CreateNotesTable($doc_id, $doc_type); ?></span>
+                        <button class="btn btn-secondary" data-toggle="modal" data-target="#NoteModal">Add Note</button>
                     </div>
-                </div>
-
-                <div class="col-md-12 px-0 pt-3 pb-3">
-                    <span class="font-weight-normal"><?php CreateNotesTable($doc_id, $doc_type); ?></span>
-                    <button class="btn btn-secondary" data-toggle="modal" data-target="#NoteModal">Add Note</button>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<!-- END OF APPLICATION -->
+    <!-- END OF APPLICATION -->
 
 <?php
-if (!$signed_by) {
-    include("../include/inc_view_app_unsigned.php");
-}
-if ($signed_by) {
-    include("../include/inc_view_app_signed.php");
-}
+    if (!$signed_by) {
+        include("../include/inc_view_app_unsigned.php");
+    }
+    if ($signed_by) {
+        include("../include/inc_view_app_signed.php");
+    }
 
-?>
+    if ($_SESSION['rank'] >= 3) {
+        include "../include/inc_doc_SS.php";
+    }
+} else {
+    echo "The document you are trying to look for cannot be found.";
+} ?>
 
 
 <?php include "../include/footer.php"; ?>
