@@ -1,9 +1,11 @@
 <?php include 'include/header.php';  ?>
 <?php
 include "include/sqlconnection.php";
+include "include/elements.php";
 
-
-
+$limit = 25;
+$count = Query("SELECT count(*) AS `count` FROM public_players WHERE `rank`>=-1")[0]->count;
+$obj = CreatePaginateObj($count, $limit);
 
 function getCountDrivers()
 {
@@ -16,7 +18,7 @@ function getCountRecruits()
     return Query($sql)[0]->count;
 }
 
-function getRostor()
+function getRostor($start, $limit)
 {
     if (isset($_GET['search'])) {
         $q = $_GET['search'];
@@ -24,7 +26,8 @@ function getRostor()
         or (steam_name like '%$q%')
         or (discord_name like '%$q%')";
     } else {
-        $sql = "SELECT * FROM `public_players` WHERE `rank`>=-1 ORDER BY -`callsign_id` DESC";
+
+        $sql = "SELECT * FROM `public_players` WHERE `rank`>=-1 ORDER BY -`callsign_id` DESC LIMIT $start,$limit";
     }
 
     return Query($sql);
@@ -59,7 +62,7 @@ function getRostor()
         </th>
     </tr>
     <?php
-    $table = getRostor();
+    $table = getRostor($obj->start, $limit);
     if ($table) {
         foreach ($table as $row) {
             echo "<tr>";
@@ -76,4 +79,7 @@ function getRostor()
     }
     ?>
 </table>
-<?php include 'include/footer.php'; ?>
+
+<?php
+Paginate($obj);
+include 'include/footer.php'; ?>

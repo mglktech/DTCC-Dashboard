@@ -5,7 +5,16 @@ include "../include/elements.php";
 
 
 
+function AcceptDeny($status)
+{
 
+    //echo $score_percent . "/" . $pass_percent . "<br>";
+    if ($status == "accept") {
+        return "<div class='bg-success text-white text-center font-weight-bold rounded'>Accepted</div>";
+    } else {
+        return "<div class='bg-danger text-white text-center font-weight-bold rounded'>Denied</div>";
+    }
+}
 
 
 
@@ -43,7 +52,7 @@ function CreateTableArchive($start, $limit)
         $tblRow[] = toDateS($row->signed_timestamp);
         $tblRow[] = $row->phone_number;
         $tblRow[] = $super_line;
-        $tblRow[] = $row->status;
+        $tblRow[] = AcceptDeny($row->status);
         $tblRow[] = "<a class='btn btn-outline-secondary' href='/applications/view_app.php?doc_id=" . $row->app_id . "'>View</a>";
         $tblBody[] = $tblRow;
     }
