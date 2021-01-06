@@ -24,12 +24,50 @@ function SpanIsAlive($IsAlive)
     }
 }
 
-
+function Pill($text)
+{
+    if ($text == "accept") {
+        return "<div class='border border-dark text-white text-center font-weight-bold rounded-pill' style='background-color:green'>Accepted</div>";
+    }
+    if ($text == "deny") {
+        return "<div class='border border-dark text-white text-center font-weight-bold rounded-pill' style='background-color:crimson'>Denied</div>";
+    }
+    if ($text == "passed") {
+        return "<div class='border border-dark text-white text-center font-weight-bold rounded-pill' style='background-color:green'>PASS</div>";
+    }
+    if ($text == "failed") {
+        return "<div class='border border-dark text-white text-center font-weight-bold rounded-pill' style='background-color:crimson'>FAIL</div>";
+    }
+    if ($text == "theory") {
+        return "<div class='border border-dark text-white text-center font-weight-bold rounded-pill' style='background-color:steelblue'>Theory</div>";
+    }
+    if ($text == "practical") {
+        return "<div class='border border-dark text-dark text-center font-weight-bold rounded-pill' style='background-color:goldenrod'>Practical</div>";
+    }
+    if ($text == "rank_-1") {
+        return "<div class='border border-dark text-dark text-center font-weight-bold rounded-pill' style='background-color:white; font-size:12px;'>Recruit</div>";
+    }
+    if ($text == "rank_0") {
+        return "<div class='border border-dark text-white text-center font-weight-bold rounded-pill' style='background-color:gray; font-size:12px;'>Driver</div>";
+    }
+    if ($text == "rank_1") {
+        return "<div class='border border-dark text-white text-center font-weight-bold rounded-pill' style='background-color:darkslategrey; font-size:12px;'>Private Hire</div>";
+    }
+    if ($text == "rank_2") {
+        return "<div class='border border-dark text-dark text-center font-weight-bold rounded-pill' style='background-color:khaki; font-size:12px;'>Supervisor</div>";
+    }
+    if ($text == "rank_3") {
+        return "<div class='border border-dark text-dark text-center font-weight-bold rounded-pill' style='background-color:gold; font-size:12px;'>Senior Supervisor</div>";
+    }
+    if ($text == "rank_4") {
+        return "<div class='border border-dark text-white text-center font-weight-bold rounded-pill' style='background-color:dodgerblue; font-size:12px;'>Overboss</div>";
+    }
+}
 
 function Tablefy($headers, $body)
 {
     if ($body) {
-        echo "<table class='table table-striped blue-header'>";
+        echo "<table class='table table-sm table-bordered table-striped blue-header'>";
         echo "<thead>";
         echo "<tr>";
         foreach ($headers as $h) {

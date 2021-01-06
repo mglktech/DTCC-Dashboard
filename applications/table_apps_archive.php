@@ -5,16 +5,7 @@ include "../include/elements.php";
 
 
 
-function AcceptDeny($status)
-{
 
-    //echo $score_percent . "/" . $pass_percent . "<br>";
-    if ($status == "accept") {
-        return "<div class='bg-success text-white text-center font-weight-bold rounded'>Accepted</div>";
-    } else {
-        return "<div class='bg-danger text-white text-center font-weight-bold rounded'>Denied</div>";
-    }
-}
 
 
 
@@ -52,8 +43,8 @@ function CreateTableArchive($start, $limit)
         $tblRow[] = toDateS($row->signed_timestamp);
         $tblRow[] = $row->phone_number;
         $tblRow[] = $super_line;
-        $tblRow[] = AcceptDeny($row->status);
-        $tblRow[] = "<a class='btn btn-outline-secondary' href='/applications/view_app.php?doc_id=" . $row->app_id . "'>View</a>";
+        $tblRow[] = Pill($row->status);
+        $tblRow[] = "<a class='btn btn-sm btn-outline-secondary mb-0 mt-0' href='/applications/view_app.php?doc_id=" . $row->app_id . "'>View</a>";
         $tblBody[] = $tblRow;
     }
     return Tablefy($tblHeaders, $tblBody);
@@ -71,7 +62,12 @@ $obj = CreatePaginateObj($count, $limit);
 <h5 class="mb-3 font-weight-normal"><i>Previously Signed Applications</i></h5>
 <div class="container-fluid-p0">
     <?php CreateTableArchive($obj->start, $limit);
-    Paginate($obj);
+    if (!isset($_GET["search"])) {
+        Paginate($obj);
+    }
+
+
+
 
     ?>
 

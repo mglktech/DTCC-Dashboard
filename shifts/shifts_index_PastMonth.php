@@ -17,7 +17,7 @@ if ($tData) {
     foreach ($tData as $row) {
         $tRow = array();
         $tRow[] = $row->callsign . " | " . $row->char_name;
-        $tRow[] = $row->rank;
+        $tRow[] = Pill("rank_" . $row->rank);
         $tRow[] = toDurationDays($row->duration);
         $tRow[] = $row->discord_name;
         $tRow[] = "<a class='btn btn-secondary view-player' href='/view_player.php?steamid=" . $row->steam_id . "'>View Player</button>";

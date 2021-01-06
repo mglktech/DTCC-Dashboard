@@ -3,9 +3,7 @@
 include "include/sqlconnection.php";
 include "include/elements.php";
 
-$limit = 25;
-$count = Query("SELECT count(*) AS `count` FROM public_players WHERE `rank`>=-1")[0]->count;
-$obj = CreatePaginateObj($count, $limit);
+
 
 function getCountDrivers()
 {
@@ -36,50 +34,49 @@ function getRostor($start, $limit)
 //print_r($ranks_array);
 
 // output data of each row
+
+$search_bar = "<form action='players.php' method='get'>
+<div class='input-group input-group float-left'>
+    <input name='search' style='height: 27px;' type='text' class='form-control' placeholder='Search Players...'>
+    <div class='input-group-append'>
+        <button type='submit' style='height: 27px;' class='btn btn-secondary player-search' type='button'>
+            <i class='fa fa-search'></i>
+        </button>
+    </div>
+</div>
+</form>";
+
+$tblHeaders = ["Name", "Discord", "Rank", "Status", $search_bar];
+
+$tBody = array();
+$limit = 25;
+$count = Query("SELECT count(*) AS `count` FROM public_players WHERE `rank`>=-1")[0]->count;
+$obj = CreatePaginateObj($count, $limit);
+$tData = getRostor($obj->start, $limit);
+if ($tData) {
+    foreach ($tData as $row) {
+        $tRow = array();
+        $tRow[] = $row->callsign . " | " . $row->char_name;
+        $tRow[] = $row->discord_name;
+        $tRow[] = Pill("rank_" . $row->rank);
+        $tRow[] = $row->status;
+        $tRow[] = "<a class='btn btn-sm btn-secondary view-player' style = 'align-self:stretch;' href='/view_player.php?steamid=" . $row->steam_id . "'>View Player</button>";
+        $tBody[] = $tRow;
+    }
+}
+
+
+
 ?>
 
 <h1>Roster</h1>
 <h5 class="font-italic mb-3 font-weight-normal">My Minions!</h5>
 <h5 class="mb-1 font-weight-normal font-weight-bold"> <?php echo getCountDrivers(); ?> Active Drivers, <?php echo getCountRecruits(); ?> Recruits</h5>
-<table class="table table-striped blue-header roster-table">
-    <tr>
-        <th>Callsign</th>
-        <th>Name</th>
-        <th>Discord</th>
-        <th>Rank</th>
-        <th>Status</th>
-        <th>
-            <form action="players.php" method="get">
-                <div class="input-group input-group float-left">
-                    <input name="search" style="height: 27px;" type="text" class="form-control" placeholder="Search Players...">
-                    <div class="input-group-append">
-                        <button type="submit" style="height: 27px;" class="btn btn-secondary player-search" type="button">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </th>
-    </tr>
-    <?php
-    $table = getRostor($obj->start, $limit);
-    if ($table) {
-        foreach ($table as $row) {
-            echo "<tr>";
-            echo "<td>" . $row->callsign . "</td>";
-            echo "<td>" . $row->char_name . "</td>";
-            echo "<td>" . $row->discord_name . "</td>";
-            echo "<td>" . $row->rank_label . "</td>";
-            echo "<td>" . $row->status . "</td>";
-            echo "<td><a class='btn btn-secondary view-player' href='/view_player.php?steamid=" . $row->steam_id . "'>View Player</button></td>";
-            echo "</tr>";
-        }
-    } else {
-        echo "no results";
-    }
-    ?>
-</table>
+
 
 <?php
-Paginate($obj);
+Tablefy($tblHeaders, $tBody);
+if (!isset($_GET["search"])) {
+    Paginate($obj);
+}
 include 'include/footer.php'; ?>

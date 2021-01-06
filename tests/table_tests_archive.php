@@ -13,9 +13,9 @@ function PassFail($metas, $score_percent)
     $pass_percent = (round($metas->pass_mark / $metas->max_score, 2));
     //echo $score_percent . "/" . $pass_percent . "<br>";
     if ($score_percent >= $pass_percent) {
-        return "<div class='bg-success text-white text-center font-weight-bold rounded'>PASS</div>";
+        return Pill("passed");
     } else {
-        return "<div class='bg-danger text-white text-center font-weight-bold rounded'>FAIL</div>";
+        return Pill("failed");
     }
 }
 
@@ -59,7 +59,7 @@ foreach ($result as $row) {
     $tblRow = array();
     $tblRow[] = $row->student_name;
     $tblRow[] = toDateS($row->submit_date);
-    $tblRow[] = $row->type;
+    $tblRow[] = Pill($row->type);
     $tblRow[] = $row->version;
     $tblRow[] = ($row->score_percent * 100) . "%";
     $tblRow[] = $super_line;
@@ -72,6 +72,8 @@ foreach ($result as $row) {
 <h5 class="font-italic mb-3 font-weight-normal">Why so serious?</h5>
 <?php
 Tablefy($tblHeaders, $tblBody);
-Paginate($obj);
+if (!isset($_GET["search"])) {
+    Paginate($obj);
+}
 
 include '../include/footer.php';
