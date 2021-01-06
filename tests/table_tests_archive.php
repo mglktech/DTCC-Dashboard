@@ -64,7 +64,7 @@ foreach ($result as $row) {
     $tblRow[] = ($row->score_percent * 100) . "%";
     $tblRow[] = $super_line;
     $tblRow[] = PassFail($metas, $row->score_percent);
-    $tblRow[] = "<a class='btn btn-primary' href='view_test.php?test_id=" . $row->id . "'>View Test</button>";
+    $tblRow[] = "<a class='btn btn-sm btn-primary mx-2' href='view_test.php?test_id=" . $row->id . "'>View Test</button>" . "<a class='btn btn-sm btn-secondary view-player' style = 'align-self:stretch;' href='/view_player.php?steamid=" . $row->steam_id . "'>View Player</button>";
     $tblBody[] = $tblRow;
 }
 ?>
