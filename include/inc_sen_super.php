@@ -10,6 +10,7 @@
     <?php } else { ?>
         <button class="btn bg-danger text-light mb-3" data-toggle="modal" data-target="#RemoveRecruitModal" <?php if ($rank >= $_SESSION["rank"]) echo "disabled" ?>><i class="fas fa-gavel"></i> Remove Recruit</button>
     <?php } ?>
+    <a type="button" class="btn text-light mb-3" style="background-color:gray" href="admin/upd_player_details.php?steamid=<?= $steamid ?>"> <i class='far fa-edit'></i>Edit Details</a>
 
 </div>
 

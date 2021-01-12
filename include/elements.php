@@ -64,6 +64,24 @@ function Pill($text)
     }
 }
 
+function Modal($id, $header, $body, $footer)
+{
+    echo "<div class='modal fade' id='" . $id . "' tabindex='-1' role='dialog' aria-hidden='true'>";
+    echo "<div class='modal-dialog modal-dialog-centered' role='document'>"; // could potentially forward entire modal content
+    echo "<div class='modal-content'>";
+    echo "<div class='modal-header'>";
+    echo "<h5 class='modal-title text-center'>" . $header . "</h5>";
+    echo "<button type='button' class='close' data-dismiss='modal' aria-label='Close'>";
+    echo "<span aria-hidden='true'>&times;</span>";
+    echo "</button></div>";
+    echo "<div class='modal-body text-center'>";
+    echo $body . "</div>";
+    echo "<div class='modal-footer'>";
+    echo $footer;
+    echo "</div></div></div></div>";
+}
+
+
 function Tablefy($headers, $body)
 {
     if ($body) {

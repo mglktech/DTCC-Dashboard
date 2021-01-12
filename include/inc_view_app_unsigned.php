@@ -219,14 +219,14 @@ $banned_status = prepBanned($isBanned);
                                     <textarea placeholder="Additional Information" class="form-control" name="additionalInformation" id="additionalInformation" rows="5"></textarea>
                                 </div>
                                 <div class="custom-control custom-switch">
-                                    <input class="custom-control-input" type="checkbox" name="reapplyDaysSwitch" id="reapplyDaysSwitch" data-toggle="collapse" data-target="#reapplyDaysGroup" aria-expanded="false" aria-controls="reapplyDaysSwitch" />
+                                    <input class="custom-control-input" type="checkbox" checked name="reapplyDaysSwitch" id="reapplyDaysSwitch" data-toggle="collapse" data-target="#reapplyDaysGroup" aria-expanded="false" aria-controls="reapplyDaysSwitch" />
                                     <label class="custom-control-label" for="reapplyDaysSwitch">
                                         <h6 class="font-weight-normal" type="button">Reapply?</h6>
                                     </label>
                                 </div>
-                                <div class="collapse" id="reapplyDaysGroup">
+                                <div id="reapplyDaysGroup">
                                     <div class="input-group my-2 w-75">
-                                        <input type="text" class="form-control" name="reapplyDaysAmount" placeholder="How many days?" aria-label="Days" aria-describedby="basic-addon2" id="reapplyDaysAmount" value="0" />
+                                        <input type="text" class="form-control" name="reapplyDaysAmount" placeholder="How many days?" aria-label="Days" aria-describedby="basic-addon2" id="reapplyDaysAmount" value="2" />
                                         <div class="input-group-append">
                                             <span class="input-group-text" id="basic-addon2">Days</span>
                                         </div>

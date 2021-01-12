@@ -18,6 +18,7 @@ if ($tData) {
         $tRow[] = Pill("rank_" . $row->rank);
         $tRow[] = toDurationDays($row->duration);
         $tRow[] = $row->discord_name;
+        //$tRow[] = $row->last_seen;
         $tRow[] = "<a class='btn btn-secondary view-player' href='/view_player.php?steamid=" . $row->steam_id . "'>View Player</button>";
         $tbody[] = $tRow;
     }
