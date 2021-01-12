@@ -4,13 +4,13 @@ include "../include/sqlconnection.php";
 
 function POST_shiftdata($data)
 {
-    print_r($data);
+    //print_r($data);
     $timestamp = time();
     foreach ($data as $row) {
         if ($row->outcome == "Accept") {
 
             $sql = "INSERT INTO verified_shifts (`server`,`steam_id`,`inRow`,`outRow`,`duration`,`signed_by`,`timestamp`) VALUES ('$row->server','$row->steam_id','$row->inRow','$row->outRow','$row->duration','$row->signed_by','$timestamp')";
-            echo "<br>" . $sql;
+            //echo "<br>" . $sql;
             Query($sql);
         }
         sign_record($row->inRow, $row->signed_by, $row->outcome);
@@ -20,12 +20,13 @@ function POST_shiftdata($data)
             sign_record($rej, $row->signed_by, "Reject", $row->inRow . " selected");
         }
     }
+    //echo "all done! <br>";
 }
 
 function sign_record($id, $sig, $outcome, $reason = NULL)
 {
     $sql = "UPDATE shift_records SET `signed_by`='$sig',`outcome`='$outcome', `reason`='$reason' WHERE `id` = '$id'";
-    echo "<br>" . $sql;
+    //echo "<br>" . $sql;
     Query($sql);
 }
 
@@ -107,7 +108,7 @@ function create_shift($_shift) // BULLSHIT code to unreference $shift->InRows an
 function get_steamid($sn)
 {
     $sql = "SELECT `steam_id` FROM `players` WHERE `steam_name` = '$sn'";
-    return Query($sql)[0]->steam_id;
+    return isset(Query($sql)[0]) ? Query($sql)[0]->steam_id : "";
 }
 
 
@@ -145,8 +146,8 @@ if (isset($_POST["submit"])) {
         $verified_shift->duration = $_POST["duration"][$index];
         $decode = json_decode($_POST["AllInRows"][$index]);
         $verified_shift->RejectedInRows = array_diff($decode, array($_POST["InRows"][$index]));
-        echo "<br>RejectedInRows = ";
-        print_r($verified_shift->RejectedInRows);
+        //echo "<br>RejectedInRows = ";
+        //print_r($verified_shift->RejectedInRows);
         if (in_array($index, $_POST["chk"])) {
             $verified_shift->outcome = "Accept";
             //echo "<br>InRow: " . $_POST["InRows"][$index] . " | OutRow: " . $_POST["OutRows"][$index] . " APPROVE";
@@ -158,6 +159,7 @@ if (isset($_POST["submit"])) {
         $verified_shifts[] = $verified_shift;
     }
     POST_shiftdata($verified_shifts);
+    echo "<h5>Done!</h5><br><a class='btn btn-outline-secondary' href='table_unver_shifts.php'>Back</a>";
 }
 
 
@@ -225,7 +227,7 @@ function display_selectbox($vals)
         <button name="submit" type="submit" class="btn btn-success">Submit</button>
     </form>
 <?php } ?>
-<a class='btn btn-outline-secondary' href='table_unver_shifts.php'>Back</a>
+
 <script>
     document.addEventListener("DOMContentLoaded", updateDurations());
 

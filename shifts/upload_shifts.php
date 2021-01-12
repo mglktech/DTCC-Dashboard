@@ -10,7 +10,7 @@ CreateShifts
 CreateShifts has added functionality to automatically reject "in" records that are more than 12 hours from the next "out".
 It will be up to Senior Supervisors to validate each shift on an individual basis. if we feel that the pruned shift could not be valid, we will reject it by hand.
 */
-include "../include/db_connection.php"; ?>
+include "../include/sqlconnection.php"; ?>
 <form action="" method="post" enctype="multipart/form-data">
     <input type="file" name="file">
     <input type="submit" name="btn_submit" value="Upload File" />
@@ -56,12 +56,12 @@ function DumpRawShiftDataToDB($records)
         $io = $record->io;
         // first query db for existing values
         $sql = "SELECT * FROM `shift_records` WHERE (`timestamp`='$ts' and `server` = '$sv' and `steam_name` = '$sn' and `io` = '$io')";
-        $r = fetchAll($sql);
+        $r = Query($sql);
         //echo "<br>" . $sql . "<br>";
-        if (count($r) == 0) {
+        if (!$r) {
             echo "<br>Adding new shift data for: " . $sn . "...";
             $sql = "INSERT IGNORE INTO shift_records (`timestamp`,`server`,`steam_name`,`io`) VALUES('$ts','$sv','$sn','$io')";
-            $responses[] = sqlRun($sql);
+            $responses[] = Query($sql);
         }
     }
     return $responses;
@@ -89,20 +89,20 @@ function CreateShifts()
     // ContainsOut will be figured from whether outRow contains any data
     // RowsToReject will be filled on whether the InTime being added is more than 12 hours from the corresponding OutTime
     // to begin, build an array of all servers, and include relevant data
-    $sql = "SELECT DISTINCT `server` FROM `shift_records`";
-    $servers = fetchAll($sql);
-    print_r($servers);
+    $servers = Query("SELECT DISTINCT `server` FROM `shift_records`");
+    //print_r($servers);
     // next, build an array of steam names
-    $sql = "SELECT DISTINCT `steam_name` FROM `shift_records`";
-    $steam_names = fetchAll($sql);
+    $steam_names = Query("SELECT DISTINCT `steam_name` FROM `shift_records`");
     //print_r($steam_names);
-    $records_by_server = array();
+    //$records_by_server = array();
     foreach ($servers as $s) { // foreach server number
         foreach ($steam_names as $sn) { // foreach player name
-            $sql = "SELECT * FROM `shift_records` WHERE (`steam_name` = '$sn[0]' AND `server` = '$s[0]' AND `signed_by` IS NULL) ORDER BY `id`";
-            $records = fetchAll($sql);
+            $sql = "SELECT * FROM `shift_records` WHERE (`steam_name` = '$sn->steam_name' AND `server` = '$s->server' AND `signed_by` IS NULL) ORDER BY `id`";
+            $records = Query($sql);
+            if ($records) {
+                PruneShiftRecords($records);
+            }
 
-            $PrunedShifts = PruneShiftRecords($records);
             //print_r($PrunedShifts);
         }
     }
@@ -115,11 +115,11 @@ function PruneShiftRecords($records)
     $shift->InRows = array();
     $shift->InTimes = array();
     foreach ($records as $r) {
-        $id = $r[0];
-        $timestamp = $r[1];
+        $id = $r->id;
+        $timestamp = $r->timestamp;
         //$server = $r[2];
-        $steam_name = $r[3];
-        $io = $r[4];
+        $steam_name = $r->steam_name;
+        $io = $r->io;
         echo "steamname: " . $steam_name . ", id: " . $id . " time: " . $timestamp . " io: " . $io . "<br>";
         if ($io == "in") {
             $shift->InRows[] = $id;
@@ -159,20 +159,17 @@ function PruneShift($shift)
             }
         }
         if (count($shift->InTimes) == 0) { // if OutRow found with no InRows
-            $sql = "UPDATE shift_records SET `signed_by`='Automatic',`outcome`='Reject',`reason`='Highlife_Server_Error' WHERE `id` = '$shift->OutRow'";
-            $res = sqlRun($sql);
+            Query("UPDATE shift_records SET `signed_by`='Automatic',`outcome`='Reject',`reason`='Highlife_Server_Error' WHERE `id` = '$shift->OutRow'");
             echo "<br> THROWING SHIFT #" . $shift->OutRow;
         }
     }
     if (!isset($shift->InTimes)) {
-        $sql = "UPDATE shift_records SET `signed_by`='Automatic',`outcome`='Reject',`reason`='Highlife_Server_Error' WHERE `id` = '$shift->OutRow'";
-        sqlRun($sql);
+        Query("UPDATE shift_records SET `signed_by`='Automatic',`outcome`='Reject',`reason`='Highlife_Server_Error' WHERE `id` = '$shift->OutRow'");
         echo "<br> THROWING SHIFT #" . $shift->OutRow;
     }
     // now deal with rejected rows
     foreach ($RejectRows as $r) {
-        $sql = "UPDATE shift_records SET `signed_by`='Automatic',`outcome`='Reject',`reason`='>12hrsFromOut' WHERE `id` = '$r'";
-        sqlRun($sql);
+        Query("UPDATE shift_records SET `signed_by`='Automatic',`outcome`='Reject',`reason`='>12hrsFromOut' WHERE `id` = '$r'");
         echo "<br> THROWING SHIFT #" . $shift->OutRow;
         //echo $sql . "<br>";
     }

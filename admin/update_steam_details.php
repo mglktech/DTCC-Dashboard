@@ -1,6 +1,6 @@
 <?php include "../include/header.php";
 include "../include/sqlconnection.php";
-include "../steam/SteamUser.php";
+include "../steam/SteamWebAPI_Simple.php";
 include "../include/elements.php";
 
 
@@ -8,17 +8,17 @@ function CheckSteamNames()
 {
     $sql = "SELECT steam_id, steam_name, char_name FROM players WHERE rank>='0'";
     $players = Query($sql);
-    $p_ch_sn_ary = array();
+    $p_ch_sn_ary = array(); // player character steam_name array
 
     foreach ($players as $player) {
-        $st_resp = new SteamUser($player->steam_id);
-        if (isset($st_resp->steamID) && $st_resp->steamID != $player->steam_name) {
+        $response_steam_name = GetSteamDetails($player->steam_id)->steam_name;
+        if (isset($response_steam_name) && $response_steam_name != $player->steam_name) {
             $p = new stdClass();
             $p->char_name = $player->char_name;
             $p->old_steam_name = $player->steam_name;
-            $p->new_steam_name = $st_resp->steamID;
+            $p->new_steam_name = $response_steam_name;
             $p_ch_sn_ary[] = $p;
-            UpdateDB($player->steam_id, $st_resp->steamID);
+            UpdateDB($player->steam_id, $response_steam_name);
         }
     }
     return $p_ch_sn_ary;
@@ -26,7 +26,7 @@ function CheckSteamNames()
 
 function TableConstr()
 {
-    $head = ["char_name", "old_steamid", "new_steamid"];
+    $head = ["Player Name", "Old Steam Name", "New Steam Name"];
     $content = CheckSteamNames();
     $body = array();
     foreach ($content as $c) {
