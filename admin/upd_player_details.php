@@ -31,6 +31,8 @@ if ($rank > 2) {
     if ($newrank) {
         $sql = "UPDATE players SET rank = '$newrank' WHERE steam_id = '$steamid'";
         Query($sql);
+        $sql = "UPDATE players SET whitelisted = '0' WHERE steam_id = '$steamid'";
+        Query($sql);
     }
 }
 
