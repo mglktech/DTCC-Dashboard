@@ -10,28 +10,41 @@ if (isset($_GET['steamid'])) {
     $doc_id = $steamid;
     $sql = "SELECT * from public_players where steam_id = '$steamid'";
     $player = Query($sql)[0];
-    $char_name = $player->char_name;
-    if ($player->callsign != null) {
-        $call_char_name = $player->callsign . " | " . $player->char_name;
-    } else {
-        $call_char_name = $player->char_name;
-    }
 
-    //$steamid = $_GET['steamid'] or $player[2];
-    $steam_name = $player->steam_name;
-    $discord_name = $player->discord_name;
-    $phone_number = $player->phone_number;
-    $rank = $player->rank;
-    $rank_label = $player->rank_label;
-    $status = $player->status;
-    $zone = $player->timezone;
-
-    $alive = IsAlive($player->char_name);
+    $char_name = "";
+    $steam_name = "";
+    $discord_name = "";
+    $phone_number = "";
+    $rank = "";
+    $rank_label = "";
+    $status = "";
+    $zone = "";
     $link = new stdClass();
     $link->label = "Whitelist";
     $link->href = "https://highliferoleplay.net/whitelisting/index.php";
     $hex = "steam:" . dechex($steamid);
     $doc_type = "player";
+    $call_char_name = "";
+    $alive = -2;
+
+    if ($player) {
+        $char_name = $player->char_name;
+        if ($player->callsign != null) {
+            $call_char_name = $player->callsign . " | " . $player->char_name;
+        } else {
+            $call_char_name = $player->char_name;
+        }
+
+        //$steamid = $_GET['steamid'] or $player[2];
+        $steam_name = $player->steam_name;
+        $discord_name = $player->discord_name;
+        $phone_number = $player->phone_number;
+        $rank = $player->rank;
+        $rank_label = $player->rank_label;
+        $status = $player->status;
+        $zone = $player->timezone;
+        $alive = IsAlive($player->char_name);
+    }
 }
 
 function getSumShifts($steam_id)
@@ -69,6 +82,8 @@ function getMetas($type, $ver)
     $sql = "SELECT `pass_mark`,`max_score` FROM `tests_meta` WHERE `type`='$type' AND `version`='$ver'";
     return Query($sql)[0];
 }
+
+
 
 function PassFail($ret, $score_percent)
 {

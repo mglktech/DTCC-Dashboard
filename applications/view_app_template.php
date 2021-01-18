@@ -16,25 +16,6 @@ function AppStillUnsigned($doc_id)
     }
 }
 
-
-// function PrepareSteamURL($steam_link)
-// {
-//     include "steam/SteamWebApi_Simple.php";
-
-
-//     $split = explode("/", $steam_link);
-//     if (count($split) >= 4) {
-//         $user = new SteamUser($split[4]);
-//     } else {
-//         $user = NULL;
-//     }
-//     return $user;
-
-//     // auto-checks for vanity url
-//     //print_r($user);
-
-// }
-
 function chkPostBool($id)
 {
     if (isset($_POST[$id])) {
@@ -58,18 +39,6 @@ function UpdateDB($sql)
     $response = Query($sql);
     return $response;
 }
-
-function getViewPlayer($steamid)
-{
-    if ($steamid) {
-        $sql = "SELECT * FROM players WHERE steam_id = '$steamid'";
-        $result = Query($sql);
-        if ($result) {
-            return "<a class='btn btn-secondary view-player' href='/view_player.php?steamid=" . $steamid . "'>View Player</a>";
-        }
-    }
-}
-
 
 if (isset($_GET["doc_id"])) {
     $doc_id = $_GET["doc_id"];
@@ -222,7 +191,7 @@ if (isset($appdata->app_id)) {
                     <div class="row">
                         <div class="col-md-6">
                             <?php
-                            CreateInputElemFull(SpanPrepend("Employee Name: "), SpanMiddleDefault($char_name), getViewPlayer($detected_steam_id));
+                            CreateInputElemFull(SpanPrepend("Employee Name: "), SpanMiddleDefault($char_name), SpanIsAlive($alive));
                             CreateInputElem("Phone Number:", $phone_number, "");
                             CreateInputElem("Discord:", $discord_name, "");
                             ?>
