@@ -1,2 +1,3 @@
 /include/db_connection.php
 /include/p_db_connection.php
+/include/change_password.php
