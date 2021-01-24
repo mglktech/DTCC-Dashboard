@@ -85,7 +85,8 @@ function Modal($id, $header, $body, $footer)
 function Tablefy($headers, $body)
 {
     if ($body) {
-        echo "<table class='table table-sm table-bordered table-striped blue-header'>";
+        echo "<div class='table-responsive'>";
+        echo "<table class='table table-striped'>";
         echo "<thead>";
         echo "<tr>";
         foreach ($headers as $h) {
@@ -104,6 +105,7 @@ function Tablefy($headers, $body)
 
         echo "</tbody>";
         echo "</table>";
+        echo "</div>";
     } else {
         echo "Table is empty";
     }
@@ -212,7 +214,7 @@ function Paginate($obj)
 {
     //$obj = CreatePaginateObj($count, $limit);
 
-    echo " <nav> <ul class='pagination'>";
+    echo " <nav> <ul class='pagination flex-wrap'>";
     echo "<li class='page-item";
     if ($obj->page == 1) {
         echo " disabled";

@@ -1,4 +1,4 @@
-<?php include 'include/header.php';  ?>
+<?php include "include/components/head.php"; ?>
 <?php
 include "include/sqlconnection.php";
 include "include/elements.php";
@@ -69,9 +69,9 @@ if ($tData) {
 
 ?>
 
-<h1>Roster</h1>
-<h5 class="font-italic mb-3 font-weight-normal">My Minions!</h5>
-<h5 class="mb-1 font-weight-normal font-weight-bold"> <?php echo getCountDrivers(); ?> Active Drivers, <?php echo getCountRecruits(); ?> Recruits</h5>
+<h1 class="h-title">Roster</h1>
+<h5 class="h-subtitle font-italic mb-3 font-weight-normal">My Minions!</h5>
+<h5 class="h-subtitle mb-1 font-weight-normal font-weight-bold"> <?php echo getCountDrivers(); ?> Active Drivers, <?php echo getCountRecruits(); ?> Recruits</h5>
 
 
 <?php
@@ -79,4 +79,4 @@ Tablefy($tblHeaders, $tBody);
 if (!isset($_GET["search"])) {
     Paginate($obj);
 }
-include 'include/footer.php'; ?>
+include "include/components/foot.php";

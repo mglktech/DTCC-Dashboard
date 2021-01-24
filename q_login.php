@@ -2,16 +2,7 @@
 include "include/sqlconnection.php";
 include "include/elements.php";
 include "steam/SteamWebAPI_Simple.php";
-function getSteamID($steam_name)
-{
-    $sql = "SELECT steam_id FROM players WHERE steam_name='$steam_name'";
-    $result = Query($sql);
-    if ($result) {
-        return $result[0]->steam_id;
-    } else {
-        return null;
-    }
-}
+
 
 // function getAvatars($steam_id)
 // {
@@ -25,6 +16,15 @@ function getSteamID($steam_name)
 //     SET av_icon='$avIcon',av_medium='$avMedium',av_full='$avFull' WHERE steam_id='$steam_id'";
 //     Query($sql);
 // }
+function chkOnline()
+{
+    $resp = Query("SELECT * FROM public_players LIMIT 1");
+    if ($resp) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 function BeginSession($player, $temp)
 {
@@ -82,4 +82,11 @@ include "include/_header.php";
         <input type="submit" name="Login" class="btn btn-secondary" value="Login">
     </div>
 </form>
+
+<label>MySQL is: <?php if (chkOnline()) {
+                        echo "online";
+                    } else {
+                        echo "offline";
+                    } ?></label>
+
 <?php include "include/footer.php";

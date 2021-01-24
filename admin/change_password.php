@@ -1,16 +1,16 @@
 <?php
 include "../include/sqlconnection.php";
-
+$_POST["steam_name"] = "Pwnstar64";
 if (isset($_POST["ChangePW"])) {
     if ($_POST["txtNewPass"] == $_POST["txtNewPassConfirm"] && $_POST["txtNewPass"] != '') {
         $resp = set_password($_POST["steam_name"], $_POST["txtNewPass"]);
         //echo $resp;
-        header("Location: ../index.php");
+        header("Location: ../q_login.php");
     } else {
         echo "Passwords do not match!";
     }
 }
-include "../include/header.php";
+include "../include/_header.php";
 ?>
 <form method="post" target="">
     You have logged in with a temporary code. Please choose a more permanent password!
@@ -27,7 +27,7 @@ include "../include/header.php";
             </div>
             <input class='form-control' type='password' value='' name='txtNewPassConfirm'>
         </div>
-        <input name="steam_name" value='<?php echo $_SESSION['steam_name'] ?>' hidden>
+
         <input type="submit" name="ChangePW" class="btn btn-secondary" value="Change">
     </div>
 </form>

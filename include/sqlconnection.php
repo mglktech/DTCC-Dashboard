@@ -138,6 +138,17 @@ function q_fetchPlayerFormatted($steam_id)
     return $player->callsign . " | " . $player->char_name;
 }
 
+function getSteamID($steam_name)
+{
+    $sql = "SELECT steam_id FROM players WHERE steam_name='$steam_name'";
+    $result = Query($sql);
+    if ($result) {
+        return $result[0]->steam_id;
+    } else {
+        return null;
+    }
+}
+
 function EXPORT_DATABASE($host, $user, $pass, $name,       $tables = false, $backup_name = false)
 {
     $mysqli = new mysqli($host, $user, $pass, $name);
