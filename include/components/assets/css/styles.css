@@ -18,6 +18,20 @@
   border-radius: .25rem;
 }
 
+.span-denied {
+  background: rgb(176,11,0);
+  color: #f2f5f8;
+  font-size: 24px;
+}
+
+.span-ignored {
+  background: rgb(101,101,101);
+  color: #f2f5f8;
+  font-size: 24px;
+}
+
+
+
 thead {
   background-color: rgb(28,54,84);
   color: white;
@@ -26,8 +40,7 @@ thead {
 
 tbody {
   color: rgb(205,205,205);
-  font-size: 14px;
-  background-color: #464d5f;
+  font-size: 12px;
 }
 
 .table td {
@@ -35,7 +48,6 @@ tbody {
   padding-right: 5px;
   padding-bottom: 5px;
   padding-left: 5px;
-  
 }
 
 .table thead th {
@@ -43,14 +55,7 @@ tbody {
   padding-right: 5px;
   padding-bottom: 8px;
   padding-left: 5px;
-  font-size: 16px;
-}
-
-container-table {
-  padding-top: 15px;
-  padding-bottom: 15px;
-  padding-right: 15px;
-  padding-left: 15px;
+  font-size: 14px;
 }
 
 .h-title {
@@ -65,6 +70,10 @@ container-table {
   text-align: center;
 }
 
+.frm-search {
+  font-size: 12px;
+}
+
 .col-index {
   max-height: 70vh;
   border: 1px solid rgb(120,120,120) ;
@@ -74,12 +83,15 @@ container-table {
   padding-left: 5px;
 }
 
-.page-link:hover {
-  z-index: 2;
-  color: #214a80;
-  text-decoration: none;
-  background-color: #787878;
+
+
+.pag-dtcc {
+  background: #444444;
+  color: #f2f5f8;
+  border-style: none;
 }
+
+
 
 .page-link {
   position: relative;
@@ -92,6 +104,19 @@ container-table {
   border: 0px solid;
 }
 
+.page-link:hover {
+  z-index: 2;
+  color: #214a80;
+  text-decoration: none;
+  background-color: #787878;
+}
+
+.page-item.active .page-link {
+  z-index: 3;
+  color: #fff;
+  background-color: #787878;
+}
+
 .page-item.disabled .page-link {
   color: #787878;
   pointer-events: none;
@@ -100,60 +125,97 @@ container-table {
   border-color: #dee2e6;
 }
 
-
-.page-item.active .page-link {
-  z-index: 3;
-  color: #fff;
-  background-color: #787878;
+.span-form {
+  background: #cccccc;
+  color: #363739;
+  max-width: 85px;
+  width: 100px;
+  border: 1px solid #aaaaaa ;
+  
+}
+@import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap');
+.architects-font {
+ font-family: 'Architects Daughter', cursive !important;
+ font-size: 15px !important;
 }
 
-
-
-
-
-
-
-
-.btn:not(:disabled):not(.disabled).btn-table {
-  background-color: rgb(28,54,84);
-  color: white;
-  font-size: 14px;
-  padding-right: 6px;
-  padding-left: 6px;
+.form-title {
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 5px;
+}
+.form-subtitle {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #363739;
 }
 
-
-.navigation-clean.navbar-dark .navbar-nav .nav-link:focus, .navigation-clean.navbar-dark .navbar-nav .nav-link:hover {
-  color: #fff;
-  background-color: transparent;
+.document-form {
+  background: radial-gradient(rgb(247,255,255), rgb(212,215,218) 95%), #f2f5f8;
+  Color: #1f2021;
+  margin-top: 5%;
+  margin-right: 5%;
+  margin-bottom: 5%;
+  margin-left: 5%;
+  border-width: 1px;
+  max-width: 842px;
 }
 
-.navigation-clean.navbar-light .navbar-nav .nav-link:focus, .navigation-clean.navbar-light .navbar-nav .nav-link:hover {
-  color: #e8e8e8;
-  background-color: transparent;
+.igroup-read {
+  padding: 0;
+  margin: 0;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
-.navigation-clean.navbar-dark .navbar-nav .nav-link {
-  color: #dfe8ee;
+.igroup-read-input {
+  border: 1px solid #aaaaaa ;
 }
 
-.navigation-clean.navbar-light .navbar-nav .nav-link {
-  color: white;
+body {
+  margin: 0;
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #ffffff;
+  text-align: left;
+  background: radial-gradient(#2f3334 20%, #232729 68%), rgb(35,39,41);
 }
 
-.navigation-clean.navbar .navbar-nav .nav-link {
-  padding-left: 18px;
-  padding-right: 18px;
+.span-textarea {
+  background: rgb(204,204,204);
+  border: 1px solid rgb(54,55,57);
+  border-bottom-style: none;
+  text-align: center;
 }
 
-.navigation-clean .navbar-nav > .active > a, .navigation-clean .navbar-nav > .show > a {
-  background: none;
-  box-shadow: none;
+.span-approved {
+  background: rgb(0,133,0);
+  color: #f2f5f8;
+  font-size: 24px;
 }
 
-.navigation-clean.navbar-dark {
-  background-color: #1f2021;
-  color: #fff;
+.container-result {
+  margin-top: 10px;
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+  color: #dee2e6;
+  background-color: #214a80;
+  border-color: #dee2e6 #dee2e6 #fff;
+}
+
+.nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover {
+  border-color: #e9ecef #e9ecef #dee2e6;
+}
+
+.nav-tabs .nav-link {
+  border-top-left-radius: .25rem;
+  border-top-right-radius: .25rem;
+  background: #1c3654;
+  border: 1px solid #e9ecef ;
+  color: #e9ecef;
 }
 
 .navigation-clean {
@@ -222,11 +284,30 @@ container-table {
   border-top-color: #333;
 }
 
+.navigation-clean .navbar-nav > .active > a, .navigation-clean .navbar-nav > .show > a {
+  background: none;
+  box-shadow: none;
+}
+
 .navigation-clean.navbar-light .navbar-nav .nav-link.active, .navigation-clean.navbar-light .navbar-nav .nav-link.active:focus, .navigation-clean.navbar-light .navbar-nav .nav-link.active:hover {
   color: #8f8f8f;
   box-shadow: none;
   background: none;
   pointer-events: none;
+}
+
+.navigation-clean.navbar .navbar-nav .nav-link {
+  padding-left: 18px;
+  padding-right: 18px;
+}
+
+.navigation-clean.navbar-light .navbar-nav .nav-link {
+  color: white;
+}
+
+.navigation-clean.navbar-light .navbar-nav .nav-link:focus, .navigation-clean.navbar-light .navbar-nav .nav-link:hover {
+  color: #e8e8e8;
+  background-color: transparent;
 }
 
 .navigation-clean .navbar-nav > li > .dropdown-menu {
@@ -262,11 +343,25 @@ container-table {
   color: white;
 }
 
+.navigation-clean.navbar-dark {
+  background-color: #1f2021;
+  color: #fff;
+}
+
 .navigation-clean.navbar-dark .navbar-nav a.active, .navigation-clean.navbar-dark .navbar-nav a.active:focus, .navigation-clean.navbar-dark .navbar-nav a.active:hover {
   color: #8f8f8f;
   box-shadow: none;
   background: none;
   pointer-events: none;
+}
+
+.navigation-clean.navbar-dark .navbar-nav .nav-link {
+  color: #dfe8ee;
+}
+
+.navigation-clean.navbar-dark .navbar-nav .nav-link:focus, .navigation-clean.navbar-dark .navbar-nav .nav-link:hover {
+  color: #fff;
+  background-color: transparent;
 }
 
 .navigation-clean.navbar-dark .navbar-nav > li > .dropdown-menu {
@@ -286,4 +381,6 @@ container-table {
     color: #fff;
   }
 }
+
+
 

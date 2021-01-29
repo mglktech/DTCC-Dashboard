@@ -12,6 +12,7 @@ isset($_POST["new_discord"]) ? $newdiscord = quotefix($_POST["new_discord"])  : 
 isset($_POST["new_rank"]) ? $newrank = quotefix($_POST["new_rank"])  : $newrank = null;
 
 if ($rank > 2) {
+
     if ($newname) {
         $sql = "UPDATE players SET char_name = '$newname' WHERE steam_id = '$steamid'";
         Query($sql);
@@ -28,7 +29,7 @@ if ($rank > 2) {
         $sql = "UPDATE players SET discord_name = '$newdiscord' WHERE steam_id = '$steamid'";
         Query($sql);
     }
-    if ($newrank) {
+    if ($newrank != null) {
         $sql = "UPDATE players SET rank = '$newrank' WHERE steam_id = '$steamid'";
         Query($sql);
         $sql = "UPDATE players SET whitelisted = '0' WHERE steam_id = '$steamid'";

@@ -231,3 +231,31 @@
 .table-tablefy {
 }
 
+.tbl-head {
+  height: 40px;
+  max-height: 40px;
+}
+
+.tbl-row {
+  max-height: 35px;
+  height: 35px;
+}
+
+.divTableHead {
+  background-color: #214a80;
+}
+
+.divTableRow:nth-of-type(even) {
+  background-color: #434a52;
+}
+
+.divTableRow:nth-of-type(odd) {
+  background-color: #37434d;
+}
+
+.span-denied {
+  background: rgb(176,11,0);
+  color: #f2f5f8;
+  font-size: 24px;
+}
+

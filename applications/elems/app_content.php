@@ -1,40 +1,48 @@
-<div class="container border">
-    <div class="d-flex flex-row-reverse">
-        <label>Version: <?= $app_info->version; ?></label>
-    </div>
-
-    <div class="row justify-content-center mt-2">
-        <h1>Application Form</h1>
-    </div>
-    <div class="row justify-content-center">
-        <h6>Submitted On: <?= $app_info->date_submitted; ?></h6>
-    </div>
-    <div class="row mt-5 mb-3">
-        <div class="col">
-            <?= CreateInputElemFull(SpanPrepend("Name: "), SpanMiddleDefault($app_info->name), ""); ?>
-            <?= CreateInputElemFull(SpanPrepend("Phone: "), SpanMiddleDefault($app_info->phone), ""); ?>
-            <?= CreateInputElemFull(SpanPrepend("Discord: "), SpanMiddleDefault($app_info->discord), ""); ?>
-            <?= CreateInputElemFull(SpanPrepend("DOB: "), SpanMiddleDefault($app_info->DOB), ""); ?>
+<h4 class="form-title">Driver Application Form</h4>
+<h6 class="form-subtitle">Submitted On: <?= $app_info->date_submitted; ?></h6>
+<div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-app">
+    <div class="col">
+        <div class="input-group d-flex justify-content-end justify-content-sm-center igroup-read">
+            <div class="input-group-prepend"><span class="d-flex justify-content-end input-group-text span-form">Name:</span></div><input class="form-control d-flex d-xl-flex justify-content-start igroup-read-input" type="text" value="<?= $app_info->name ?>" readonly="" style="max-width: 200px;">
+            <div class="input-group-append"></div>
         </div>
-        <div class="col">
-            <?= CreateInputElemFull(SpanPrepend("Steam: "), SpanMiddleDefault($app_info->steam_name), ""); ?>
-            <?= CreateInputElemFull(SpanPrepend("SteamID: "), SpanMiddleDefault($app_info->SteamID), ""); ?>
-            <?= CreateInputElemFull(SpanPrepend("Zone: "), SpanMiddleDefault($app_info->Zone), ""); ?>
-            <?= CreateInputElemFull(SpanPrepend("Info: "), SpanMiddleDefault($app_info->Info), ""); ?>
+        <div class="input-group d-flex justify-content-end justify-content-sm-center igroup-read">
+            <div class="input-group-prepend"><span class="d-flex justify-content-end input-group-text span-form">Phone:</span></div><input class="form-control d-flex d-xl-flex justify-content-start igroup-read-input" type="text" value="<?= $app_info->phone ?>" readonly="" style="max-width: 200px;">
+            <div class="input-group-append"></div>
+        </div>
+        <div class="input-group d-flex justify-content-end justify-content-sm-center igroup-read">
+            <div class="input-group-prepend"><span class="d-flex justify-content-end input-group-text span-form">Discord:</span></div><input class="form-control d-flex d-xl-flex justify-content-start igroup-read-input" type="text" value="<?= $app_info->discord ?>" readonly="" style="max-width: 200px;">
+            <div class="input-group-append"></div>
+        </div>
+        <div class="input-group d-flex justify-content-end justify-content-sm-center igroup-read">
+            <div class="input-group-prepend"><span class="d-flex justify-content-end input-group-text span-form">DOB:</span></div><input class="form-control d-flex d-xl-flex justify-content-start igroup-read-input" type="text" value="<?= $app_info->DOB ?>" readonly="" style="max-width: 200px;">
+            <div class="input-group-append"></div>
         </div>
     </div>
-    <div class="row mt-5 mb-3">
-        <div class="col">
-            <h5 class="h5-header-label mb-0 w-100 text-center">Character Backstory</h5>
-            <div class="border p-4 text-background-grey architects-font">
-                <span class="font-weight-normal"><?= $app_info->backstory ?></span>
-            </div>
+    <div class="col">
+        <div class="input-group d-flex justify-content-start justify-content-sm-center igroup-read">
+            <div class="input-group-prepend"><span class="d-flex justify-content-end input-group-text span-form">Steam:</span></div><input class="form-control d-flex d-xl-flex justify-content-start igroup-read-input" type="url" value="<?= $app_info->steam_name ?>" readonly="" style="max-width: 200px;">
+            <div class="input-group-append"></div>
         </div>
-        <div class="col">
-            <h5 class="h5-header-label mb-0 w-100 text-center">Reason for Applying</h5>
-            <div class="border p-4 text-background-grey architects-font">
-                <span class="font-weight-normal"><?= $app_info->reason ?></span>
-            </div>
+        <div class="input-group d-flex justify-content-start justify-content-sm-center igroup-read">
+            <div class="input-group-prepend"><span class="d-flex justify-content-end input-group-text span-form">Steam ID:</span></div><input class="form-control d-flex d-xl-flex justify-content-start igroup-read-input" type="text" value="<?= $app_info->SteamID ?>" readonly="" style="max-width: 200px;">
+            <div class="input-group-append"></div>
         </div>
+        <div class="input-group d-flex justify-content-start justify-content-sm-center igroup-read">
+            <div class="input-group-prepend"><span class="d-flex justify-content-end input-group-text span-form">Zone:</span></div><input class="form-control d-flex d-xl-flex justify-content-start igroup-read-input" type="text" value="<?= $app_info->Zone ?>" readonly="" style="max-width: 200px;">
+            <div class="input-group-append"></div>
+        </div>
+        <div class="input-group d-flex justify-content-start justify-content-sm-center igroup-read">
+            <div class="input-group-prepend"><span class="d-flex justify-content-end input-group-text span-form">Info:</span></div><input class="form-control d-flex d-xl-flex justify-content-start igroup-read-input" type="text" value="<?= $app_info->Info ?>" readonly="" style="max-width: 200px;">
+            <div class="input-group-append"></div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <div class="d-flex flex-column"><span class="span-textarea">Backstory</span><textarea class="architects-font" readonly="" rows="10"><?= $app_info->backstory ?></textarea></div>
+    </div>
+    <div class="col">
+        <div class="d-flex flex-column"><span class="span-textarea">Reason</span><textarea class="architects-font" readonly="" rows="10"><?= $app_info->reason ?></textarea></div>
     </div>
 </div>

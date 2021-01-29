@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="assets/css/Navigation-Clean.css">
     <link rel="stylesheet" href="assets/css/Navigation-with-Search.css">
     <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/table.css">
 </head>
 
 <body style="background: rgb(35,39,41);text-align: center;">
@@ -42,7 +43,7 @@
     <section>
         <div class="container-fluid d-flex">
             <div class="row">
-                <div class="col d-flex flex-column flex-grow-0 flex-shrink-1 col-index">
+                <div class="col-auto d-flex flex-column flex-grow-0 flex-shrink-1 col-index">
                     <h4 class="h-title">New Applicants</h4>
                     <h5 class="h-subtitle">Need Friends?</h5>
                     <div class="table-responsive">
@@ -79,6 +80,25 @@
                     <h5 class="h-subtitle">Useful Links</h5><a class="btn btn-secondary m-1" href="https://drive.google.com/drive/folders/1DkeJJ5uiEdpRJ0KCDMmGQsKFPxOaPzF4?usp=sharing">Google&nbsp;Drive&nbsp;Folder<br></a><a class="btn btn-secondary m-1" href="#">Feedback</a>
                     <a
                         class="btn btn-secondary m-1" href="#">Link</a><a class="btn btn-secondary m-1" href="#">Link</a></div>
+                <div class="col">
+                    <div>
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item" role="presentation"><a class="nav-link active" role="tab" data-toggle="tab" href="#tab-1">Tab 1</a></li>
+                            <li class="nav-item" role="presentation"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-2">Tab 2</a></li>
+                            <li class="nav-item" role="presentation"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-3">Tab 3</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" role="tabpanel" id="tab-1">
+                                <p>Content for tab 1.</p>
+                            </div>
+                            <div class="tab-pane" role="tabpanel" id="tab-2">
+                                <p>Content for tab 2.</p>
+                            </div>
+                            <div class="tab-pane" role="tabpanel" id="tab-3">
+                                <p>Content for tab 3.</p>
+                            </div>
+                        </div>
+                    </div><button class="btn btn-primary" type="button">Button</button></div>
             </div>
         </div>
     </section>

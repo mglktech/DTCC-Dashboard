@@ -40,20 +40,29 @@ function CreateTableUnread()
                     <?php CreateTableUnread() ?>
                 </div>
             </div>
+
+            <?php
+
+            if ($_SESSION['rank'] > 2) {
+
+                include "include/inc_index_senior.php";
+            }
+            ?>
             <div class="col d-xl-flex flex-column justify-content-xl-center align-items-xl-center">
-                <h5 class="h-subtitle">Useful Links</h5><a class="btn btn-secondary m-1" href="https://drive.google.com/drive/folders/1DkeJJ5uiEdpRJ0KCDMmGQsKFPxOaPzF4?usp=sharing">Google&nbsp;Drive&nbsp;Folder<br></a><a class="btn btn-secondary m-1" href="#">Feedback</a>
-                <a class="btn btn-secondary m-1" href="#">Link</a><a class="btn btn-secondary m-1" href="#">Link</a>
+                <h5 class="h-subtitle">Useful Links</h5>
+                <a class="btn btn-secondary m-1" href="https://drive.google.com/drive/folders/1DkeJJ5uiEdpRJ0KCDMmGQsKFPxOaPzF4?usp=sharing">Google&nbsp;Drive&nbsp;Folder<br></a>
+                <a class="btn btn-secondary m-1" href="#">Feedback</a>
+                <?php if ($_SESSION['rank'] > 2) { ?>
+                    <a class='btn btn-dark m-1' href='/admin/inactive_drivers.php'>Inactive Staff</a>
+                    <a class='btn btn-dark m-1' href='/admin/slackers.php'>Under-Achievers</a>
+                    <a class='btn btn-dark m-1' href='/admin/whitelisting.php'>Needs Whitelisting</a>
+                <?php } ?>
             </div>
         </div>
     </div>
 </section>
 
 
-<?php
 
-if ($_SESSION['rank'] > 2) {
 
-    include "include/inc_index_senior.php";
-}
-
-include "include/components/foot.php";
+<?php include "include/components/foot.php";

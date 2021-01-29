@@ -32,7 +32,10 @@ function BeginSession($player, $temp, $pw)
     }
 }
 
+function response($r = null)
+{
 
+}
 
 if (isset($_POST["Login"])) {
 
@@ -58,6 +61,7 @@ include "include/components/head.php";
 
 <div class="container-fluid d-flex justify-content-center justify-content-sm-center align-items-sm-center justify-content-lg-center" style="min-height: 39vh;">
     <form method="post" style="text-align: center;padding: 57px;max-width: 392px;height: 278px;"><label style="color: rgb(255,255,255);">Please Login Below.</label>
+    <label style="color: rgb(255,255,255);"></label>
         <div class="illustration"><i class="icon ion-ios-locked-outline"></i></div>
         <div class="form-group"><input class="form-control" type="text" name="steam_name" placeholder="Steam Name"></div>
         <div class="form-group"><input class="form-control" type="password" name="password" placeholder="Password"></div>

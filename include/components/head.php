@@ -110,18 +110,18 @@ function Path($subdir)
 
 </head>
 
-<body style="background: rgb(35,39,41);">
+<body>
     <nav class="navbar navbar-light navbar-expand-md navigation-clean navbar-dark" style="background: linear-gradient(rgb(34,76,123) 0%, rgba(255,255,255,0));">
         <div class="container"><a class="navbar-brand text-center" href="#" style="font-family: 'Indie Flower', cursive;color: rgb(217,217,217);"><img class="d-md-flex" src="/include/components/assets/img/logo.png" style="margin-right: 8px;height: 49px;">Dashboard</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1" style="border-style: none;"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-1">
                 <ul class="nav navbar-nav ml-auto">
                     <li class="nav-item"><a class="nav-link" href="/index.php" style="color: rgb(217,217,217);"><i class="icon ion-ios-home-outline" style="margin-right: 4px;"></i>Home</a></li>
                     <li class="nav-item dropdown"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#" style="color: rgb(217,217,217);"><i class="icon ion-clipboard" style="margin-right: 4px;"></i>Applications</a>
-                        <div class="dropdown-menu"><a class="dropdown-item" href="/applications/table_apps.php">Unread</a><a class="dropdown-item" href="applications/table_apps_archive.php">Archive</a></div>
+                        <div class="dropdown-menu"><a class="dropdown-item" href="/applications/table_apps.php">Unread</a><a class="dropdown-item" href="/applications/table_apps_archive.php">Archive</a></div>
                     </li>
                     <li class="nav-item"><a class="nav-link" href="/players.php" style="color: rgb(217,217,217);"><i class="icon ion-ios-person-outline" style="margin-right: 4px;"></i>Roster</a></li>
                     <li class="nav-item dropdown"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#" style="color: rgb(217,217,217);"><i class="icon ion-ios-folder-outline" style="margin-right: 4px;"></i>Tests</a>
-                        <div class="dropdown-menu"><a class="dropdown-item" href="/tests/table_needs_theory.php">Theory</a><a class="dropdown-item" href="tests/table_needs_practical.php">Practical</a><a class="dropdown-item" href="/tests/table_tests_archive.php">Archive</a></div>
+                        <div class="dropdown-menu"><a class="dropdown-item" href="/tests/table_needs_theory.php">Theory</a><a class="dropdown-item" href="/tests/table_needs_practical.php">Practical</a><a class="dropdown-item" href="/tests/table_tests_archive.php">Archive</a></div>
                     </li>
                     <li class="nav-item"><a class="nav-link" href="/shifts/shifts_index.php" style="color: rgb(217,217,217);"><i class="far fa-clock" style="margin-right: 4px;"></i>Shifts</a></li>
                 </ul>

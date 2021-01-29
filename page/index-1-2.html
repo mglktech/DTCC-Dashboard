@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="assets/css/Navigation-Clean.css">
     <link rel="stylesheet" href="assets/css/Navigation-with-Search.css">
     <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/table.css">
 </head>
 
 <body style="background: rgb(35,39,41);text-align: center;">
@@ -39,50 +40,142 @@
             </div>
         </div>
     </nav>
-    <div class="container">
-        <div class="table-responsive">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Column 1</th>
-                        <th>Column 1</th>
-                        <th>
-                            <form class="frm-search">
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend"></div><input class="form-control" type="text" id="search-1">
-                                        <div class="input-group-append"><button class="btn btn-dark" type="submit"><i class="fa fa-search"></i></button></div>
-                                    </div>
-                                </div>
-                            </form>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Cell 1</td>
-                        <td>Cell 1</td>
-                        <td>Cell 2</td>
-                    </tr>
-                    <tr>
-                        <td>Cell 1</td>
-                        <td>Cell 3</td>
-                        <td>Cell 4</td>
-                    </tr>
-                </tbody>
-            </table>
+    <section class="document-form">
+        <div class="container-fluid">
+            <h4>Application Form</h4>
+            <h6 class="h-subtitle">Submitted On: 00/00/0000</h6>
+            <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-app">
+                <div class="col">
+                    <div class="input-group d-flex justify-content-end justify-content-sm-center igroup-read">
+                        <div class="input-group-prepend"><span class="d-flex justify-content-end input-group-text span-form">Name:</span></div><input class="form-control d-flex d-xl-flex justify-content-start igroup-read-input" type="text" value="Patrik Spongebob" readonly="" style="max-width: 200px;">
+                        <div
+                            class="input-group-append"></div>
+                </div>
+                <div class="input-group d-flex justify-content-end justify-content-sm-center igroup-read">
+                    <div class="input-group-prepend"><span class="d-flex justify-content-end input-group-text span-form">Phone:</span></div><input class="form-control d-flex d-xl-flex justify-content-start igroup-read-input" type="text" value="942-4920" readonly="" style="max-width: 200px;">
+                    <div
+                        class="input-group-append"></div>
+            </div>
+            <div class="input-group d-flex justify-content-end justify-content-sm-center igroup-read">
+                <div class="input-group-prepend"><span class="d-flex justify-content-end input-group-text span-form">Discord:</span></div><input class="form-control d-flex d-xl-flex justify-content-start igroup-read-input" type="text" value="" readonly="" style="max-width: 200px;">
+                <div
+                    class="input-group-append"></div>
         </div>
-    </div>
-    <div class="container">
-        <form class="form-inline mr-auto frm-search">
-            <div class="form-group">
-                <div class="input-group">
-                    <div class="input-group-prepend"></div><input class="form-control" type="text" id="search">
-                    <div class="input-group-append"><button class="btn btn-dark" type="submit"><i class="fa fa-search"></i></button></div>
+        <div class="input-group d-flex justify-content-end justify-content-sm-center igroup-read">
+            <div class="input-group-prepend"><span class="d-flex justify-content-end input-group-text span-form">DOB:</span></div><input class="form-control d-flex d-xl-flex justify-content-start igroup-read-input" type="text" value="00/00/0000" readonly="" style="max-width: 200px;">
+            <div
+                class="input-group-append"></div>
+        </div>
+        </div>
+        <div class="col">
+            <div class="input-group d-flex justify-content-start justify-content-sm-center igroup-read">
+                <div class="input-group-prepend"><span class="d-flex justify-content-end input-group-text span-form">Steam:</span></div><input class="form-control igroup-read-input" type="url" value="http://www.google.co.uk" readonly="" style="max-width: 200px;">
+                <div class="input-group-append"></div>
+            </div>
+            <div class="input-group d-flex justify-content-start justify-content-sm-center igroup-read">
+                <div class="input-group-prepend"><span class="d-flex justify-content-end input-group-text span-form">Steam ID:</span></div><input class="form-control d-flex d-xl-flex justify-content-start igroup-read-input" type="text" value="" readonly="" style="max-width: 200px;">
+                <div
+                    class="input-group-append"></div>
+        </div>
+        <div class="input-group d-flex justify-content-start justify-content-sm-center igroup-read">
+            <div class="input-group-prepend"><span class="d-flex justify-content-end input-group-text span-form">Zone:</span></div><input class="form-control d-flex d-xl-flex justify-content-start igroup-read-input" type="text" value="" readonly="" style="max-width: 200px;">
+            <div class="input-group-append"></div>
+        </div>
+        <div class="input-group d-flex justify-content-start justify-content-sm-center igroup-read">
+            <div class="input-group-prepend"><span class="d-flex justify-content-end input-group-text span-form">Info:</span></div><input class="form-control d-flex d-xl-flex justify-content-start igroup-read-input" type="text" value="" readonly="" style="max-width: 200px;">
+            <div class="input-group-append"></div>
+        </div>
+        </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="d-flex flex-column"><span class="span-textarea">Backstory</span><textarea readonly=""></textarea></div>
+            </div>
+            <div class="col">
+                <div class="d-flex flex-column"><span class="span-textarea">Reason</span><textarea readonly=""></textarea></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="container-result"><span class="d-flex justify-content-center align-items-center span-approved">Approved!</span>
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-auto d-flex justify-content-end align-items-center">
+                            <div>
+                                <div class="input-group d-flex justify-content-end justify-content-sm-center igroup-read">
+                                    <div class="input-group-prepend"><span class="d-flex justify-content-end input-group-text span-form">Signed:&nbsp;</span></div><input class="form-control d-flex d-xl-flex justify-content-start igroup-read-input" type="text" value="00/00/0000" readonly=""
+                                        style="max-width: 200px;">
+                                    <div class="input-group-append"></div>
+                                </div>
+                                <div class="input-group d-flex justify-content-end justify-content-sm-center igroup-read">
+                                    <div class="input-group-prepend"><span class="d-flex justify-content-end input-group-text span-form">Date:&nbsp;</span></div><input class="form-control d-flex d-xl-flex justify-content-start igroup-read-input" type="text" value="00/00/0000" readonly=""
+                                        style="max-width: 200px;">
+                                    <div class="input-group-append"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto d-flex justify-content-start align-items-center"><button class="btn btn-dark btn-lg fas fa-edit" type="button"></button></div>
+                    </div>
                 </div>
             </div>
-        </form>
-    </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="container-result"><span class="d-flex justify-content-center align-items-center span-denied">Denied</span>
+                    <div class="row justify-content-center">
+                        <div class="col-auto d-flex justify-content-end align-items-center">
+                            <div>
+                                <div class="input-group d-flex justify-content-end justify-content-sm-center igroup-read">
+                                    <div class="input-group-prepend"><span class="d-flex justify-content-end input-group-text span-form">Signed:&nbsp;</span></div><input class="form-control d-flex d-xl-flex justify-content-start igroup-read-input" type="text" value="00/00/0000" readonly=""
+                                        style="max-width: 200px;">
+                                    <div class="input-group-append"></div>
+                                </div>
+                                <div class="input-group d-flex justify-content-end justify-content-sm-center igroup-read">
+                                    <div class="input-group-prepend"><span class="d-flex justify-content-end input-group-text span-form">Date:&nbsp;</span></div><input class="form-control d-flex d-xl-flex justify-content-start igroup-read-input" type="text" value="00/00/0000" readonly=""
+                                        style="max-width: 200px;">
+                                    <div class="input-group-append"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto d-flex justify-content-start align-items-center"><button class="btn btn-dark btn-lg fas fa-edit" type="button"></button></div>
+                        <div class="col-auto"><label>Reasons:</label>
+                            <ul class="text-left">
+                                <li>Bad Character Name</li>
+                                <li>Bad Reason</li>
+                                <li>Bad Discord</li>
+                                <li>Bad Phone Number</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="container-result"><span class="d-flex justify-content-center align-items-center span-ignored">Ignored</span>
+                    <div class="row d-flex justify-content-center">
+                        <div class="col">
+                            <div>
+                                <div class="input-group d-flex justify-content-end justify-content-sm-center igroup-read">
+                                    <div class="input-group-prepend"><span class="d-flex justify-content-end input-group-text span-form">Signed:&nbsp;</span></div><input class="form-control d-flex d-xl-flex justify-content-start igroup-read-input" type="text" value="00/00/0000" readonly=""
+                                        style="max-width: 200px;">
+                                    <div class="input-group-append"></div>
+                                </div>
+                                <div class="input-group d-flex justify-content-end justify-content-sm-center igroup-read">
+                                    <div class="input-group-prepend"><span class="d-flex justify-content-end input-group-text span-form">Date:&nbsp;</span></div><input class="form-control d-flex d-xl-flex justify-content-start igroup-read-input" type="text" value="00/00/0000" readonly=""
+                                        style="max-width: 200px;">
+                                    <div class="input-group-append"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col align-self-center m-auto"><button class="btn btn-success m-1" type="button">Accept</button><button class="btn btn-secondary m-1" type="button">Ignore</button><button class="btn btn-danger m-1" type="button">Deny</button></div>
+        </div>
+        </div>
+    </section>
     <footer class="d-flex justify-content-end justify-content-lg-end"><label style="color: rgb(185,190,194);">Version 0.1.0</label></footer>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>

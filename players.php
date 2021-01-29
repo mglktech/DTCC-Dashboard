@@ -73,10 +73,11 @@ if ($tData) {
 <h5 class="h-subtitle font-italic mb-3 font-weight-normal">My Minions!</h5>
 <h5 class="h-subtitle mb-1 font-weight-normal font-weight-bold"> <?php echo getCountDrivers(); ?> Active Drivers, <?php echo getCountRecruits(); ?> Recruits</h5>
 
-
-<?php
-Tablefy($tblHeaders, $tBody);
-if (!isset($_GET["search"])) {
-    Paginate($obj);
-}
-include "include/components/foot.php";
+<div class="container">
+    <?php
+    Tablefy($tblHeaders, $tBody);
+    if (!isset($_GET["search"])) {
+        Paginate($obj);
+    }
+    ?></div><?php
+        include "include/components/foot.php";

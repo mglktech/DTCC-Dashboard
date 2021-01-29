@@ -1,4 +1,4 @@
-<?php include "../include/header.php";
+<?php include "../include/components/head.php";
 include "../include/sqlconnection.php";
 include "../include/elements.php";
 
@@ -109,4 +109,4 @@ if ($_SESSION["rank"] > 2) {
 
 
 <?php }
-include "../include/footer.php";
+include "../include/components/foot.php";
