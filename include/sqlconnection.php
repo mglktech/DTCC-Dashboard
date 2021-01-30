@@ -129,13 +129,20 @@ FROM
     players
 LEFT JOIN callsigns ON players.steam_id = callsigns.assigned_steam_id
 WHERE players.steam_id = '$steam_id'";
-    return Query($sql)[0];
+    $result = Query($sql);
+    if ($result) {
+        return $result[0];
+    }
 }
 
 function q_fetchPlayerFormatted($steam_id)
 {
     $player = q_fetchPlayer($steam_id);
-    return $player->callsign . " | " . $player->char_name;
+    if ($player) {
+        return $player->callsign . " | " . $player->char_name;
+    } else {
+        return null;
+    }
 }
 
 function getSteamID($steam_name)

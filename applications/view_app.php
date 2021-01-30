@@ -72,8 +72,9 @@ function PrepareContent($doc_id)
             }
             if ($app_info->status == "ignore") {
                 include("elems/app_ignored.php");
-            } else {
             }
+        } else {
+            include("elems/app_sign.php");
         }
         ?>
     </div>
