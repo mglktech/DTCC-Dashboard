@@ -13,6 +13,16 @@ function getSteamID($steam_name)
     }
 }
 
+function chkOnline()
+{
+    $resp = Query("SELECT * FROM public_players LIMIT 1");
+    if ($resp) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 // function getAvatars($steam_id)
 // {
 //     require_once "steam/SteamUser.php";
