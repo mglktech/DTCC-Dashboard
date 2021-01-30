@@ -82,4 +82,11 @@ include "include/_header.php";
         <input type="submit" name="Login" class="btn btn-secondary" value="Login">
     </div>
 </form>
+<label>MySQL is: <?php if (chkOnline()) {
+                        echo "online";
+                    } else {
+                        echo "offline";
+                    } ?></label>
+
+
 <?php include "include/footer.php";
