@@ -10,7 +10,7 @@ CreateShifts
 CreateShifts has added functionality to automatically reject "in" records that are more than 12 hours from the next "out".
 It will be up to Senior Supervisors to validate each shift on an individual basis. if we feel that the pruned shift could not be valid, we will reject it by hand.
 */
-include "../include/sqlconnection.php"; ?>
+ ?>
 <form action="" method="post" enctype="multipart/form-data">
     <input type="file" name="file">
     <input type="submit" name="btn_submit" value="Upload File" />

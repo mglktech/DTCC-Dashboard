@@ -1,5 +1,5 @@
 <?php include '../include/header.php';
-include "../include/sqlconnection.php";
+
 include "../include/elements.php";
 
 function getMetas($type, $ver)

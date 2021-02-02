@@ -1,5 +1,5 @@
 <?php include "../include/components/head.php";
-include "../include/sqlconnection.php";
+
 include "../include/elements.php";
 
 // create table of people who need whitelisting

@@ -1,5 +1,5 @@
 <?php
-include "include/sqlconnection.php";
+
 include "include/elements.php";
 include "steam/SteamWebAPI_Simple.php";
 

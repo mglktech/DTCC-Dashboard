@@ -1,5 +1,5 @@
 <?php
-include "../include/sqlconnection.php";
+
 include "../include/elements.php";
 if (isset($_POST["ChangePW"])) {
     if ($_POST["txtNewPass"] == $_POST["txtNewPassConfirm"] && $_POST["txtNewPass"] != '') {

@@ -1,6 +1,6 @@
 <?php
 include "../include/header.php";
-include "../include/sqlconnection.php";
+
 $sql = "SELECT DISTINCT `steam_name` FROM `shift_records` WHERE (`signed_by` IS NULL AND `io` = 'out')";
 $result = Query($sql);
 if ($result) {

@@ -1,5 +1,5 @@
 <?php
-include "include/sqlconnection.php";
+
 include "steam/SteamWebAPI_Simple.php";
 
 isset($_SESSION["error"]) ? $error = $_SESSION["error"] : $error = "";

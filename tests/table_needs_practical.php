@@ -1,5 +1,5 @@
 <?php include '../include/header.php';
-include "../include/sqlconnection.php";
+
 include "../include/elements.php";
 
 $sql = "SELECT `steam_id`,`char_name`,`discord_name`,`phone_number`,`last_seen` FROM `players` WHERE `status` = 'Needs Practical' ORDER BY `last_seen`";

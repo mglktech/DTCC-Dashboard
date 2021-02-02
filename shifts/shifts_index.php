@@ -1,5 +1,5 @@
 <?php include "../include/header.php";
-include "../include/sqlconnection.php";
+
 include "../include/elements.php";
 isset($_POST['tab']) ? $tab = quotefix($_POST['tab']) : $tab = "PastWeek";
 isset($_POST['IncludeStaff']) ? $inc_staff = quotefix($_POST['IncludeStaff']) : $inc_staff = "on";

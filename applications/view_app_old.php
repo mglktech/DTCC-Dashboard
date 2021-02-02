@@ -1,6 +1,6 @@
 <?php
 include "../include/components/head.php";
-include "../include/sqlconnection.php";
+
 include "../steam/SteamWebAPI_Simple.php";
 
 $doc_type = "application";

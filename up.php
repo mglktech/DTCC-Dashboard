@@ -1,6 +1,6 @@
 <?php
 include "include/header.php";
-include "include/sqlconnection.php";
+
 function PrepareSteamURL($steam_link)
 {
     require_once "steam/SteamUser.php";

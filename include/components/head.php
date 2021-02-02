@@ -1,5 +1,5 @@
 <?php
-
+include_once $_SERVER['DOCUMENT_ROOT'] . "/include/sqlconnection.php";
 $public_pages = ["login.php"];
 if (!in_array(basename($_SERVER['PHP_SELF']), $public_pages)) {
 
@@ -25,7 +25,6 @@ function ReturnToLogin()
 
 function CollectLoginData($token)
 {
-    include_once("include/sqlconnection.php");
     $data = Query("SELECT * FROM sessions WHERE session_token = '$token'");
     if($data)
     {

@@ -1,6 +1,6 @@
 <?php include "include/components/head.php"; ?>
 <?php
-include "include/sqlconnection.php";
+
 include "include/elements.php";
 
 

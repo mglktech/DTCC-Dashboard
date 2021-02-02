@@ -1,4 +1,4 @@
-<?php include "include/sqlconnection.php";
+<?php 
 
 isset($_POST['doc_type']) ? $doc_type = $_POST['doc_type'] : $doc_type = null;
 

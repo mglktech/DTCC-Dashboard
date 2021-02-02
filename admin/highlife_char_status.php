@@ -1,5 +1,5 @@
 <?php include "../include/header.php";
-include "../include/sqlconnection.php";
+
 
 function char_status($name)
 {

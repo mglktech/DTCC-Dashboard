@@ -1,7 +1,7 @@
 <?php include "include/header.php";
 include "include/elements.php";
 
-include "include/sqlconnection.php";
+
 
 
 
