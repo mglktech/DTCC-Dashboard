@@ -1,4 +1,4 @@
-<?php include "include/header.php";
+<?php include "include/header.php"; 
 include "steam/SteamWebAPI_Simple.php";
 $steam_name = GetSteamDetails(ResolveSteamID("https://steamcommunity.com/profiles/76561198256900062/"))->steam_name;
 ?>
