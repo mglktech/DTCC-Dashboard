@@ -1,5 +1,5 @@
 <?php
-include "include/header.php";
+include "include/components/head.php";
 
 
 
@@ -242,4 +242,4 @@ if ($signed_by) {
 }
 ?>
 </div>
-<?php include_once "include/footer.php"; ?>
+<?php include_once "include/components/foot.php"; ?>

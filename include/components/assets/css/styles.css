@@ -30,8 +30,6 @@
   font-size: 24px;
 }
 
-
-
 thead {
   background-color: rgb(28,54,84);
   color: white;
@@ -217,7 +215,64 @@ body {
   border: 1px solid #e9ecef ;
   color: #e9ecef;
 }
+.span-ignored {
+  background: rgb(101,101,101);
+  color: #f2f5f8;
+  font-size: 24px;
+}
 
+.txt-backstory-profile {
+  text-align: center;
+  margin: 15px;
+  padding: 15px;
+  color: #e9ecef;
+  background: #2d2f30;
+  border-radius: 15px;
+  border: 3px solid #262121 ;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+.btn-pad {
+  margin: 2.5px;
+}
+
+.modal-header {
+  background: linear-gradient(rgb(34,76,123) 0%, rgb(35,39,41));
+  border-bottom: 1px solid rgb(35,39,41);
+}
+
+.modal-body {
+  background: rgb(35,39,41);
+}
+
+.modal-footer {
+  background-color: #232729;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  padding: .75rem;
+  border-top: 1px solid #232729;
+  border-bottom-right-radius: calc(.3rem - 1px);
+  border-bottom-left-radius: calc(.3rem - 1px);
+}
+
+.header-blue {
+  background: linear-gradient(135deg, #172a74, #21a9af);
+  background-color: #184e8e;
+  padding-bottom: 80px;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+@media (min-width:768px) {
+  .header-blue {
+    padding-bottom: 120px;
+  }
+}
 .navigation-clean {
   background: #232729;
   padding-top: .75rem;
@@ -337,6 +392,48 @@ body {
   line-height: 2;
   color: white;
 }
+
+.dropdown-item.drop-item-navbar {
+  background-color: rgb(35,39,41);
+}
+
+
+
+.tbl-head {
+  height: 40px;
+  max-height: 40px;
+}
+
+.tbl-row {
+  max-height: 35px;
+  height: 35px;
+}
+
+.divTableHead {
+  background-color: #214a80;
+}
+
+.divTableRow:nth-of-type(even) {
+  background-color: #434a52;
+}
+
+.divTableRow:nth-of-type(odd) {
+  background-color: #37434d;
+}
+
+.span-denied {
+  background: rgb(176,11,0);
+  color: #f2f5f8;
+  font-size: 24px;
+}
+
+
+
+.span-dialog {
+  font-size: 14px;
+  color: var(--gray);
+}
+
 
 .navigation-clean .dropdown-menu .dropdown-item:focus, .navigation-clean .dropdown-menu .dropdown-item:hover {
   background-color: rgb(35,39,41);
