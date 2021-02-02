@@ -44,7 +44,7 @@ function CreateTableArchive($start, $limit)
         $tblRow[] = $row->phone_number;
         $tblRow[] = $super_line;
         $tblRow[] = Pill($row->status);
-        $tblRow[] = "<a class='btn btn-sm btn-outline-secondary mb-0 mt-0' href='/applications/view_app.php?doc_id=" . $row->app_id . "'>View</a>";
+        $tblRow[] = "<a class='btn btn-sm btn-secondary' href='/applications/view_app.php?doc_id=" . $row->app_id . "'>View</a>";
         $tblBody[] = $tblRow;
     }
     return Tablefy($tblHeaders, $tblBody);

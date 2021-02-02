@@ -69,6 +69,34 @@ function QueryTrigger($sql)
     }
 }
 
+function GenerateToken($length = 10) {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    return $randomString;
+}
+
+function BeginSession($player, $temp)
+{
+    //getAvatars($player->steam_id);
+    session_start();
+    $token = GenerateToken();
+    $_SESSION["token"] = $token;
+    $timenow = time();
+    $sql = "INSERT INTO `sessions`(`session_user`, `session_token`, `session_start`, `session_rank`, `session_steamid`) VALUES ('$player->steam_name','$token','$timenow','$player->rank','$player->steam_id')";
+    Query($sql);
+    if ($temp) {
+        header("Location: admin/change_password.php");
+    }
+    if (!$temp) {
+        header("Location: index.php");
+    }
+}
+
+
 function Query($sql)
 {
     $response = array();

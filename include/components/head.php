@@ -1,4 +1,5 @@
 <?php
+
 $public_pages = ["login.php"];
 if (!in_array(basename($_SERVER['PHP_SELF']), $public_pages)) {
 
@@ -6,10 +7,35 @@ if (!in_array(basename($_SERVER['PHP_SELF']), $public_pages)) {
         session_start();
     }
 
-    if (!isset($_SESSION["password"])) {
+    if (!isset($_SESSION["token"])) {
         $_SESSION["redirect"] = $_SERVER['REQUEST_URI'];
         //echo "not logged in";
-        header("Location: ../login.php");
+        ReturnToLogin();
+    }
+    else
+    {
+        CollectLoginData($_SESSION["token"]);
+    }
+}
+
+function ReturnToLogin()
+{
+    header("Location: ../login.php");
+}
+
+function CollectLoginData($token)
+{
+    include_once("include/sqlconnection.php");
+    $data = Query("SELECT * FROM sessions WHERE session_token = '$token'");
+    if($data)
+    {
+        $d = $data[0];
+        $_SESSION["user"] = $d->session_user;
+        $_SESSION["rank"] = $d->session_rank;
+        $_SESSION["steam_id"] = $d->session_steamid;
+    }
+    else {
+        ReturnToLogin();
     }
 }
 

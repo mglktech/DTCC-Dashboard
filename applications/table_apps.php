@@ -14,7 +14,7 @@ function CreateTableUnread()
             $tblRow[] = toDate($row->app_timestamp);
             $tblRow[] = $row->char_name;
             $tblRow[] = $row->discord_name;
-            $tblRow[] = "<a class='btn btn-table' href='/applications/view_app.php?doc_id=" . $row->app_id . "'>View Application</a>";
+            $tblRow[] = "<a class='btn btn-secondary' href='/applications/view_app.php?doc_id=" . $row->app_id . "'>View Application</a>";
             $tblBody[] = $tblRow;
         }
     } else {

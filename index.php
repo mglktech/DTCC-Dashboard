@@ -1,5 +1,5 @@
 <?php include "include/components/head.php";
-include "include/sqlconnection.php";
+include_once "include/sqlconnection.php";
 include "include/elements.php";
 
 function CreateTableUnread()
@@ -15,7 +15,7 @@ function CreateTableUnread()
             $tblRow[] = toDate($row->app_timestamp);
             $tblRow[] = $row->char_name;
             $tblRow[] = $row->discord_name;
-            $tblRow[] = "<a class='btn btn-table' href='/applications/view_app.php?doc_id=" . $row->app_id . "'>View</a>";
+            $tblRow[] = "<a class='btn btn-sm btn-secondary' href='/applications/view_app.php?doc_id=" . $row->app_id . "'>View</a>";
             $tblBody[] = $tblRow;
         }
     } else {

@@ -2,7 +2,7 @@
 include "include/sqlconnection.php";
 include "steam/SteamWebAPI_Simple.php";
 
-
+isset($_SESSION["error"]) ? $error = $_SESSION["error"] : $error = "";
 function chkOnline()
 {
     $resp = Query("SELECT * FROM public_players LIMIT 1");
@@ -12,25 +12,7 @@ function chkOnline()
         return false;
     }
 }
-function BeginSession($player, $temp, $pw)
-{
-    //getAvatars($player->steam_id);
-    session_start();
-    $_SESSION['password'] = $pw;
-    $_SESSION['steam_id'] = $player->steam_id;
-    $_SESSION['steam_name'] = $player->steam_name;
-    $_SESSION['callsign'] = $player->callsign;
-    $_SESSION['char_name'] = $player->char_name;
-    $_SESSION['rank'] = $player->rank;
-    $_SESSION['phone_number'] = $player->phone_number;
-    $_SESSION['av_icon'] = $player->av_icon;
-    if ($temp) {
-        header("Location: admin/change_password.php");
-    }
-    if (!$temp) {
-        header("Location: index.php");
-    }
-}
+
 
 function response($r = null)
 {
@@ -43,14 +25,14 @@ if (isset($_POST["Login"])) {
     $pass = quotefix($_POST["password"]);
     $response = check_temp_code($user, $pass);
     if ($response) {
-        BeginSession(q_fetchPlayer(getSteamID($user)), true, $pass);
+        BeginSession(q_fetchPlayer(getSteamID($user)), true);
     }
-    if (!$response) {
+    else {
         $response2 = check_password($user, $pass);
         if ($response2) {
-            BeginSession(q_fetchPlayer(getSteamID($user)), false, $pass);
+            BeginSession(q_fetchPlayer(getSteamID($user)), false);
         } else {
-            $error = "Incorrect Username/password combination.";
+            $_SESSION["error"] = "Incorrect Username/password combination.";
         }
     }
 }
