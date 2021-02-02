@@ -1,5 +1,5 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT'] . "/include/sqlconnection.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/include/sqlconnection.php";
 $public_pages = ["login.php"];
 if (!in_array(basename($_SERVER['PHP_SELF']), $public_pages)) {
 
@@ -26,12 +26,14 @@ function ReturnToLogin()
 function CollectLoginData($token)
 {
     $data = Query("SELECT * FROM sessions WHERE session_token = '$token'");
+    $t = time();
     if($data)
     {
         $d = $data[0];
         $_SESSION["user"] = $d->session_user;
         $_SESSION["rank"] = $d->session_rank;
         $_SESSION["steam_id"] = $d->session_steamid;
+        Query("UPDATE sessions SET session_last_active = '$t' WHERE `session_id` = '$d->session_id'");
     }
     else {
         ReturnToLogin();

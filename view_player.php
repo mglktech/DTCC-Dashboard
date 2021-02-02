@@ -1,4 +1,4 @@
-<?php include "include/header.php";
+<?php include "include/components/head.php";
 include "include/elements.php";
 
 
@@ -99,7 +99,7 @@ function PassFail($ret, $score_percent)
 ?>
 
 
-<div class="container-fluid">
+<div class="container">
     <!-- APPLICATION FORM -->
     <div class="row">
         <div class="col rounded p-0 pb-3">

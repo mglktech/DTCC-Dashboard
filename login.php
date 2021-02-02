@@ -1,5 +1,5 @@
 <?php
-
+include "include/components/head.php";
 include "steam/SteamWebAPI_Simple.php";
 
 isset($_SESSION["error"]) ? $error = $_SESSION["error"] : $error = "";
@@ -37,7 +37,7 @@ if (isset($_POST["Login"])) {
     }
 }
 
-include "include/components/head.php";
+
 ?>
 
 
