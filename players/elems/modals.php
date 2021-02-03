@@ -6,13 +6,13 @@
             </div>
             <div class="modal-body">
                 <ul class="list-unstyled">
-                    <li>Global Rank |&nbsp; Senior Supervisor</li>
-                    <li>Company Rank | Administrative Executive Officer</li>
-                    <li>Steam Name |&nbsp;<a href="https://steamcommunity.com/id/Curses6969/">Pwnstar64<br></a></li>
-                    <li>Steam ID | 76561197995263974</li>
-                    <li>Phone | 412-7145</li>
-                    <li>Discord | Pwnstar64#2427</li>
-                    <li>Time zone | GMT</li>
+                    <li>Full Name | <?=$pInfo->public_player->char_name?></li>
+                    <li>Company Rank | <?=$pInfo->public_player->char_name?></li>
+                    <li>Steam Name | <a href="<?=$pInfo->public_player->steam_link?>"><?=$pInfo->public_player->steam_name?><br></a></li>
+                    <li>Steam ID | <?=$player_id?></li>
+                    <li>Phone | <?=$pInfo->public_player->phone_number?></li>
+                    <li>Discord | <?=$pInfo->public_player->discord_name?></li>
+                    <li>Time zone | <?=$pInfo->public_player->timezone?></li>
                     <li>Member Since | -</li>
                 </ul>
             </div>
