@@ -18,6 +18,10 @@
   border-radius: .25rem;
 }
 
+
+
+
+
 .span-denied {
   background: rgb(176,11,0);
   color: #f2f5f8;
@@ -186,6 +190,7 @@ body {
   border: 1px solid rgb(54,55,57);
   border-bottom-style: none;
   text-align: center;
+  color:black;
 }
 
 .span-approved {
@@ -232,6 +237,15 @@ body {
   font-family: 'Source Sans Pro', sans-serif;
 }
 
+.hr {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border: 0;
+  border-top: 1px solid rgba(255,255,255,0.38);
+}
+
+
+
 .btn-pad {
   margin: 2.5px;
 }
@@ -241,9 +255,21 @@ body {
   border-bottom: 1px solid rgb(35,39,41);
 }
 
+.modal-title {
+  margin-bottom: 0;
+  line-height: 1.5;
+  color: white;
+}
+
+
 .modal-body {
   background: rgb(35,39,41);
+  color: white;
 }
+
+
+
+
 
 .modal-footer {
   background-color: #232729;
