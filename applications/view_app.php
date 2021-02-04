@@ -21,6 +21,7 @@ if(isset($_POST["SubmitApp"]))
     $ap->steam_name= quotefix($_POST["steam_name"]);
     $ap->steam_id= quotefix($_POST["steam_id"]);
     $ap->signed_by = $_SESSION["steam_id"];
+    $ap->av_full = quotefix($_POST["av_full"]);
     if($_POST["SubmitApp"] == "accept")
     {
         AppAccept($ap);
@@ -90,12 +91,13 @@ function UpdatePlayer($ap)
         `status` = '$ap->pStatus',
         `last_seen` = '$ap->date',
         `timezone` = '$ap->timezone',
+        `av_full` = '$ap->av_full',
         `backstory` = '$ap->backstory' WHERE `steam_id` = '$ap->steam_id'";
     }
     else
     {
         $sql = "REPLACE INTO players 
-    (`steam_id`,`phone_number`,`steam_name`,`discord_name`,`char_name`,`status`,`last_seen`,`timezone`, `backstory`) 
+    (`steam_id`,`phone_number`,`steam_name`,`discord_name`,`char_name`,`status`,`last_seen`,`timezone`,`av_full`,`backstory`) 
     VALUES(
         '$ap->steam_id',
         '$ap->phone_number',
@@ -105,6 +107,7 @@ function UpdatePlayer($ap)
         '$ap->pStatus',
         '$ap->date',
         '$ap->timezone',
+        '$ap->av_full',
         '$ap->backstory')";
     }
 
@@ -223,6 +226,7 @@ function PrepareContent($doc_id)
         $app_info->DOB = $data->applicant_dob;
         $app_info->SteamID = ResolveSteamID($data->steam_link);
         $app_info->steam_name = GetSteamDetails($app_info->SteamID)->steam_name;
+        $app_info->av_full = GetSteamDetails($app_info->SteamID)->av_full;
         $app_info->steam_link = $data->steam_link;
         $app_info->Zone = $data->app_zoneOffset;
         $app_info->Info = "";

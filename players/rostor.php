@@ -35,7 +35,7 @@ function getRostor($start, $limit)
 
 // output data of each row
 
-$search_bar = "<form action='players.php' method='get'>
+$search_bar = "<form action='rostor.php' method='get'>
 <div class='input-group input-group float-left'>
     <input name='search' style='height: 27px;' type='text' class='form-control' placeholder='Search Players...'>
     <div class='input-group-append'>

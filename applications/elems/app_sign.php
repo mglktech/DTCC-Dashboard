@@ -20,7 +20,7 @@ function CanAccept($steamid)
 
 }
 
-// https://steamcommunity.com/profiles/76561198306932084/
+
 function IsBanned($steam_id)
 {
     //include_once "db_connection.php";
@@ -108,6 +108,7 @@ function CanReapply($result)
                 <input name="steam_link" value="<?=$app_info->steam_link?>" hidden></input>
                 <input name="steam_name" value="<?=$app_info->steam_name?>" hidden></input>
                 <input name="steam_id" value="<?=$app_info->SteamID?>" hidden></input>
+                <input name="av_full" value="<?=$app_info->av_full?>" hidden></input>
                 <div class="modal-footer d-flex justify-content-center"><button class="btn btn-success btn-lg" type="submit">Yes</button><button class="btn btn-danger btn-lg" type="button" data-dismiss="modal">No</button></div>
                 </form>
             </div>
@@ -153,7 +154,7 @@ function CanReapply($result)
                             <input name="steam_link" value="<?=$app_info->steam_link?>" hidden></input>
                             <input name="steam_name" value="<?=$app_info->steam_name?>" hidden></input>
                             <input name="steam_id" value="<?=$app_info->SteamID?>" hidden></input>
-                            
+                            <input name="av_full" value="<?=$app_info->av_full?>" hidden></input>
                             <input type="checkbox" name="csw-banned" id="csw-banned"  <?=AutoCheck($can_accept,"banned")?> hidden></input> 
                             <input type="checkbox" name="csw-steamid" id="csw-steamid"  <?=AutoCheck($can_accept,"steamid")?> hidden></input>
                             <div class="modal-footer d-flex justify-content-center"><button class="btn btn-success btn-lg" type="submit">Submit</button><button class="btn btn-danger btn-lg" type="button" data-dismiss="modal">Cancel</button></div>
@@ -185,7 +186,7 @@ function CanReapply($result)
                 <input name="steam_link" value="<?=$app_info->steam_link?>" hidden></input>
                 <input name="steam_name" value="<?=$app_info->steam_name?>" hidden></input>
                 <input name="steam_id" value="<?=$app_info->SteamID?>" hidden></input>
-                
+                <input name="av_full" value="<?=$app_info->av_full?>" hidden></input>
                 <div class="modal-footer d-flex justify-content-center"><button class="btn btn-success btn-lg" type="submit">Yes</button><button class="btn btn-danger btn-lg" type="button" data-dismiss="modal">No</button></div>
                 </form>
             </div>
