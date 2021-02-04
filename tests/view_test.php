@@ -1,7 +1,7 @@
-<?php include '../include/header.php';
+<?php include '../include/components/head.php';
 include "../include/elements.php";
 
-include '../include/sqlconnection.php';
+
 
 if (isset($_POST["test_type"])) {
     if ($_POST["test_type"] == "theory") {
@@ -163,8 +163,8 @@ function POST_Practical()
 
         //echo "congrats, you passed!";
         $sql = "UPDATE players
-         SET `status`='Active', `last_seen`='$date' , `rank`='0'
-         WHERE `steam_id`='$steamid'";
+        SET `status`='Active', `last_seen`='$date' , `rank`='0'
+        WHERE `steam_id`='$steamid'";
         $response = Query($sql);
         //echo "Player Database Response: " . $response;
         $sql = "UPDATE callsigns
@@ -187,7 +187,7 @@ function POST_Practical()
     $sql = "INSERT INTO tests (`steam_id`, `type`, `version`, `score_total`, `score_percent`, `signed_by`,`scores`,`submit_date`,`comments`) VALUES ('$steamid','practical','0','$total_score','$percentage','$signed_by','$score_string','$date','$comments')";
     $response = Query($sql);
     //echo "Tests Database Response: " . $response;
-    $char = fetchPlayer($steamid);
+    $char = q_fetchPlayer($steamid);
     $postret['char_name'] = $char_name;
     $postret['max_score'] = $max_score;
     $postret['total_score'] = $total_score;
@@ -267,7 +267,7 @@ function pickTWeight($num, $max)
 $char_name = $rvals['char_name'];
 ?>
 
-<div class="container-fluid">
+<div class="container">
     <div class="row">
         <h1>Test Results</h1>
         <h5 class="w-100 font-italic mb-3 font-weight-normal">did this butthole pass?</h5>
@@ -360,4 +360,4 @@ $char_name = $rvals['char_name'];
     </div>
 </div>
 
-<?php include "../include/footer.php";
+<?php include '../include/components/foot.php';

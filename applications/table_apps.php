@@ -35,9 +35,10 @@ function CreateTableUnread()
             <h6 class="h-subtitle">Need Friends?</h6>
         </div>
     </div>
-</div>
+
 <div class="container-table">
     <?php CreateTableUnread(); ?>
+</div>
 </div>
 
 <?php include "../include/components/foot.php"; ?>

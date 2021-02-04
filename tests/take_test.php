@@ -1,5 +1,5 @@
-<?php include '../include/header.php';
-include '../include/sqlconnection.php';
+<?php include '../include/components/head.php';
+
 if (isset($_GET['type'])) {
     $test_type = $_GET['type'];
     $student_steamid = $_GET['steamid'];
@@ -13,7 +13,7 @@ if (isset($_GET['type'])) {
         include "theory_test_new.php";
     }
     if ($test_type == "practical") {
-        include "practical_test.php";
+        include "practical_test_new.php";
     }
 }
 
@@ -21,4 +21,4 @@ if (isset($_GET['type'])) {
 
 
 
-<?php include "../include/footer.php"; ?>
+<?php include '../include/components/foot.php';

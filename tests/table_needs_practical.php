@@ -1,4 +1,4 @@
-<?php include '../include/header.php';
+<?php include '../include/components/head.php';
 
 include "../include/elements.php";
 
@@ -16,9 +16,12 @@ foreach ($result as $row) {
     $tblBody[] = $tblRow;
 }
 ?>
+<div class="container">
 <h2>Needs Practical</h2>
 <h5 class="font-italic mb-3 font-weight-normal">But can they Drive?</h5>
 <?php
 Tablefy($tblHeaders, $tblBody);
-
-include '../include/footer.php';
+?>
+</div>
+<?php 
+include '../include/components/foot.php';

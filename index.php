@@ -31,6 +31,7 @@ function CreateTableUnread()
 
 
 <section>
+<div class="container">
     <div class="container-fluid d-flex">
         <div class="row">
             <div class="col-auto d-flex flex-column flex-grow-0 flex-shrink-1 col-index">
@@ -60,6 +61,7 @@ function CreateTableUnread()
             </div>
         </div>
     </div>
+</div>
 </section>
 
 
