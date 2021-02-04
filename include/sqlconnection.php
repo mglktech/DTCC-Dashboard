@@ -132,7 +132,7 @@ function LogError($statement, $error)
 {
     $time = time();
     $conn = OpenCon();
-    $client = $_SESSION['steam_id'];
+    isset($_SESSION['steam_id']) ? $client = $_SESSION['steam_id'] : $client = "";
     $statement = quotefix($statement);
     $error = quotefix($error);
     $sql = "INSERT INTO sql_errors (`timestamp`,`client`,`sqlcode`,`errormsg`)VALUES('$time','$client','$statement','$error')";
@@ -180,6 +180,7 @@ function getSteamID($steam_name)
     if ($result) {
         return $result[0]->steam_id;
     } else {
+        echo "database connection issue!";
         return null;
     }
 }
