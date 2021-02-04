@@ -144,19 +144,7 @@ function LogError($statement, $error)
 
 function q_fetchPlayer($steam_id)
 {
-    $sql = "SELECT
-    callsigns.label AS callsign,
-    players.char_name AS char_name,
-    players.rank AS rank,
-    players.steam_id AS steam_id,
-    players.steam_name AS steam_name,
-    players.phone_number AS phone_number,
-    players.discord_name AS discord_name,
-    players.av_icon AS av_icon
-FROM
-    players
-LEFT JOIN callsigns ON players.steam_id = callsigns.assigned_steam_id
-WHERE players.steam_id = '$steam_id'";
+    $sql = "SELECT * FROM public_players WHERE steam_id = '$steam_id'";
     $result = Query($sql);
     if ($result) {
         return $result[0];
