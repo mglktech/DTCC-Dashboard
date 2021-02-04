@@ -3,8 +3,9 @@ include "../include/elements.php";
 
 
 // SQL ADDITIONS
-// players table + backstory
-// public_players +av_full +backstory
+// players table + backstory +av_full +steam_link
+// public_players +av_full +backstory +steam_link
+// 
 
 isset ($_GET["id"]) ? $player_id = $_GET["id"] : $player_id = null;
 $pInfo = CollectPlayerInfo($player_id);

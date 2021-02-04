@@ -35,6 +35,10 @@ function FormatReasons($app)
         if ($reasons[8] > 1) {
             echo "They have been asked to reapply in " . $reasons[8] . " days.<br>";
         }
+        if ($reasons[8] == 0) {
+            echo "They have been asked not to reapply again<br>";
+        }
+        
     }
     if (!$reasons[7]) {
         echo "They have been asked not to reapply again<br>";
@@ -87,6 +91,10 @@ function FormatCopyPasta($app)
         }
         if ($reasons[8] > 1) {
             echo "We recommend that you reapply in " . $reasons[8] . " days.<br>";
+        }
+        if($reasons[8] < 0)
+        {
+            echo "We recommend that you do not apply for DTCC again.<br>";
         }
     }
     if (!$reasons[7]) {

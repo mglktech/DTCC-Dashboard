@@ -146,7 +146,7 @@ function Path($subdir)
                     <li class="nav-item dropdown"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#" style="color: rgb(217,217,217);"><i class="icon ion-clipboard" style="margin-right: 4px;"></i>Applications</a>
                         <div class="dropdown-menu"><a class="dropdown-item" href="/applications/table_apps.php">Unread</a><a class="dropdown-item" href="/applications/table_apps_archive.php">Archive</a></div>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="/players.php" style="color: rgb(217,217,217);"><i class="icon ion-ios-person-outline" style="margin-right: 4px;"></i>Roster</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/players/rostor.php" style="color: rgb(217,217,217);"><i class="icon ion-ios-person-outline" style="margin-right: 4px;"></i>Roster</a></li>
                     <li class="nav-item dropdown"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#" style="color: rgb(217,217,217);"><i class="icon ion-ios-folder-outline" style="margin-right: 4px;"></i>Tests</a>
                         <div class="dropdown-menu"><a class="dropdown-item" href="/tests/table_needs_theory.php">Theory</a><a class="dropdown-item" href="/tests/table_needs_practical.php">Practical</a><a class="dropdown-item" href="/tests/table_tests_archive.php">Archive</a></div>
                     </li>

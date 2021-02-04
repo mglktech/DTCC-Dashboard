@@ -29,6 +29,9 @@ function Pill($text)
     if ($text == "accept") {
         return "<div class='border border-dark text-white text-center font-weight-bold rounded-pill' style='background-color:green'>Accepted</div>";
     }
+    if ($text == "ignore") {
+        return "<div class='border border-dark text-white text-center font-weight-bold rounded-pill' style='background-color:grey'>Ignored</div>";
+    }
     if ($text == "deny") {
         return "<div class='border border-dark text-white text-center font-weight-bold rounded-pill' style='background-color:crimson'>Denied</div>";
     }

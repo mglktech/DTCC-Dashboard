@@ -2,9 +2,212 @@
 
 include "../include/elements.php";
 include "../steam/SteamWebAPI_Simple.php";
+
+
 isset($_GET['doc_id']) ? $doc_id = $_GET['doc_id'] : $doc_id = -1;
 $app_info = PrepareContent($doc_id);
 
+if(isset($_POST["SubmitApp"]))
+{
+    $ap = new stdClass();
+    $ap->date = time();
+    $ap->app_id = quotefix($_POST["app_id"]);
+    $ap->char_name = quotefix($_POST["char_name"]);
+    $ap->phone_number = quotefix($_POST["phone_number"]);
+    $ap->discord_name= quotefix($_POST["discord_name"]);
+    $ap->timezone= quotefix($_POST["timezone"]);
+    $ap->backstory= quotefix($_POST["backstory"]);
+    $ap->steam_link= quotefix($_POST["steam_link"]);
+    $ap->steam_name= quotefix($_POST["steam_name"]);
+    $ap->steam_id= quotefix($_POST["steam_id"]);
+    $ap->signed_by = $_SESSION["steam_id"];
+    if($_POST["SubmitApp"] == "accept")
+    {
+        AppAccept($ap);
+        
+    }
+    if($_POST["SubmitApp"] == "deny")
+    {
+        AppDeny($ap);
+    }
+    if($_POST["SubmitApp"] == "ignore")
+    {
+        AppIgnore($ap);
+    }
+    header("Refresh: 0");
+}
+
+
+
+
+
+function AppAccept($ap)
+{
+    
+    $ap->status = "accept";
+    $ap->status_desc = "";
+    $ap->add_info = "";
+    
+    if(PlayerValidate($ap->steam_id) == null) // if player isn't currently employed by us
+    {
+        $ap->pStatus = "Needs Theory";
+    }
+    else{
+        $ap->pStatus = PlayerValidate($ap->steam_id);
+    }
+    UpdateApplication($ap);
+    UpdatePlayer($ap);
+}
+function UpdateApplication($ap)
+{
+    $sql = "UPDATE applications_v0
+        SET `steam_id`='$ap->steam_id',
+        `detected_steam_name`='$ap->steam_name',
+        `signed_by`='$ap->signed_by',
+        `status`='$ap->status',
+        `status_desc`='$ap->status_desc',
+        `additional_info`='$ap->add_info',
+        `signed_timestamp`='$ap->date'
+        WHERE `app_id`='$ap->app_id'";
+        if(AppStillUnsigned($ap->app_id))
+        {
+            Query($sql);
+        }
+}
+
+function UpdatePlayer($ap)
+{
+    $validate = Query("SELECT * FROM `players` WHERE `steam_id` = '$ap->steam_id'");
+    
+    if($validate)
+    {
+        in_array($validate[0]->status, ["Needs Theory","Needs Practical","Active"]) ? $ap->pStatus = $validate[0]->status : $ap->pStatus = $ap->pStatus;
+        $sql = "UPDATE players SET
+        `phone_number` = '$ap->phone_number',
+        `steam_name` = '$ap->steam_name',
+        `discord_name` = '$ap->discord_name',
+        `char_name` = '$ap->char_name',
+        `status` = '$ap->pStatus',
+        `last_seen` = '$ap->date',
+        `timezone` = '$ap->timezone',
+        `backstory` = '$ap->backstory' WHERE `steam_id` = '$ap->steam_id'";
+    }
+    else
+    {
+        $sql = "REPLACE INTO players 
+    (`steam_id`,`phone_number`,`steam_name`,`discord_name`,`char_name`,`status`,`last_seen`,`timezone`, `backstory`) 
+    VALUES(
+        '$ap->steam_id',
+        '$ap->phone_number',
+        '$ap->steam_name',
+        '$ap->discord_name',
+        '$ap->char_name',
+        '$ap->pStatus',
+        '$ap->date',
+        '$ap->timezone',
+        '$ap->backstory')";
+    }
+
+    
+    Query($sql);
+
+}
+function AppDeny($ap)
+{
+    $ap->status = "deny";
+    $ap->status_desc = MakeDesc();
+    $ap->add_info = quotefix(chkPost("txt-addinfo"));
+    UpdateApplication($ap);
+    
+    if($ap->steam_id)
+    {
+        if(chkPostBool("csw-banned"))
+    {
+        $ap->pStatus = "Banned";
+    }
+        UpdatePlayer($ap);
+    }
+
+}
+function AppIgnore($ap)
+{
+    $ap->status = "ignore";
+    $ap->status_desc = "";
+    $ap->add_info = "";
+    UpdateApplication($ap);
+
+}
+
+function chkPostBool($id)
+{
+    if (isset($_POST[$id])) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+function chkPost($id)
+{
+    if (isset($_POST[$id])) {
+        return $_POST[$id];
+    } else {
+        return "";
+    }
+}
+
+
+function MakeDesc()
+{
+    $isBanned = chkPostBool("csw-banned");
+    $badCharName = chkPostBool("csw-char_name");
+    $badPNum = chkPostBool("csw-phone");
+    $badDiscord = chkPostBool("csw-discord");
+    $badLink = chkPostBool("csw-steamid");
+    $badBackstory = chkPostBool("csw-backstory");
+    $badReason = chkPostBool("csw-reason");
+    if($isBanned)
+    {
+        $reapplySwitch = 0;
+    }
+    else{
+        $reapplySwitch = 1;
+    }
+    
+    $reapplyDays = chkPost("txt-days");
+    $status_desc =  $isBanned . "/" . $badCharName . "/" . $badPNum . "/" . $badDiscord . "/" . $badLink . "/" . $badBackstory . "/" . $badReason . "/" . $reapplySwitch . "/" . $reapplyDays;
+    return $status_desc;
+}
+
+function PlayerValidate($id)
+{
+    $sql = "SELECT `rank`, `status` FROM `players` WHERE `steam_id` = '$id'";
+    $result = Query($sql);
+    if(isset($result[0]))
+    {
+        if($result[0]->rank >= 0)
+        {
+            return $result[0]->status;
+        }
+        else {
+            return null;
+        }
+    }
+    else
+    {
+        return null;
+    }
+}
+
+function AppStillUnsigned($doc_id)
+{
+    $sql = "SELECT * FROM applications_v0 WHERE app_id = '$doc_id' AND signed_by is null";
+    $result = Query($sql);
+    if ($result) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 
 function PrepareContent($doc_id)
