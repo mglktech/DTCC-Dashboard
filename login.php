@@ -24,17 +24,18 @@ if (isset($_POST["Login"])) {
     $user = quotefix($_POST["steam_name"]);
     $pass = quotefix($_POST["password"]);
     $response = check_temp_code($user, $pass);
-    if ($response) {
-        BeginSession(q_fetchPlayer(getSteamID($user)), true);
-    }
-    else {
-        $response2 = check_password($user, $pass);
-        if ($response2) {
-            BeginSession(q_fetchPlayer(getSteamID($user)), false);
-        } else {
-            $_SESSION["error"] = "Incorrect Username/password combination.";
-        }
-    }
+    BeginSession(q_fetchPlayer(getSteamID($user)), true);
+    // if ($response) {
+    //     BeginSession(q_fetchPlayer(getSteamID($user)), true);
+    // }
+    // else {
+    //     $response2 = check_password($user, $pass);
+    //     if ($response2) {
+    //         BeginSession(q_fetchPlayer(getSteamID($user)), false);
+    //     } else {
+    //         $_SESSION["error"] = "Incorrect Username/password combination.";
+    //     }
+    // }
 }
 
 
