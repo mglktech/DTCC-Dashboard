@@ -1,6 +1,12 @@
 <?php
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 include $_SERVER['DOCUMENT_ROOT'] . "/include/sqlconnection.php";
 $public_pages = ["login.php"];
+
 if (!in_array(basename($_SERVER['PHP_SELF']), $public_pages)) {
 
     if (session_status() == PHP_SESSION_NONE) {
