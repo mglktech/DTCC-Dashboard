@@ -60,6 +60,9 @@ function QueryTrigger($sql)
     if ($audit_type == "UPDATE") {
         $target_table = explode(" ", $sql)[1];
     }
+    if($audit_type == "SELECT") {
+        $target_table = "";
+    }
     if (isset($target_table)) {
         $fixed_sql = quotefix($sql);
         $audit_sql = "INSERT INTO audit_logs (audit_type,target_table,author,sql_code,timestamp) VALUES('$audit_type','$target_table','$author','$fixed_sql','$time')";
