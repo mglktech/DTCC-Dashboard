@@ -24,7 +24,7 @@ if (isset($_POST["Login"])) {
     $user = quotefix($_POST["steam_name"]);
     $pass = quotefix($_POST["password"]);
     $response = check_temp_code($user, $pass);
-    BeginSession(q_fetchPlayer(getSteamID($user)), true);
+    BeginSession(q_fetchPlayer(getSteamID($user)), false);
     // if ($response) {
     //     BeginSession(q_fetchPlayer(getSteamID($user)), true);
     // }
