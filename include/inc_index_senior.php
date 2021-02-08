@@ -42,7 +42,7 @@ if (isset($_POST["chk"])) {
 
     $chk_array = $_POST["chk"];
     foreach ($chk_array as $val) {
-        $sql = "UPDATE players SET whitelisted='1' WHERE steam_name = '$val'";
+        $sql = "UPDATE `players` SET `whitelisted`='1' WHERE `steam_name` = '$val'";
         Query($sql);
     }
 }
@@ -50,7 +50,7 @@ if (isset($_POST["chk2"])) {
 
     $chk_array = $_POST["chk2"];
     foreach ($chk_array as $val) {
-        $sql = "UPDATE players SET whitelisted='0' WHERE steam_name = '$val'";
+        $sql = "UPDATE `players` SET `whitelisted`='0' WHERE `steam_name` = '$val'";
         Query($sql);
     }
 }
@@ -59,7 +59,7 @@ if (isset($_POST["chk2"])) {
 function create_whitelist_table()
 {
 
-    $sql = "SELECT * FROM public_players WHERE whitelisted = '0' and rank >= '0' ";
+    $sql = "SELECT * FROM `public_players` WHERE `whitelisted` = '0' and `rank` >= '0' ";
     $tData = Query($sql);
     $thead = ["Name", "Steam Name", "Rank", "Hex", "Whitelisted?"];
     $tbody = array();
@@ -79,7 +79,7 @@ function create_whitelist_table()
 
 function create_remove_table()
 {
-    $sql = "SELECT * FROM public_players WHERE whitelisted = '1' and rank < '0' ";
+    $sql = "SELECT * FROM `public_players` WHERE `whitelisted` = '1' and `rank` < '0' ";
     $tData = Query($sql);
     $thead = ["Name", "Steam Name", "Rank", "Hex", "Whitelisted?"];
     $tbody = array();
