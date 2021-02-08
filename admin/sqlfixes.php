@@ -7,11 +7,11 @@ function Fill()
     $steamids = Query("SELECT `steam_id` FROM `players` WHERE 1");
     foreach($steamids as $s)
     {
-        // $extras = CollectFurtherAppInfo($s->steam_id);
-        // if($extras)
-        // {
-        //     Query("UPDATE `players` SET `backstory` = '$extras[0]' , `steam_link`='$extras[1]' WHERE `steam_id` = '$s->steam_id'");
-        // }
+        $extras = CollectFurtherAppInfo($s->steam_id);
+        if($extras)
+        {
+            Query("UPDATE `players` SET `backstory` = '$extras[0]' , `steam_link`='$extras[1]' WHERE `steam_id` = '$s->steam_id'");
+        }
         $ES = EmploymentStart($s->steam_id);
         if($ES)
         {
@@ -34,7 +34,7 @@ function CollectFurtherAppInfo($steamid)
     }
 }
 
-Fill();
+
 
 function EmploymentStart($steamid)
 {
@@ -49,5 +49,5 @@ function EmploymentStart($steamid)
         return null;
     }
 }
-
+Fill();
 include "../include/components/foot.php";
