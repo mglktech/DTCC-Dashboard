@@ -1,4 +1,4 @@
-<?php include "../include/header.php";
+<?php include "../include/components/head.php";
 
 include "../include/elements.php";
 
@@ -11,7 +11,7 @@ isset($_POST["new_status"]) ? $newstatus = quotefix($_POST["new_status"])  : $ne
 isset($_POST["new_discord"]) ? $newdiscord = quotefix($_POST["new_discord"])  : $newdiscord = null;
 isset($_POST["new_rank"]) ? $newrank = quotefix($_POST["new_rank"])  : $newrank = null;
 
-if ($rank > 2) {
+if (Rank("Supervisor")) {
 
     if ($newname) {
         $sql = "UPDATE players SET char_name = '$newname' WHERE steam_id = '$steamid'";
@@ -85,26 +85,29 @@ function ModalBody($flag, $rank)
         $content = "<input type='text' class='form-control' name='new_name'>";
     }
     if ($flag == "rank") {
-        if ($rank == 2) {
+        if (Rank("Supervisor")) {
             $content = "<select class='form-select' name='new_rank'>
             <option selected>Choose Rank</option>
             <option value='0'>Driver</option>
             <option value='1'>Private Hire</option>
+            <option value='1.5'>Instructor</option>
         </select>";
         }
-        if ($rank == 3) {
+        if (Rank("Senior Supervisor")) {
             $content = "<select class='form-select' name='new_rank'>
             <option selected>Choose Rank</option>
             <option value='0'>Driver</option>
             <option value='1'>Private Hire</option>
+            <option value='1.5'>Instructor</option>
             <option value='2'>Supervisor</option>
         </select>";
         }
-        if ($rank == 4) {
+        if (Rank("Overboss")) {
             $content = "<select class='form-select' name='new_rank'>
             <option selected>Choose Rank</option>
             <option value='0'>Driver</option>
             <option value='1'>Private Hire</option>
+            <option value='1.5'>Instructor</option>
             <option value='2'>Supervisor</option>
             <option value='3'>Senior Supervisor</option>
         </select>";
@@ -171,4 +174,4 @@ if ($rank > 2) {
     }
 }
 ?>
-<?= include "../include/footer.php";
+<?php include "../include/components/foot.php";

@@ -1,14 +1,14 @@
 <?php include "db_connection.php";
 
-function set_temp_code($steam_name, $code)
+function set_temp_code($steam_id, $code)
 {
     //Users are given a Temporary code to log in on forgot password/first use
     // checks against "code" column of players table
     //$hash = pass_hash();
     $code_hash = password_hash($code, PASSWORD_BCRYPT);
-    $sql = "UPDATE players 
-    SET code='$code_hash'
-    WHERE steam_name = '$steam_name'";
+    $sql = "UPDATE `players` 
+    SET `code`='$code_hash'
+    WHERE `steam_id` = '$steam_id'";
     Query($sql);
 }
 function check_temp_code($steam_name, $code)
@@ -162,6 +162,25 @@ function q_fetchPlayerFormatted($steam_id)
     } else {
         return null;
     }
+}
+
+function Rank($rank_label, $doc_rank = null)
+{
+    $resp = false;
+    isset($_SESSION['rank']) ? $my_rank = $_SESSION['rank'] : $my_rank = null;
+    if($my_rank > $doc_rank)
+    {
+    $r = Query("SELECT `placement` FROM `ranks` WHERE `display_name` = '$rank_label'");
+    
+    if($r)
+    {
+        if($my_rank >= $r[0]->placement)
+        {
+            $resp = true;
+        }
+    }
+}
+    return $resp;
 }
 
 function getSteamID($steam_name)

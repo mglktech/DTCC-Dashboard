@@ -18,6 +18,7 @@ function CollectPlayerInfo($steam_id)
     $pInfo->warnings = getStrikes($steam_id);
     $pInfo->public_verified_shifts = getShiftData($steam_id);
     $pInfo->test_history = getTests($steam_id);
+    $pInfo->notes = getNotes($steam_id);
     return $pInfo;
 }
 
@@ -26,7 +27,7 @@ function CollectPlayerInfo($steam_id)
 
 function getPublicPlayer($steam_id)
 {
-    $pInfo = Query("SELECT * from public_players where steam_id = '$steam_id'");
+    $pInfo = Query("SELECT * from `public_players` where `steam_id` = '$steam_id'");
     if($pInfo)
     {   return $pInfo[0];
     }
@@ -71,6 +72,21 @@ function getMetas($type, $ver)
     return Query($sql)[0];
 }
 
+function getNotes($steam_id)
+{
+    $sql = "SELECT * FROM `notes` WHERE `doc_id` = '$steam_id' AND `doc_type` = 'player' ORDER BY `timestamp` DESC";
+    return Query($sql);
+}
+
+if (isset($_POST['leaveNote'])) {
+    isset($_SESSION["steam_id"]) ? $steam_id = $_SESSION["steam_id"] : $steam_id = null;
+    $time = time();
+    $doc_type = "player";
+    $doc_id = $player_id;
+    $message = quotefix($_POST['message']);
+    $sql = "INSERT INTO private_notes (`doc_id`, `doc_type`, `steam_id`, `timestamp`, `message`) VALUES ('$doc_id','$doc_type','$steam_id','$time','$message')";
+    Query($sql);
+}
 
 
 function PassFail($ret, $score_percent)
@@ -86,7 +102,7 @@ function PassFail($ret, $score_percent)
 
 
 
-if($_SESSION["rank"] >=3) {
+if(Rank("Supervisor")) {
     include "elems/modals.php";
 }
 include "elems/profile.php";

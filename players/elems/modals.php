@@ -1,26 +1,93 @@
-<div class="modal fade" role="dialog" tabindex="-1" id="modal-AdditionalInfo">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Additional Info</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-            </div>
-            <div class="modal-body">
-                <ul class="list-unstyled">
-                    <li>Full Name | <?=$pInfo->public_player->char_name?></li>
-                    <li>Company Rank | <?=$pInfo->public_player->char_name?></li>
-                    <li>Steam Name | <a href="<?=$pInfo->public_player->steam_link?>"><?=$pInfo->public_player->steam_name?><br></a></li>
-                    <li>Steam ID | <?=$player_id?></li>
-                    <li>Phone | <?=$pInfo->public_player->phone_number?></li>
-                    <li>Discord | <?=$pInfo->public_player->discord_name?></li>
-                    <li>Time zone | <?=$pInfo->public_player->timezone?></li>
-                    <li>Member Since | -</li>
-                </ul>
-            </div>
-            <div class="modal-footer d-flex justify-content-center"><button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
+
+<?php 
+function inc_Warnings($warnings)
+{
+    $head = ["Issue Date", "Severity", "reason", "Struck by", "End Date"];
+    $body = array();
+    if ($warnings) {
+        foreach ($warnings as $s) {
+            $row = array();
+            $row[] = toDateS($s->issue_date);
+            $row[] = $s->severity;
+            $row[] = quotefix($s->strike_desc);
+            $row[] = quotefix($s->signed_callsign . " | " . $s->signed_by);
+            $row[] = toDateS($s->end_date);
+            $body[] = $row;
+        }
+    }
+    Tablefy($head, $body);
+}
+
+function inc_Apps($apps)
+{
+    
+    $thead = ["Date", "Status", "Signed By", ""];
+    $tbody = array();
+    if ($apps) {
+        foreach ($apps as $row) {
+            $tRow = array();
+            $tRow[] = toDate($row->app_timestamp);
+            $tRow[] = $row->status;
+            $tRow[] = $row->callsign . " | " .  $row->signed_by;
+            $tRow[] = "<a class='btn btn-secondary' href='/applications/view_app.php?doc_id=" . $row->app_id . "'>View</a>";
+            $tbody[] = $tRow;
+        }
+    }
+    Tablefy($thead, $tbody);
+}
+
+function inc_Tests($tData)
+{
+    $thead = ["Date", "Type", "Status", "Signed By", ""];
+    $tbody = array();
+    if ($tData) {
+        foreach ($tData as $row) {
+            $tRow = array();
+            $tRow[] =  toDateS($row->submit_date);
+            $tRow[] = $row->type;
+            $tRow[] = PassFail(getMetas($row->type, $row->version), $row->score_percent);
+            $tRow[] = $row->callsign . " | " .  $row->signed_by;
+            $tRow[] = "<a class='btn btn-secondary' href='../tests/view_test.php?test_id=" . $row->id . "'>View</a>";
+            $tbody[] = $tRow;
+        }
+    }
+
+    Tablefy($thead, $tbody);
+}
+
+function inc_shifts($tData)
+{
+    $thead = ["Date", "Time In", "Time Out", "Duration"];
+        $tbody = array();
+        if ($tData) {
+            foreach ($tData as $row) {
+                $tRow = array();
+                $tRow[] = toDateS($row->time_in); // Date
+                $tRow[] = toTime($row->time_in);
+                $tRow[] = toTime($row->time_out);
+                $tRow[] = toDurationHours($row->duration);
+                $tbody[] = $tRow;
+            }
+        }
+        Tablefy($thead, $tbody);
+}
+
+function inc_notes($tData) 
+{
+    $thead = ["Notes"];
+    $tbody = array();
+        if ($tData) {
+            foreach ($tData as $row) {
+                $tRow = array();
+                $tRow[] = $row->char_name . ": " . $row->message . " - " . ToDateS($row->timestamp);
+                $tbody[] = $tRow;
+            }
+        }
+        Tablefy($thead, $tbody);
+
+}
+
+?>
 
 <div class="modal fade" role="dialog" tabindex="-1" id="modal-tblWarnings">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -29,27 +96,8 @@
                     <h4 class="modal-title">Warnings</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 </div>
                 <div class="modal-body">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Duration</th>
-                                    <th>Description</th>
-                                    <th>Signed</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>12-Nov-2020<br></td>
-                                    <td>30 Days<br></td>
-                                    <td>Not being in Dispatch<br></td>
-                                    <td>David Budd</td>
-                                </tr>
-                                <tr></tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <?=inc_Warnings($pInfo->warnings)?>
+                    
                 </div>
                 <div class="modal-footer d-flex justify-content-center"><button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button></div>
             </div>
@@ -88,27 +136,7 @@
                     <h4 class="modal-title">Applications</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 </div>
                 <div class="modal-body">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Result</th>
-                                    <th>Signed</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>02-Nov-2020<br></td>
-                                    <td>accept<br></td>
-                                    <td>T1-02 | Gorgeous George<br></td>
-                                    <td><a class="btn btn-secondary btn-sm" role="button">View</a></td>
-                                </tr>
-                                <tr></tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <?= inc_Apps($pInfo->app_history)?>
                 </div>
                 <div class="modal-footer d-flex justify-content-center"><button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button></div>
             </div>
@@ -122,29 +150,7 @@
                     <h4 class="modal-title">Completed Tests</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 </div>
                 <div class="modal-body">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Type</th>
-                                    <th>Status</th>
-                                    <th>Signed</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>04-Nov-2020<br></td>
-                                    <td>practical<br></td>
-                                    <td>PASS</td>
-                                    <td>T1-02 | Gorgeous George<br></td>
-                                    <td><a class="btn btn-secondary btn-sm" role="button">View</a></td>
-                                </tr>
-                                <tr></tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <?=inc_Tests($pInfo->test_history)?>
                 </div>
                 <div class="modal-footer d-flex justify-content-center"><button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button></div>
             </div>
@@ -158,27 +164,7 @@
                     <h4 class="modal-title">Time Sheet (All Shifts)</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 </div>
                 <div class="modal-body">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>In</th>
-                                    <th>Out</th>
-                                    <th>Duration</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>30-Jan-2021<br></td>
-                                    <td>05:29PM</td>
-                                    <td>05:49PM</td>
-                                    <td>0hrs 20mins</td>
-                                </tr>
-                                <tr></tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <?=inc_Shifts($pInfo->public_verified_shifts)?>
                 </div>
                 <div class="modal-footer d-flex justify-content-center"><button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button></div>
             </div>
@@ -192,11 +178,10 @@
                     <h4 class="modal-title">Supervisor Notes</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 </div>
                 <div class="modal-body">
+                <form method="post" target="_self">
                     <div class="container">
-                        <ul class="list-unstyled">
-                            <li>No Notes...</li>
-                        </ul>
-                        <form method="post" target="_self">
+                        <?=inc_Notes($pInfo->notes)?>
+                        
                             <div class="input-group">
                                 <div class="input-group-prepend"></div><input class="form-control" type="text">
                                 <div class="input-group-append"><button class="btn btn-success" type="submit">Submit</button></div>

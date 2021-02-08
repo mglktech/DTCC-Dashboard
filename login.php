@@ -50,12 +50,16 @@ if (isset($_POST["Login"])) {
         <div class="form-group"><input class="form-control" type="password" name="password" placeholder="Password"></div>
         <div class="form-group"><button class="btn btn-primary btn-block " name="Login" type="submit" style="border-style: none;background: rgb(34,77,124);">Log In</button></div>
     </form>
+    
 </div>
-
+<div class="container">
 <label>MySQL is: <?php if (chkOnline()) {
                         echo "online";
                     } else {
                         echo "offline";
                     } ?></label>
+</div>
+
+
 
 <?php include "include/components/foot.php";

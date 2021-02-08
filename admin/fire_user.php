@@ -1,4 +1,4 @@
-<?php include "../include/header.php";
+<?php include "../include/components/head.php";
 
 
 function CreateReasonPhrase($reason)
@@ -7,7 +7,7 @@ function CreateReasonPhrase($reason)
     if ($reason == "inactivity") {
         $str = "You have not turned up for work in a while.";
     } else if ($reason == "too_many_strikes") {
-        $str = "You have received too many Strikes.";
+        $str = "You have received too many Warnings.";
     } else if ($reason == "resigned") {
         $str = "You have resigned.";
     } else if ($reason == "misconduct") {
@@ -36,20 +36,20 @@ if (isset($_POST["FireMe"])) {
         $reason = $_POST["otherreason"];
     }
     $add_info = $_POST["additionalInformation"];
-    if (isset($_POST["ban"])) {
+    if (isset($_POST["ban"]) || isset($_POST["banR"])) {
         $BanFire = "Banned";
         $banned = 1;
     }
-    $sql = "INSERT INTO fired (timestamp,steam_id,reason,signed_by,add_info,banned) VALUES('$timestamp','$steam_id','$reason','$signed_by','$add_info','$banned')";
+    $sql = "INSERT INTO `fired` (`timestamp`,`steam_id`,`reason`,`signed_by`,`add_info`,`banned`) VALUES('$timestamp','$steam_id','$reason','$signed_by','$add_info','$banned')";
     Query($sql);
-    $sql = "UPDATE players 
+    $sql = "UPDATE `players`
     SET `status`='$BanFire',
     `code` = null,
     `pw_hash` = null,
-    `rank` = '-2'
+    `rank` = null
     WHERE `steam_id` = '$steam_id'";
     Query($sql);
-    $sql = "UPDATE callsigns 
+    $sql = "UPDATE `callsigns` 
     SET `assigned_steam_id` = null
     WHERE `assigned_steam_id` = '$steam_id'";
     Query($sql);
@@ -106,4 +106,4 @@ if (isset($_POST["FireMe"])) {
     </div>
 </div>
 
-<?php include "../include/footer.php"; ?>
+<?php include "../include/components/foot.php"; ?>

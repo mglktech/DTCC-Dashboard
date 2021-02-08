@@ -1,17 +1,16 @@
 <?php
-
+include "../include/components/head.php";
 include "../include/elements.php";
-include "../include/header.php";
 
-function setCode($steam_name, $code)
-{
-    set_temp_code($_POST["txtSteamName"], $_POST["txtNewPass"]);
-}
 
-if (isset($_POST["ChangePW"])) {
-    setCode($_POST["txtSteamName"], $_POST["txtNewPass"]);
+
+
+if (isset($_POST["SteamID"])) {
+    set_temp_code($_POST["SteamID"], $_POST["txtNewPass"]);
+
 ?>
-    <h6> Send this message to <?php echo $_POST['discord_name']; ?></h6>
+<div class="container">
+    <h6> Send this message to <?=q_fetchPlayer($_POST["SteamID"])->discord_name ?></h6>
     <p class="border-p4">
         Your password to the DTCC Dashboard has been reset.<br>
         All passwords are stored in an encrypted format, and cannot be retrieved by staff.<br>
@@ -20,8 +19,9 @@ if (isset($_POST["ChangePW"])) {
         Your code will only work once, after which you will be redirected to reset your password.<br>
         Thanks!
     </p>
+    </div>
 <?php
     //header("Location: ../index.php");
 }
 
-include "../include/footer.php";
+include "../include/components/foot.php";
