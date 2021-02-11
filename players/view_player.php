@@ -62,7 +62,7 @@ function getApps($steam_id)
 }
 function getStrikes($steam_id)
 {
-    $sql = "SELECT * FROM `public_strikes` WHERE `steam_id` = '$steam_id'";
+    $sql = "SELECT * FROM `public_strikes` WHERE `steam_id` = '$steam_id' ORDER BY `id` DESC";
     return Query($sql);
 }
 
@@ -83,10 +83,31 @@ if (isset($_POST['leaveNote'])) {
     $time = time();
     $doc_type = "player";
     $doc_id = $player_id;
-    $message = quotefix($_POST['message']);
-    $sql = "INSERT INTO private_notes (`doc_id`, `doc_type`, `steam_id`, `timestamp`, `message`) VALUES ('$doc_id','$doc_type','$steam_id','$time','$message')";
+    $message = quotefix($_POST['note_message']);
+    $sql = "INSERT INTO `private_notes` (`doc_id`, `doc_type`, `steam_id`, `timestamp`, `message`) VALUES ('$doc_id','$doc_type','$steam_id','$time','$message')";
     Query($sql);
+    header("Refresh: 0");
 }
+if(isset($_POST["applyStrike"]))
+{
+    isset($_SESSION["steam_id"]) ? $signed = $_SESSION["steam_id"] : $signed = null;
+    $title_clean = quotefix($_POST["strike_title"]);
+    $desc_clean = quotefix($_POST["strike_desc"]);
+    $link_clean = quotefix($_POST["strike_link"]);
+    $dateNow = time();
+    $addTime = 2629743; // One Month
+    $endDate = $dateNow + $addTime;
+    $sql = "INSERT INTO `strikes` (`steam_id`, `strike_title`, `strike_desc`,`strike_evidence`, `signed_by`, `issue_date`, `end_date`) VALUES('$player_id','$title_clean','$desc_clean','$link_clean','$signed','$dateNow','$endDate')";
+    Query($sql);
+    header("Refresh: 0");
+}
+
+function ApplyStrike($id,$title,$desc,$link)
+{
+    
+    //echo $r . " SQL: " . $sql;
+}
+
 
 
 function PassFail($ret, $score_percent)

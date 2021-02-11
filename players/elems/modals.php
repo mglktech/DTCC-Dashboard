@@ -2,14 +2,15 @@
 <?php 
 function inc_Warnings($warnings)
 {
-    $head = ["Issue Date", "Severity", "reason", "Struck by", "End Date"];
+    $head = ["Issue Date", "Title", "Desc","link", "Struck by", "End Date"];
     $body = array();
     if ($warnings) {
         foreach ($warnings as $s) {
             $row = array();
             $row[] = toDateS($s->issue_date);
-            $row[] = $s->severity;
-            $row[] = quotefix($s->strike_desc);
+            $row[] = $s->strike_title;
+            $row[] = $s->strike_desc;
+            $row[] = $s->strike_evidence;
             $row[] = quotefix($s->signed_callsign . " | " . $s->signed_by);
             $row[] = toDateS($s->end_date);
             $body[] = $row;
@@ -114,13 +115,14 @@ function inc_notes($tData)
                     <div class="container d-flex flex-column">
                         <form id="warning_deets" target="_self" method="post"><span>Please give your warning a short description:</span>
                             <div class="input-group">
-                                <div class="input-group-prepend"><span class="input-group-text">Title</span></div><input class="form-control" type="text" value="3x running red lights, speeding.">
+                                <div class="input-group-prepend"><span class="input-group-text">Title</span></div><input class="form-control" type="text" placeholder="A Short Description..." name="strike_title">
                                 <div class="input-group-append"></div>
-                            </div><span>Please explain in full why you are warning this player:</span><textarea class="form-control" rows="4">two verbal warnings issued, but player continued to break traffic laws despite being warned!</textarea><span>If you have any evidence, please include a link below:<br></span>
+                            </div><span>Please explain in full why you are warning this player:</span><textarea class="form-control" rows="4" placeholder= "A Long Description..." name="strike_desc" ></textarea><span>If you have any evidence, please include a link below:<br></span>
                             <div class="input-group">
-                                <div class="input-group-prepend"><span class="input-group-text">Link:</span></div><input class="form-control" type="text">
+                                <div class="input-group-prepend"><span class="input-group-text">Link:</span></div><input class="form-control" type="text" placeholder="A Link to a screenshot/video" name="strike_link">
                                 <div class="input-group-append"></div>
                             </div><span class="span-dialog">(if you have additional evidence, please include links in the first box)&nbsp;</span>
+                            <input name="applyStrike" value="1" hidden></input>
                             <div class="modal-footer d-flex justify-content-center"><button class="btn btn-warning" type="submit">Submit Warning</button><button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button></div>
                         </form>
                     </div>
@@ -181,9 +183,9 @@ function inc_notes($tData)
                 <form method="post" target="_self">
                     <div class="container">
                         <?=inc_Notes($pInfo->notes)?>
-                        
+                        <input name="leaveNote" value="1" hidden></input>
                             <div class="input-group">
-                                <div class="input-group-prepend"></div><input class="form-control" type="text">
+                                <div class="input-group-prepend"></div><input class="form-control" type="text" name="note_message">
                                 <div class="input-group-append"><button class="btn btn-success" type="submit">Submit</button></div>
                             </div>
                         </form>
