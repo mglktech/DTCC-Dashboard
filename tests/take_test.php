@@ -8,15 +8,26 @@ if (isset($_GET['type'])) {
     $char_name = $applicant->char_name;
     $discord_name = $applicant->discord_name;
     $region = $applicant->timezone;
+    
 
     if ($test_type == "theory") {
-        include "theory_test_new.php";
+        if(Query("SELECT * FROM `globals` where `name` = 'enable_test_witnessing'")[0]->value == 1 && $witness_id == null)
+        {
+            include "interview_pre1.php";
+        }
+        else
+        {
+            include "theory_test_new.php";
+        }
     }
     if ($test_type == "practical") {
         include "practical_test_new.php";
     }
-}
 
+
+
+
+}
 ?>
 
 

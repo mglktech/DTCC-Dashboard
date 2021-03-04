@@ -32,15 +32,18 @@ function CreateQuestionnaireElement($id, $data)
 </div><hr>";
 }
 ?>
+<div class="container">
+        <p class="text-right">Student: <?php echo $char_name ?><br>Discord: <?php echo $discord_name ?></p>
+</div>
+<section>
 
-<div class="container-fluid">
-    <div class="row">
-        <h1>Theory Test: <?php echo $char_name ?></h1>
-        <h5 class="font-italic mb-3 font-weight-normal">To begin, you will be asking your applicant the following theoretical questions. These should be common sense. Make sure to mark each answer accordingly.</h5>
-    </div>
+        
+<div class="container">
+            <h3 class="text-center">Theory Test</h3>
+            <p class="text-left"><em>Next, you will be asking your applicant the following theoretical questions. These should be common sense. Make sure to mark each answer accordingly.</em><br></p>
 </div>
 
-<div class="container-fluid">
+<div class="container">
     <div class="row">
         <form action="view_test.php" method="post">
             <?php $data = CollectQuestionnaireData();
@@ -61,7 +64,7 @@ function CreateQuestionnaireElement($id, $data)
         </form>
     </div>
 </div>
-
+</section>
 
 <script>
     function IndexInClass(elem) {
