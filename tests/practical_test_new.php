@@ -12,7 +12,7 @@ function CreateQuestionnaireElement($id, $data)
     $vis_id = $id + 1;
     $points = $data[$id]->max_points;
     echo "<div class='container-fluid'>";
-    echo "<div class='row bg-light px-3 pt-0'>";
+    echo "<div class='row px-3 pt-0'>";
     echo "<div class='row w-100 mt-3 mb-3 rounded-lg'>";
     echo "<div class='col'>";
     echo "<h5 class='mt-3'>" . $vis_id . ". " . $data[$id]->question . "</h5>";

@@ -13,7 +13,7 @@ if (isset($_GET['type'])) {
         include "theory_test_new.php";
     }
     if ($test_type == "practical") {
-        include "practical_test.php";
+        include "practical_test_new.php";
     }
 }
 

@@ -14,11 +14,11 @@ function CreateQuestionnaireElement($id, $data)
     $vis_id = $id + 1;
     $points = $data[$id]->max_points;
     echo "<div class='container-fluid'>";
-    echo "<div class='row bg-light px-3 pt-0'>";
+    echo "<div class='row px-3 pt-0'>";
     echo "<div class='row w-100 mt-3 mb-3 rounded-lg'>";
     echo "<div class='col'>";
-    echo "<h5 class='mt-3'>" . $vis_id . ". " . $data[$id]->question . "</h5>";
-    echo "<i>Expected Answer:</i> <h6>" . $data[$id]->expected_answer . "</h6><br>";
+    echo "<ul><li>" . $vis_id . ". " . $data[$id]->question . "<ul>";
+    echo "<li>" . $data[$id]->expected_answer . "</li></ul></li></ul>";
     echo "<div class='test-question input-group mb-3' >
   <input type='range' min='0' max='" . $points . "' value='0' step='1' name='A[]' oninput='UpdateElem(this)' class='slider w-25' id='RangeSlider'>
   <div class='input-group-append'>
