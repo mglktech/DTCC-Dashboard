@@ -126,6 +126,20 @@ function Query($sql)
     $conn->close();
     QueryTrigger($sql);
 }
+
+function QueryFirst($sql)
+{
+    $result = Query($sql);
+    
+    if(isset($result[0])) {
+        return $result[0];
+    }
+    else {
+        return null;
+    }
+    
+}
+
 function quotefix($str)
 {
     return str_replace("'", "''", "$str");

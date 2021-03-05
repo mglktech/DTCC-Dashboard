@@ -13,7 +13,7 @@ foreach ($result as $row) {
     $tblRow[] = $row->char_name;
     $tblRow[] = $row->discord_name;
     $tblRow[] = toDateS($row->last_seen);
-    $tblRow[] = "<a class='btn btn-primary' href='take_test.php?type=theory&steamid=" . $row->steam_id . "'>Take Test</button>";
+    $tblRow[] = "<a class='btn btn-primary' href='take_test.php?type=theory&ver=1&steamid=" . $row->steam_id . "'>Take Test</button>";
     $tblBody[] = $tblRow;
 }
 ?>

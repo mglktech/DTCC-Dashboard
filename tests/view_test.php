@@ -303,7 +303,8 @@ $char_name = $rvals['char_name'];
 
             <div class="row">
                 <div class="col-md-6">
-                    <?php CreateInputElem("Test Type", $rvals["test_type"], "v0"); ?>
+                    <?php $ver = "v".$rvals["ver"];
+                    CreateInputElem("Test Type", $rvals["test_type"], $ver); ?>
                 </div>
                 <div class="col-md-6">
                     <?php CreateRichInputElem("Test Result:", CreatePassFail($rvals['total_score'], $rvals['pass_mark']), ($rvals['percentage'] * 100) .  "%"); ?>
@@ -350,13 +351,15 @@ $char_name = $rvals['char_name'];
                 <span class="font-weight-normal"><?php echo $rvals['comments']; ?></span>
             </div>
             <div>
-                <?php include "../include/inc_notes.php"; ?>
+                <?php if(isset($doc_id)) {
+                 include "../include/inc_notes.php"; ?>
                 <span class="font-weight-normal"><?php CreateNotesTable($doc_id, $doc_type); ?></span>
                 <button class="btn btn-secondary" data-toggle="modal" data-target="#NoteModal">Add Note</button>
             </div>
+            <?php }?>
         </div>
 
-        <a class="btn btn-secondary mb-5 btn-large mt-5" href="table_tests.php">Done</a>
+        <a class="btn btn-secondary mb-5 btn-large mt-5" href="table_tests_archive.php">Done</a>
     </div>
 </div>
 
