@@ -13,34 +13,21 @@ function CreateQuestionnaireElement($id, $data)
 
     $vis_id = $id + 1;
     $points = $data[$id]->max_points;
-    echo "<div class='container-fluid'>";
-    echo "<div class='row bg-light px-3 pt-0'>";
-    echo "<div class='row w-100 mt-3 mb-3 rounded-lg'>";
-    echo "<div class='col'>";
-    echo "<h5 class='mt-3'>" . $vis_id . ". " . $data[$id]->question . "</h5>";
-    echo "<i>Expected Answer:</i> <h6>" . $data[$id]->expected_answer . "</h6><br>";
-    echo "<div class='test-question input-group mb-3' >
-  <input type='range' min='0' max='" . $points . "' value='0' step='1' name='A[]' oninput='UpdateElem(this)' class='slider w-25' id='RangeSlider'>
-  <div class='input-group-append'>
-    <input class='ml-2 output w-25' type='text' value='0' disabled>
-  </div>
-  
-</div>
-</div>
-</div>
-</div>
-</div><hr>";
+    include "elems/question.php";
 }
 ?>
+<div class="container">
+        <p class="text-right">Student: <?php echo $char_name ?><br>Discord: <?php echo $discord_name ?></p>
+</div>
+<section>
 
-<div class="container-fluid">
-    <div class="row">
-        <h1>Theory Test: <?php echo $char_name ?></h1>
-        <h5 class="font-italic mb-3 font-weight-normal">To begin, you will be asking your applicant the following theoretical questions. These should be common sense. Make sure to mark each answer accordingly.</h5>
-    </div>
+        
+<div class="container">
+            <h3 class="text-center">Theory Test</h3>
+            <p class="text-left"><em>Next, you will be asking your applicant the following theoretical questions. These should be common sense. Make sure to mark each answer accordingly.</em><br></p>
 </div>
 
-<div class="container-fluid">
+<div class="container">
     <div class="row">
         <form action="view_test.php" method="post">
             <?php $data = CollectQuestionnaireData();
@@ -61,7 +48,7 @@ function CreateQuestionnaireElement($id, $data)
         </form>
     </div>
 </div>
-
+</section>
 
 <script>
     function IndexInClass(elem) {

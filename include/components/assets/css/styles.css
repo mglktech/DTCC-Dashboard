@@ -237,11 +237,11 @@ body {
   font-family: 'Source Sans Pro', sans-serif;
 }
 
-.hr {
+hr {
   margin-top: 1rem;
   margin-bottom: 1rem;
-  border: 0;
-  border-top: 1px solid rgba(255,255,255,0.38);
+  border:0;
+  border-top: 1px solid rgba(255,255,255,0.43);
 }
 
 
