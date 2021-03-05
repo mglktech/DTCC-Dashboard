@@ -144,7 +144,7 @@ if (isset($_POST["SubmitApp"])) {
             $sql = "REPLACE INTO players (`steam_id`,`phone_number`,`steam_name`,`discord_name`,`char_name`,`status`,`last_seen`) VALUES('$detected_steam_id','$phone_number','$detected_steam_name','$discord_name','$char_name','BANNED','$date')";
         } else {
             if ($status == "accept") {
-                $sql = "REPLACE INTO players (`steam_id`,`phone_number`,`steam_name`,`discord_name`,`char_name`,`status`,`last_seen`,`timezone`) VALUES('$detected_steam_id','$phone_number','$detected_steam_name','$discord_name','$char_name','Needs Theory','$date','$timezone')";
+                $sql = "REPLACE INTO players (`rank`,`steam_id`,`phone_number`,`steam_name`,`discord_name`,`char_name`,`status`,`last_seen`,`timezone`) VALUES('-1','$detected_steam_id','$phone_number','$detected_steam_name','$discord_name','$char_name','Needs Theory','$date','$timezone')";
             } else {
                 $sql = "REPLACE INTO players (`steam_id`,`phone_number`,`steam_name`,`discord_name`,`char_name`,`last_seen`) VALUES('$detected_steam_id','$phone_number','$detected_steam_name','$discord_name','$char_name',$date)";
             }
