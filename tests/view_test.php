@@ -17,6 +17,11 @@ if (isset($_GET["test_id"])) {
     $rvals = Get_Test($_GET["test_id"]);
 }
 
+function update_callsign($id,$callsign)
+{
+    
+}
+
 function getPlayer()
 { // code updated
 }
@@ -135,7 +140,7 @@ function POST_Theory()
 function POST_Practical()
 {
     //assign callsign
-    $callsign = $_POST['callsign'];
+    //$callsign = $_POST['callsign'];
     //echo $callsign;
     $date = time();
     $steamid = $_POST["steamid"];

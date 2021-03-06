@@ -3,8 +3,8 @@
     $vis_id = $id + 1;
     $points = $data->max_points;
     $question = $data->question;
-    $answer = $data->expected_answer;
-    include "elems/question.php";
+    $answer = $data->question_desc;
+    include "elems/question_practical.php";
 }
 
 ?>
@@ -16,8 +16,8 @@
 
         
 <div class="container">
-            <h3 class="text-center">Theory Test</h3>
-            <p class="text-left"><em>Next, you will be asking your applicant the following theoretical questions. These should be common sense. Make sure to mark each answer accordingly.</em><br></p>
+            <h3 class="text-center">Practical Test</h3>
+            <p class="text-center"><em>Prrrrrrrrrrrrrrrractical Test - Sky Baca</em><br></p>
 </div>
 
 <div class="container">
@@ -28,8 +28,8 @@
                 CreateQuestionnaireElement($i, $test_data[$i]);
             } ?>
             <input name="steamid" value="<?php echo $student->steam_id ?>" hidden>
-            <input name="test_type" value="theory" hidden>
-            <input name="test_version" value = "1" hidden>
+            <input name="test_type" value="practical" hidden>
+            <input name="test_version" value = "0" hidden>
             <div class="input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text">Comments</span>
@@ -37,7 +37,7 @@
                 <textarea name="comments" rows="5" class="form-control" aria-label="With textarea"></textarea>
             </div>
             <button class="btn btn-success mb-5 mr-2 mt-3" type="submit" <?php if (!Rank("Supervisor")) echo "disabled" ?>>Submit</button>
-            <a class="btn btn-secondary mb-5 mr-2 mt-3" href="table_needs_theory.php">Go Back</a>
+            <a class="btn btn-secondary mb-5 mr-2 mt-3" href="table_needs_practical.php">Go Back</a>
         </form>
     
 </div>

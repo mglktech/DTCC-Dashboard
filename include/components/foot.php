@@ -1,5 +1,5 @@
 <?php
-$pages_noback = ["view_test.php","login.php", "index.php", "shifts_index.php", "shifts_index_AllTime.php", "shifts_index_PastMonth.php", "shifts_index_PastWeek.php", "verify_shifts.php"]; ?>
+$pages_noback = ["take_test.php","view_test.php","login.php", "index.php", "shifts_index.php", "shifts_index_AllTime.php", "shifts_index_PastMonth.php", "shifts_index_PastWeek.php", "verify_shifts.php"]; ?>
 <div class="container">
     <?php if (!in_array(basename($_SERVER['PHP_SELF']), $pages_noback)) { ?>
         <button class="btn btn-dark btn-sm" type="button" onclick="goBack()">Go Back</button>

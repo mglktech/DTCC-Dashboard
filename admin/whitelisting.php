@@ -50,7 +50,7 @@ function create_whitelist_table()
 
 function create_remove_table()
 {
-    $sql = "SELECT * FROM `public_players` WHERE `whitelisted` = '1' and `rank` < '0' ";
+    $sql = "SELECT * FROM `public_players` WHERE `whitelisted` = '1' and `rank` is null ";
     $tData = Query($sql);
     $thead = ["Name", "Steam Name", "Rank", "Hex", "Whitelisted?"];
     $tbody = array();
