@@ -1,4 +1,4 @@
-<?php include "../include/header.php";
+<?php include "../include/components/head.php";
 
 
 function char_status($name)
@@ -66,4 +66,4 @@ function SpanIsAlive($IsAlive)
 }
 
 CheckAllPlayers();
-include "../include/footer.php";
+include "../include/components/foot.php";

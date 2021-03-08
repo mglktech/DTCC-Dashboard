@@ -1,4 +1,4 @@
-<?php include 'include/header.php';
+<?php include 'include/components/head.php';
 include "include/db_connection.php";
 
 ?>
@@ -24,4 +24,4 @@ if (isset($_POST["Name"])) {
 }
 ?>
 
-<?php include_once "include/footer.php"; ?>
+<?php include_once "include/components/foot.php"; ?>

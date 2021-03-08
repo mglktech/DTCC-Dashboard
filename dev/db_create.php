@@ -1,5 +1,5 @@
 <?php
-include_once "../include/header.php";
+include_once "../include/components/head.php";
 
 include "../include/db_connection.php";
 

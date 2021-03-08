@@ -1,4 +1,4 @@
-<?php include "../include/header.php";
+<?php include "../include/components/head.php";
 
 include "../steam/SteamWebAPI_Simple.php";
 include "../include/elements.php";
@@ -49,4 +49,4 @@ Players who have changed their steam names:
 these new steam names have been updated:
 <?php TableConstr();
 
-include "../include/footer.php"; ?>
+include "../include/components/foot.php"; ?>

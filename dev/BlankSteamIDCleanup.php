@@ -1,4 +1,4 @@
-<?php include "../include/header.php";
+<?php include "../include/components/head.php";
 
 include "../include/elements.php";
 
@@ -51,4 +51,4 @@ foreach ($res as $row) {
 Tablefy($head, $body); ?>
 <a type="button" class="btn btn-secondary" href="../index.php">Go Back</a>
 <?php
-include "../include/footer.php";
+include "../include/components/foot.php";

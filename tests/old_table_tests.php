@@ -1,4 +1,4 @@
-<?php include '../include/header.php';  ?>
+<?php include '../include/components/head.php';  ?>
 
 <?php
 include '../include/db_connection.php';
@@ -164,7 +164,7 @@ callsign
         ?>
     </div>
 </div>
-<?php include '../include/footer.php';
+<?php include '../include/components/foot.php';
 
 function CreateTable($tableType)
 {
