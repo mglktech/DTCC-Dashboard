@@ -1,4 +1,4 @@
-<?php include "../include/header.php";
+<?php include "../include/components/head.php";
 /*
 This page reads a CSV compilation of live-clockin-data and dumps it into shift_records SQL table, ignoring existing values.
 Upon POST of a CSV file, it runs the following functions in order:
@@ -11,11 +11,12 @@ CreateShifts has added functionality to automatically reject "in" records that a
 It will be up to Senior Supervisors to validate each shift on an individual basis. if we feel that the pruned shift could not be valid, we will reject it by hand.
 */
  ?>
+ <div class="container">
 <form action="" method="post" enctype="multipart/form-data">
     <input type="file" name="file">
     <input type="submit" name="btn_submit" value="Upload File" />
 </form>
-
+</div>
 <?php
 
 function TrimRecords($lines)
@@ -202,4 +203,4 @@ function PruneShift($shift)
 ?>
 <!-- </tbody>
 </table> -->
-<?php include "../include/footer.php"; ?>
+<?php "../include/components/foot.php"; ?>

@@ -1,4 +1,4 @@
-<?php include "../include/header.php";
+<?php include "../include/components/head.php";
 
 include "../include/elements.php";
 
@@ -25,11 +25,13 @@ if ($tData) {
     }
 }
 ?>
+<div class="container">
 <h4>Time Spent On-Shift - Past Week</h4>
 <?php
 Tablefy($thead, $tbody);
 Paginate($obj);
 ?>
 <a href="/shifts/shifts_index.php" class="btn btn-secondary">Go Back</a>
+</div>
 <?php
-include "../include/footer.php";
+include "../include/components/foot.php";

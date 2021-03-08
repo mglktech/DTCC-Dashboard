@@ -1,5 +1,5 @@
 <?php
-include "../include/header.php";
+include "../include/components/head.php";
 
 $sql = "SELECT DISTINCT `steam_name` FROM `shift_records` WHERE (`signed_by` IS NULL AND `io` = 'out')";
 $result = Query($sql);
@@ -22,6 +22,7 @@ if ($result) {
 
 
 ?>
+<div class="container">
 <h3>Unverified Shifts</h3>
 <table class="table table-striped blue-header">
     <thead>
@@ -45,5 +46,5 @@ if ($result) {
         ?>
     </tbody>
 </table>
-
-<?php include "../include/footer.php"; ?>
+</div>
+<?php "../include/components/foot.php"; ?>

@@ -1,5 +1,5 @@
 <?php
-include "../include/header.php";
+include "../include/components/head.php";
 
 
 function POST_shiftdata($data)
@@ -187,7 +187,7 @@ function display_selectbox($vals)
 ?>
 
 <?php if (isset($shifts)) { ?>
-
+    <div class="container">
     <h3>Unverified Shifts: <?php echo $_GET['id'] ?></h3>
     <table class="table table-striped blue-header">
         <thead>
@@ -226,6 +226,7 @@ function display_selectbox($vals)
 
         <button name="submit" type="submit" class="btn btn-success">Submit</button>
     </form>
+    </div>
 <?php } ?>
 
 <script>
@@ -252,4 +253,4 @@ function display_selectbox($vals)
     }
 </script>
 
-<?php include "../include/footer.php"; ?>
+<?php "../include/components/foot.php"; ?>

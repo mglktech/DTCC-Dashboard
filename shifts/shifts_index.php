@@ -1,4 +1,4 @@
-<?php include "../include/header.php";
+<?php include "../include/components/head.php";
 
 include "../include/elements.php";
 isset($_POST['tab']) ? $tab = quotefix($_POST['tab']) : $tab = "PastWeek";
@@ -73,7 +73,7 @@ function IncludeStaffBtn($inc_staff)
 
 ?>
 
-<div class="container-fluid-p0">
+<div class="container">
     <h4>Top Time Spent On-Shift</h4>
     <h6>Last Updated: <?php echo getLastUpdated(); ?></h6>
     <ul class="nav nav-tabs">
@@ -131,7 +131,7 @@ function IncludeStaffBtn($inc_staff)
     <?php PopulateTab($tab, $inc_staff);
     IncludeInfoBtn($tab);
     ?>
-</div>
+
 
 
 <?php
@@ -190,5 +190,6 @@ if ($_SESSION["rank"] >= 3) {
         </div>
 
     </div>
+</div>
 <?php }
-include "../include/footer.php";
+include "../include/components/foot.php";
