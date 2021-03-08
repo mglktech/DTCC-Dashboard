@@ -73,6 +73,7 @@ if ($_SESSION["rank"] > 2) {
 
 
 ?>
+<div class="container">
     <a class='btn btn-lg btn-info' href='https://highliferoleplay.net/whitelisting/index.php' target='_blank'>Highlife Whitelisting</a>
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
@@ -102,7 +103,7 @@ if ($_SESSION["rank"] > 2) {
             </form>
         </div>
     </div>
-
+    </div>
 
 
 

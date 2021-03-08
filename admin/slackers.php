@@ -35,7 +35,7 @@ if ($tData) {
 }
 
 ?>
-
+<div class="container">
 <h2>Frivolous Drivers</h2>
 <h5>DTCC Staff who have been underperforming.</h5>
 <h6>(Less than two hours clocked in over the past month)</h6>
@@ -43,6 +43,7 @@ if ($tData) {
 Tablefy($thead, $tbody);
 //Paginate($obj);
 ?>
+</div>
 <!-- <a href="/shifts/shifts_index.php" class="btn btn-secondary">Go Back</a> -->
 <?php
 include "../include/components/foot.php";
