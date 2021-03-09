@@ -109,7 +109,7 @@ $test_id = SQLInsertTest($steam_id,$test_type,$test_version,$result->total_score
                 <h5>Score:</h5>
             </div>
             <div class="col d-flex flex-column justify-content-center align-items-start">
-                <h5><?=$result->percentage?></h5>
+                <h5><?=($result->percentage * 100)?>%</h5>
             </div>
         </div>
         <div class="row">
@@ -124,11 +124,13 @@ $test_id = SQLInsertTest($steam_id,$test_type,$test_version,$result->total_score
             <div class="col">
                 <?php if($result->literal == "PASS") {
                     SQLUpdatePlayer($steam_id,$test_type);
+                
+                if($test_type == "practical") {
                     ?>
                 <a class="btn btn-warning btn-pad" type="button" href="../admin/assign_callsign.php?id=<?=$steam_id?>">Assign Callsign</a>
-                <?php }?>
+                <?php }}?>
                 <a class="btn btn-secondary btn-pad" type="button" href = "view_test.php?test_id=<?=$test_id?>">More Info</a>
-                <button class="btn btn-dark btn-pad" type="button" href= "table_tests_archive.php">Finish</button>
+                <a class="btn btn-dark btn-pad" type="button" href= "table_tests_archive.php">Finish</a>
             </div>
         </div>
     </div>

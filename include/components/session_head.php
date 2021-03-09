@@ -1,86 +1,3 @@
-<?php
-
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-
-if (!isset($_SESSION["password"])) {
-    $_SESSION["redirect"] = $_SERVER['REQUEST_URI'];
-    //echo "not logged in";
-    header("Location: ../q_login.php");
-}
-
-function toDateS($timestr)
-{
-
-    if (isTimestamp($timestr)) {
-        if ($timestr != 0) {
-            return date("d-M-Y", $timestr);
-        } else {
-            return "-";
-        }
-    } else {
-        return "-";
-    }
-}
-
-function toDate($timestr)
-{
-
-    if (isTimestamp($timestr)) {
-        if ($timestr != 0) {
-            return date("d-M-Y", round($timestr / 1000));
-        } else {
-            return "-";
-        }
-    } else {
-        return "-";
-    }
-}
-
-function toDateTime($timestr)
-{
-
-    if (isTimestamp($timestr)) {
-        return date("d-M-Y - h:i:s A T", $timestr);
-    } else {
-        return "-";
-    }
-}
-
-function toTime($timestr)
-{
-    if (isTimestamp($timestr)) {
-        return date("h:i A", $timestr);
-    } else {
-        return "-";
-    }
-}
-
-function toDurationDays($timestr)
-{
-
-    return gmdate('z\d\a\y\s, G\h\r\s \a\n\d i\m\i\n\s', $timestr);
-}
-
-function toDurationHours($timestr)
-{
-
-    return gmdate('G\h\r\s i\m\i\n\s', $timestr);
-}
-
-function isTimestamp($string)
-{
-    try {
-        new DateTime('@' . $string);
-    } catch (Exception $e) {
-        return false;
-    }
-    return true;
-}
-
-
-?>
 <!DOCTYPE html>
 <html>
 
@@ -88,25 +5,42 @@ function isTimestamp($string)
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Downtown Cab Co. Dashboard</title>
-    <link rel="stylesheet" href="include/components/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/include/components/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Allerta">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Archivo+Black">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bad+Script">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Charmonman:400,700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Indie+Flower">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700">
-    <link rel="stylesheet" href="include/components/assets/fonts/ionicons.min.css">
-    <link rel="stylesheet" href="include/components/assets/css/Header-Blue.css">
-    <link rel="stylesheet" href="include/components/assets/css/Login-Form-Dark.css">
-    <link rel="stylesheet" href="include/components/assets/css/styles.css">
+    <link rel="stylesheet" href="/include/components/assets/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="/include/components/assets/css/styles.css">
+    <script src="https://kit.fontawesome.com/f98d92a3e6.js" crossorigin="anonymous"></script>
+
+
 </head>
 
-<body style="background: rgb(35,39,41);text-align: center;">
-
-    <!-- PAGE HEADER -->
-    <div class="container d-lg-flex justify-content-lg-start align-items-lg-center" style="width: 100%;max-width: 100%;background: linear-gradient(rgb(34,77,124), rgba(255,255,255,0));">
-        <div class="row d-lg-flex justify-content-lg-start align-items-lg-center" style="width: auto;">
-            <div class="col d-flex d-lg-flex justify-content-center align-items-center justify-content-lg-start" style="height: 82px;margin: 0px;"><img src="include/components/assets/img/logo.png"></div>
-            <div class="col d-flex d-lg-flex justify-content-center align-items-center justify-content-lg-center align-items-lg-center" style="text-align: center;max-width: 373px;">
-                <h3 class="d-flex align-items-center" style="color: rgb(251,251,251);font-family: 'Bad Script', cursive;">Dashboard</h3>
+<body>
+    <nav class="navbar navbar-light navbar-expand-md navigation-clean navbar-dark" style="background: linear-gradient(rgb(34,76,123) 0%, rgba(255,255,255,0));">
+        <div class="container"><a class="navbar-brand text-center" href="/home.php" style="font-family: 'Indie Flower', cursive;color: rgb(217,217,217);"><img class="d-md-flex" src="/include/components/assets/img/logo.png" style="margin-right: 8px;height: 49px;">Dashboard</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1" style="border-style: none;"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navcol-1">
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link" href="/home.php" style="color: rgb(217,217,217);"><i class="icon ion-ios-home-outline" style="margin-right: 4px;"></i>Home</a></li>
+                    <li class="nav-item dropdown"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#" style="color: rgb(217,217,217);"><i class="icon ion-clipboard" style="margin-right: 4px;"></i>Applications</a>
+                        <div class="dropdown-menu"><a class="dropdown-item" href="/applications/table_apps.php">Unread</a><a class="dropdown-item" href="/applications/table_apps_archive.php">Archive</a></div>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="/players/rostor.php" style="color: rgb(217,217,217);"><i class="icon ion-ios-person-outline" style="margin-right: 4px;"></i>Roster</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#" style="color: rgb(217,217,217);">
+                            <i class="icon ion-ios-folder-outline" style="margin-right: 4px;"></i>Training</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/tests/table_needs_theory.php">Theory</a>
+                            <a class="dropdown-item" href="/tests/table_needs_practical.php">Practical</a>
+                            <a class="dropdown-item" href="/training/day_one/table_day_one.php">Day One</a>
+                            <a class="dropdown-item" href="/tests/table_tests_archive.php">Archive</a>
+                        </div>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="/shifts/shifts_index.php" style="color: rgb(217,217,217);"><i class="far fa-clock" style="margin-right: 4px;"></i>Shifts</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/logout.php" style="color: rgb(217,217,217);">LogOut</a></li>
+                </ul>
             </div>
         </div>
-    </div>
+    </nav>

@@ -35,6 +35,7 @@ function CollectCallsigns($rank, $region)
 $player = QueryFirst("SELECT * FROM `public_players` WHERE `steam_id` = '$id'");
 $available_callsigns = CollectCallsigns($player->rank,$player->timezone);
 $existing_callsign = IdHasCallsign($id);
+$latest_test = QueryFirst("SELECT * FROM `tests` WHERE `steam_id` = '$id' ORDER BY `id` DESC");
 ?>
 <div class="container">
         <div class="row">

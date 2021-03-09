@@ -49,6 +49,6 @@ foreach ($res as $row) {
 }
 
 Tablefy($head, $body); ?>
-<a type="button" class="btn btn-secondary" href="../index.php">Go Back</a>
+<a type="button" class="btn btn-secondary" href="../home.php">Go Back</a>
 <?php
 include "../include/components/foot.php";

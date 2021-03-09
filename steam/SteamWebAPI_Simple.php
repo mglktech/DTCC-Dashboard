@@ -4,7 +4,7 @@
 function SteamAPIKey()
 {
     $sql = "SELECT * FROM secrets WHERE secret_name = 'SteamAPIKey'";
-    return Query($sql)[0]->secret;
+    return QueryFirst($sql)->secret;
 }
 
 
