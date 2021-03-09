@@ -5,7 +5,7 @@ function CountTraining()
 {
     return QueryFirst("SELECT COUNT(*) AS 'c' FROM `players` WHERE `rank` = '0' AND `instructor_trained` is null")->c;
 }
-
+// test
 function CreateTableTraining()
 {
     //$btn = "<a class='btn btn-table' href='/applications/view_app.php?doc_id=0'>View Application</a>"; //DEBUG
