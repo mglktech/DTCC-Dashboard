@@ -23,7 +23,7 @@ if ($tData) {
 
                 $tRow = array();
                 $tRow[] = $row->callsign . " | " . $row->char_name;
-                $tRow[] = Pill("rank_" . $row->rank);
+                $tRow[] = Pill(getRank($row->rank));
                 $tRow[] = toDurationDays($row->duration);
                 $tRow[] = toDateS($employ_start);
                 $tRow[] = $row->discord_name;
@@ -36,13 +36,13 @@ if ($tData) {
 
 ?>
 <div class="container">
-<h2>Frivolous Drivers</h2>
-<h5>DTCC Staff who have been underperforming.</h5>
-<h6>(Less than two hours clocked in over the past month)</h6>
-<?php
-Tablefy($thead, $tbody);
-//Paginate($obj);
-?>
+    <h2>Frivolous Drivers</h2>
+    <h5>DTCC Staff who have been underperforming.</h5>
+    <h6>(Less than two hours clocked in over the past month)</h6>
+    <?php
+    Tablefy($thead, $tbody);
+    //Paginate($obj);
+    ?>
 </div>
 <!-- <a href="/shifts/shifts_index.php" class="btn btn-secondary">Go Back</a> -->
 <?php

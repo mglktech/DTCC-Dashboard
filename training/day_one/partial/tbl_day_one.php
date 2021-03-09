@@ -20,7 +20,7 @@ function CreateTableTraining()
             $tblRow[] = $row->char_name;
             $tblRow[] = toDate($row->employment_start);
             $tblRow[] = $row->discord_name;
-            $tblRow[] = "<a class='btn btn-sm btn-secondary' href='/training/day_one/instructor_checklist.php?id=" . $row->steam_id . "'>Train</a>";
+            $tblRow[] = "<a class='btn btn-secondary' href='/training/day_one/instructor_checklist.php?id=" . $row->steam_id . "'>Train</a>";
             $tblBody[] = $tblRow;
         }
     } else {

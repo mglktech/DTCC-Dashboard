@@ -58,7 +58,7 @@ if ($tData) {
         $tRow = array();
         $tRow[] = $row->callsign . " | " . $row->char_name;
         $tRow[] = $row->discord_name;
-        $tRow[] = Pill("rank_" . $row->rank);
+        $tRow[] = Pill(getRank($row->rank));
         $tRow[] = $row->status;
         $tRow[] = "<a class='btn btn-sm btn-secondary view-player' style = 'align-self:stretch;' href='../players/view_player.php?id=" . $row->steam_id . "'>View Player</button>";
         $tBody[] = $tRow;
@@ -80,4 +80,4 @@ if ($tData) {
         Paginate($obj);
     }
     ?></div><?php
-        include "../include/components/foot.php";
+            include "../include/components/foot.php";
