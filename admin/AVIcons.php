@@ -11,12 +11,14 @@ function sel_all_steamids()
 
 function UpdateAvIcons($SteamID)
 {
-    $webapi = GetSteamDetails($SteamID);
-    $av_icon = $webapi->av_icon;
-    $av_medium = $webapi->av_medium;
-    $av_full = $webapi->av_full;
-    $sql = "UPDATE `players` SET `av_icon`='$av_icon', `av_medium` = '$av_medium', `av_full` = '$av_full' WHERE `steam_id` = '$SteamID'";
-    Query($sql);
+    if (strlen($SteamID) == 17) {
+        $webapi = GetSteamDetails($SteamID);
+        $av_icon = $webapi->av_icon;
+        $av_medium = $webapi->av_medium;
+        $av_full = $webapi->av_full;
+        $sql = "UPDATE `players` SET `av_icon`='$av_icon', `av_medium` = '$av_medium', `av_full` = '$av_full' WHERE `steam_id` = '$SteamID'";
+        Query($sql);
+    }
 }
 
 function UpdateAllAVIcons()
