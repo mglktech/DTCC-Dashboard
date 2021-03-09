@@ -179,7 +179,11 @@ function q_fetchPlayerFormatted($steam_id)
 
 function getRank($rank_placement)
 {
-    return QueryFirst("SELECT `display_name` FROM `ranks` WHERE `placement` = '$rank_placement'")->display_name;
+    $r = QueryFirst("SELECT `display_name` FROM `ranks` WHERE `placement` = '$rank_placement'");
+    if (isset($r->display_name)) {
+
+        return $r->display_name;
+    }
 }
 
 function Rank_Strict($rank_label)
