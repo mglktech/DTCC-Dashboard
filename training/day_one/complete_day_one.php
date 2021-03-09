@@ -9,7 +9,7 @@ isset($_POST["SubmitDocument"])  ? $flag = true : $flag = false;
 
 if ($flag) {
     $time = time();
-    Query("INSERT INTO `training_sessions` (`student_id`,`signed_by`,`comments`) VALUES('$student_id','$id','$comments')");
+    Query("INSERT INTO `training_sessions` (`timestamp`,`student_id`,`signed_by`,`comments`) VALUES('$time','$student_id','$id','$comments')");
     Query("UPDATE `players` SET `instructor_trained` = '1' WHERE `steam_id` = '$student_id'");
 }
 
