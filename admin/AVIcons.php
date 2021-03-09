@@ -1,5 +1,5 @@
 <?php include "../include/components/head.php";
-include "../steam/steamwebapi_simple.php";
+include "../steam/SteamWebAPI.php";
 function sel_all_steamids()
 {
     $sql = Query("SELECT `steam_id` FROM `players` WHERE 1");

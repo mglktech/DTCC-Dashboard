@@ -1,7 +1,7 @@
 <?php include "../include/components/head.php";
 
 include "../include/elements.php";
-include "../steam/SteamWebAPI_Simple.php";
+include "../steam/SteamWebApi.php";
 
 
 isset($_GET['doc_id']) ? $doc_id = $_GET['doc_id'] : $doc_id = -1;
