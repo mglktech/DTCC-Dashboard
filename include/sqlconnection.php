@@ -96,7 +96,7 @@ function BeginSession($player, $temp)
         header("Location: admin/change_password.php");
     }
     if (!$temp) {
-        header("Location: index.php");
+        header("Location: home.php");
     }
 }
 
@@ -183,7 +183,7 @@ function Rank_Strict($rank_label)
     isset($_SESSION['rank']) ? $my_rank = $_SESSION['rank'] : $my_rank = null;
     $q = Query("SELECT `placement` FROM `ranks` WHERE `display_name` = '$rank_label'");
     if ($q) {
-        if ($my_rank >= $q[0]->placement) {
+        if ($my_rank == $q[0]->placement) {
             $r = true;
         }
     }

@@ -77,9 +77,10 @@ function create_remove_table()
     <div class="container">
         <div class="row">
             <div class="col">
-                <h5 class="d-flex justify-content-center">Welcome, <?= $client->char_name; ?>!</h5>
+                <h3 class="d-flex justify-content-center">Welcome, TBoss | <?= $client->char_name; ?>!</h3>
             </div>
         </div>
+
         <div class="container-fluid d-flex">
             <div class="row">
                 <div class="col-auto d-flex flex-column flex-grow-0 flex-shrink-1 col-index">
