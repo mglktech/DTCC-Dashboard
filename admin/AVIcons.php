@@ -1,4 +1,5 @@
-<?php include "../steam/SteamWebApi_Simple.php";
+<?php include "../include/components/head.php";
+include "../steam/SteamWebApi_Simple.php";
 function sel_all_steamids()
 {
     $sql = Query("SELECT `steam_id` FROM `players` WHERE 1");
@@ -28,3 +29,5 @@ function UpdateAllAVIcons()
         UpdateAVIcons($steamid);
     }
 }
+UpdateAllAVIcons();
+include "../include/components/foot.php";
