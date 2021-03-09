@@ -1,5 +1,5 @@
 <?php include "../include/components/head.php";
-include "../steam/SteamWebApi_Simple.php";
+
 
 
 function Fill()
@@ -32,20 +32,13 @@ function CollectFurtherAppInfo($steamid)
 
 function EmploymentStart($steamid)
 {
-    $sql = "SELECT `submit_date` FROM `tests` WHERE `type` = 'practical' and `score_total` >= '26' and `steam_id` = '$steamid' ORDER BY `id` DESC LIMIT 1";
-    $resp = Query($sql);
-    if (isset($resp[0])) {
-        return $resp[0]->submit_date;
+    $r = QueryFirst("SELECT `submit_date` FROM `tests` WHERE `type` = 'practical' and `score_total` >= '26' and `steam_id` = '$steamid' ORDER BY `id` DESC LIMIT 1");
+    if ($r) {
+        return $r->submit_date;
     } else {
         return null;
     }
 }
-
-
-
-
-
-
 
 Fill();
 
