@@ -60,7 +60,7 @@ function QueryTrigger($sql)
     if ($audit_type == "UPDATE") {
         $target_table = explode(" ", $sql)[1];
     }
-    if($audit_type == "SELECT") {
+    if ($audit_type == "SELECT") {
         $target_table = "";
     }
     if (isset($target_table)) {
@@ -72,7 +72,8 @@ function QueryTrigger($sql)
     }
 }
 
-function GenerateToken($length = 10) {
+function GenerateToken($length = 10)
+{
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $charactersLength = strlen($characters);
     $randomString = '';
@@ -130,14 +131,12 @@ function Query($sql)
 function QueryFirst($sql)
 {
     $result = Query($sql);
-    
-    if(isset($result[0])) {
+
+    if (isset($result[0])) {
         return $result[0];
-    }
-    else {
+    } else {
         return null;
     }
-    
 }
 
 function quotefix($str)
@@ -178,22 +177,32 @@ function q_fetchPlayerFormatted($steam_id)
     }
 }
 
+function Rank_Strict($rank_label)
+{
+    $r = false;
+    isset($_SESSION['rank']) ? $my_rank = $_SESSION['rank'] : $my_rank = null;
+    $q = Query("SELECT `placement` FROM `ranks` WHERE `display_name` = '$rank_label'");
+    if ($q) {
+        if ($my_rank >= $q[0]->placement) {
+            $r = true;
+        }
+    }
+    return $r;
+}
+
 function Rank($rank_label, $doc_rank = null)
 {
     $resp = false;
     isset($_SESSION['rank']) ? $my_rank = $_SESSION['rank'] : $my_rank = null;
-    if($my_rank > $doc_rank)
-    {
-    $r = Query("SELECT `placement` FROM `ranks` WHERE `display_name` = '$rank_label'");
-    
-    if($r)
-    {
-        if($my_rank >= $r[0]->placement)
-        {
-            $resp = true;
+    if ($my_rank > $doc_rank) {
+        $r = Query("SELECT `placement` FROM `ranks` WHERE `display_name` = '$rank_label'");
+
+        if ($r) {
+            if ($my_rank >= $r[0]->placement) {
+                $resp = true;
+            }
         }
     }
-}
     return $resp;
 }
 
