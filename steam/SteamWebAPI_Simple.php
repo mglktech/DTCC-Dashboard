@@ -72,10 +72,9 @@ function ResolveSteamID($url)
         }
         if ($marker == "id") {
             $SteamURL = ResolveVanityUrl(explode("/", $url)[4]);
-            if(isset($SteamURL["response"]["steamid"])) {
+            if (isset($SteamURL["response"]["steamid"])) {
                 $SteamID = $SteamURL["response"]["steamid"];
-            }
-            else {
+            } else {
                 $SteamID = null;
             }
         }
