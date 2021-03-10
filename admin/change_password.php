@@ -1,16 +1,14 @@
 <?php
-
-
+include "../include/components/head.php";
 if (isset($_POST["ChangePW"])) {
     if ($_POST["txtNewPass"] == $_POST["txtNewPassConfirm"] && $_POST["txtNewPass"] != '') {
         $resp = set_password($_POST["steam_name"], $_POST["txtNewPass"]);
         //echo $resp;
-        header("Location: ../index.php");
+        header("Location: ../home.php");
     } else {
         echo "Passwords do not match!";
     }
 }
-include "../include/components/head.php";
 ?>
 <form method="post" target="">
     You have logged in with a temporary code. Please choose a more permanent password!
