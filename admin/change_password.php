@@ -2,7 +2,7 @@
 include "../include/components/head.php";
 if (isset($_POST["ChangePW"])) {
     if ($_POST["txtNewPass"] == $_POST["txtNewPassConfirm"] && $_POST["txtNewPass"] != '') {
-        $resp = set_password($_POST["steam_name"], $_POST["txtNewPass"]);
+        $resp = set_password($_POST["steam_id"], $_POST["txtNewPass"]);
         //echo $resp;
         header("Location: ../home.php");
     } else {
@@ -25,7 +25,8 @@ if (isset($_POST["ChangePW"])) {
             </div>
             <input class='form-control' type='password' value='' name='txtNewPassConfirm'>
         </div>
-        <input name="steam_name" value='<?php echo $_SESSION['steam_name'] ?>' hidden>
+        <input name="ChangePW" value="" hidden>
+        <input name="steam_id" value='<?php echo $_SESSION['steam_id'] ?>' hidden>
         <input type="submit" name="ChangePW" class="btn btn-secondary" value="Change">
     </div>
 </form>

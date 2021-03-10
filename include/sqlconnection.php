@@ -22,14 +22,14 @@ function check_temp_code($steam_name, $code)
     }
 }
 
-function set_password($steam_name, $code)
+function set_password($steam_id, $code)
 {
     //$hash = pass_hash();
     $code_hash = password_hash($code, PASSWORD_BCRYPT);
     $sql = "UPDATE `players` 
     SET `code`=NULL,
     `pw_hash`='$code_hash'
-    WHERE `steam_name` = '$steam_name'";
+    WHERE `steam_id` = '$steam_id'";
     Query($sql);
     return $sql;
 }
