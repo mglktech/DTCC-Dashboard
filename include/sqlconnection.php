@@ -26,10 +26,10 @@ function set_password($steam_name, $code)
 {
     //$hash = pass_hash();
     $code_hash = password_hash($code, PASSWORD_BCRYPT);
-    $sql = "UPDATE players 
-    SET code=NULL,
-    pw_hash='$code_hash'
-    WHERE steam_name = '$steam_name'";
+    $sql = "UPDATE `players` 
+    SET `code`=NULL,
+    `pw_hash`='$code_hash'
+    WHERE `steam_name` = '$steam_name'";
     Query($sql);
     return $sql;
 }
@@ -61,7 +61,7 @@ function QueryTrigger($sql)
         $target_table = explode(" ", $sql)[1];
     }
     if ($audit_type == "SELECT") {
-        $target_table = "";
+        //$target_table = ""; verbose audit logging
     }
     if (isset($target_table)) {
         $fixed_sql = quotefix($sql);
