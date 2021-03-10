@@ -17,7 +17,7 @@ if (isset($_POST['steam_url'])) {
     // echo $backstory;
     // echo $reason;
     // AutoReject previous unsigned applications
-    $sql = "SELECT * FROM `unread_apps` WHERE `steam_url` = '$steam_url'";
+    $sql = "SELECT * FROM `unread_apps` WHERE `steam_link` = '$steam_url'";
     $response = Query($sql);
     if ($response) {
         // previous application found, AutoReject it.
