@@ -163,7 +163,7 @@ $student = q_fetchPlayer($student_id);
             </div>
             <div class="form-row">
                 <div class="col d-flex justify-content-center">
-                    <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1" required=""><label class="form-check-label" for="formCheck-1">I confirm that this student has been fully informed of his role, and has demonstrated that he is able to conduct his duties.</label></div>
+                    <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1" required=""><label class="form-check-label" for="formCheck-1">I confirm that this student has been fully informed of their role, and has demonstrated that they are able to conduct their duties.</label></div>
                 </div>
             </div>
             <div class="form-row">
