@@ -1,4 +1,4 @@
-<?php 
+<?php include "include/sqlconnection.php";
 
 if (isset($_POST['steam_url'])) {
     $steam_url = quotefix($_POST['steam_url']);
