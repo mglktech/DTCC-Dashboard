@@ -1,5 +1,5 @@
-<?php include "../include/header.php";
-include "../include/sqlconnection.php";
+<?php include "../include/components/head.php";
+
 include "../include/elements.php";
 
 $timeNow = time();
@@ -16,13 +16,15 @@ if ($resp) {
         $r[] = $row->callsign . " | " . $row->char_name;
         $r[] = $row->rank_label;
         $r[] = toDateS($row->last_seen);
-        $r[] = "<a class='btn btn-secondary view-player' href='/view_player.php?steamid=" . $row->steam_id . "'>View Player</button>";
+        $r[] = "<a class='btn btn-secondary view-player' href='/players/view_player.php?id=" . $row->steam_id . "'>View Player</button>";
         $body[] = $r;
     }
 }
 
 ?>
-
+<div class="container">
 <h3> Inactive Staff (More than a Month ago)</h3>
-<?php Tablefy($head, $body);
-include "../include/footer.php";
+<?php Tablefy($head, $body); ?>
+</div>
+<?php 
+include "../include/components/foot.php";

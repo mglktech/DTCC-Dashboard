@@ -1,6 +1,8 @@
-<?php include 'include/header.php';  ?>
+<?php include 'include/components/head.php';  ?>
+<div class="container">
 <h4>You have successfully logged out</h4>
-<?php include 'include/footer.php'; ?>
+</div>
+<?php include 'include/components/foot.php'; ?>
 <?php
 
 session_unset();

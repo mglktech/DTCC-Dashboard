@@ -1,7 +1,7 @@
 <?php
-include "../include/sqlconnection.php";
+
 include "../include/elements.php";
-include "../include/header.php";
+include "../include/components/head.php";
 
 $searchbar = "<form method='get'>
     <div class='input-group input-group float-left'>
@@ -34,4 +34,4 @@ if (isset($_GET['search'])) {
     Tablefy($tblHeaders, $tblBody);
 }
 echo $searchbar;
-include "../include/footer.php";
+include "../include/components/foot.php";

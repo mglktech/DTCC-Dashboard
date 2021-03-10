@@ -1,5 +1,5 @@
 <?php
-include "../include/sqlconnection.php";
+
 include "../include/elements.php";
 if (isset($_POST["ChangePW"])) {
     if ($_POST["txtNewPass"] == $_POST["txtNewPassConfirm"] && $_POST["txtNewPass"] != '') {
@@ -36,4 +36,4 @@ include "../include/_header.php";
         <input type="submit" name="ChangePW" class="btn btn-secondary" value="Change">
     </div>
 </form>
-<?php include "../include/footer.php";
+<?php include "../include/components/foot.php";

@@ -1,10 +1,10 @@
-<?php include_once "../include/header.php"; ?>
+<?php include_once "../include/components/head.php"; ?>
 <form method="post">
     <p><input type="button" name="Gen" class="btn btn-secondary" value="Click To Generate Code" onclick="generateCode()"></p>
     <p><input type="text" id="txtCode" /></p>
 
 </form>
-<?php include_once "../include/footer.php"; ?>
+<?php include_once "../include/components/foot.php"; ?>
 <script>
     function generateCode() {
         var length = 6,

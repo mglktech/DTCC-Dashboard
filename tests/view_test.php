@@ -1,7 +1,7 @@
-<?php include '../include/header.php';
+<?php include '../include/components/head.php';
 include "../include/elements.php";
 
-include '../include/sqlconnection.php';
+
 
 if (isset($_POST["test_type"])) {
     if ($_POST["test_type"] == "theory") {
@@ -15,6 +15,11 @@ if (isset($_GET["test_id"])) {
     $doc_id = $_GET["test_id"];
     $doc_type = "test";
     $rvals = Get_Test($_GET["test_id"]);
+}
+
+function update_callsign($id,$callsign)
+{
+    
 }
 
 function getPlayer()
@@ -135,7 +140,7 @@ function POST_Theory()
 function POST_Practical()
 {
     //assign callsign
-    $callsign = $_POST['callsign'];
+    //$callsign = $_POST['callsign'];
     //echo $callsign;
     $date = time();
     $steamid = $_POST["steamid"];
@@ -163,8 +168,8 @@ function POST_Practical()
 
         //echo "congrats, you passed!";
         $sql = "UPDATE players
-         SET `status`='Active', `last_seen`='$date' , `rank`='0'
-         WHERE `steam_id`='$steamid'";
+        SET `status`='Active', `last_seen`='$date' , `rank`='0'
+        WHERE `steam_id`='$steamid'";
         $response = Query($sql);
         //echo "Player Database Response: " . $response;
         $sql = "UPDATE callsigns
@@ -187,7 +192,7 @@ function POST_Practical()
     $sql = "INSERT INTO tests (`steam_id`, `type`, `version`, `score_total`, `score_percent`, `signed_by`,`scores`,`submit_date`,`comments`) VALUES ('$steamid','practical','0','$total_score','$percentage','$signed_by','$score_string','$date','$comments')";
     $response = Query($sql);
     //echo "Tests Database Response: " . $response;
-    $char = fetchPlayer($steamid);
+    $char = q_fetchPlayer($steamid);
     $postret['char_name'] = $char_name;
     $postret['max_score'] = $max_score;
     $postret['total_score'] = $total_score;
@@ -267,7 +272,7 @@ function pickTWeight($num, $max)
 $char_name = $rvals['char_name'];
 ?>
 
-<div class="container-fluid">
+<div class="container">
     <div class="row">
         <h1>Test Results</h1>
         <h5 class="w-100 font-italic mb-3 font-weight-normal">did this butthole pass?</h5>
@@ -303,7 +308,8 @@ $char_name = $rvals['char_name'];
 
             <div class="row">
                 <div class="col-md-6">
-                    <?php CreateInputElem("Test Type", $rvals["test_type"], "v0"); ?>
+                    <?php $ver = "v".$rvals["ver"];
+                    CreateInputElem("Test Type", $rvals["test_type"], $ver); ?>
                 </div>
                 <div class="col-md-6">
                     <?php CreateRichInputElem("Test Result:", CreatePassFail($rvals['total_score'], $rvals['pass_mark']), ($rvals['percentage'] * 100) .  "%"); ?>
@@ -350,14 +356,16 @@ $char_name = $rvals['char_name'];
                 <span class="font-weight-normal"><?php echo $rvals['comments']; ?></span>
             </div>
             <div>
-                <?php include "../include/inc_notes.php"; ?>
+                <?php if(isset($doc_id)) {
+                 include "../include/inc_notes.php"; ?>
                 <span class="font-weight-normal"><?php CreateNotesTable($doc_id, $doc_type); ?></span>
                 <button class="btn btn-secondary" data-toggle="modal" data-target="#NoteModal">Add Note</button>
             </div>
+            <?php }?>
         </div>
 
-        <a class="btn btn-secondary mb-5 btn-large mt-5" href="table_tests.php">Done</a>
+        <a class="btn btn-secondary mb-5 btn-large mt-5" href="table_tests_archive.php">Done</a>
     </div>
 </div>
 
-<?php include "../include/footer.php";
+<?php include '../include/components/foot.php';

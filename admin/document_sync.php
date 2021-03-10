@@ -1,6 +1,6 @@
 <?php
 // purpose of this page is to echo timestamp of last document received by type, then let GAS determine what needs to be sent, then add missing records to the database.
-include "../include/sqlconnection.php";
+
 //first collect $sheet as a POST
 $sheet = $_POST["sheet"];
 // then, collect $db_table

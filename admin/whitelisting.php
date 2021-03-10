@@ -1,5 +1,5 @@
-<?php include "../include/header.php";
-include "../include/sqlconnection.php";
+<?php include "../include/components/head.php";
+
 include "../include/elements.php";
 
 // create table of people who need whitelisting
@@ -13,7 +13,7 @@ if (isset($_POST["chk"])) {
 
     $chk_array = $_POST["chk"];
     foreach ($chk_array as $val) {
-        $sql = "UPDATE players SET whitelisted='1' WHERE steam_name = '$val'";
+        $sql = "UPDATE `players` SET `whitelisted` = '1' WHERE `steam_name` = '$val'";
         Query($sql);
     }
 }
@@ -21,7 +21,7 @@ if (isset($_POST["chk2"])) {
 
     $chk_array = $_POST["chk2"];
     foreach ($chk_array as $val) {
-        $sql = "UPDATE players SET whitelisted='0' WHERE steam_name = '$val'";
+        $sql = "UPDATE `players` SET `whitelisted` = '0' WHERE `steam_name` = '$val'";
         Query($sql);
     }
 }
@@ -30,7 +30,7 @@ if (isset($_POST["chk2"])) {
 function create_whitelist_table()
 {
 
-    $sql = "SELECT * FROM public_players WHERE whitelisted = '0' and rank >= '0' ";
+    $sql = "SELECT * FROM `public_players` WHERE `whitelisted` = '0' and `rank` >= '0' ";
     $tData = Query($sql);
     $thead = ["Name", "Steam Name", "Rank", "Hex", "Whitelisted?"];
     $tbody = array();
@@ -50,7 +50,7 @@ function create_whitelist_table()
 
 function create_remove_table()
 {
-    $sql = "SELECT * FROM public_players WHERE whitelisted = '1' and rank < '0' ";
+    $sql = "SELECT * FROM `public_players` WHERE `whitelisted` = '1' and `rank` is null ";
     $tData = Query($sql);
     $thead = ["Name", "Steam Name", "Rank", "Hex", "Whitelisted?"];
     $tbody = array();
@@ -73,6 +73,7 @@ if ($_SESSION["rank"] > 2) {
 
 
 ?>
+<div class="container">
     <a class='btn btn-lg btn-info' href='https://highliferoleplay.net/whitelisting/index.php' target='_blank'>Highlife Whitelisting</a>
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
@@ -102,11 +103,11 @@ if ($_SESSION["rank"] > 2) {
             </form>
         </div>
     </div>
-
+    </div>
 
 
 
 
 
 <?php }
-include "../include/footer.php";
+include "../include/components/foot.php";

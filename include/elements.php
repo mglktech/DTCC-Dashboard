@@ -29,6 +29,9 @@ function Pill($text)
     if ($text == "accept") {
         return "<div class='border border-dark text-white text-center font-weight-bold rounded-pill' style='background-color:green'>Accepted</div>";
     }
+    if ($text == "ignore") {
+        return "<div class='border border-dark text-white text-center font-weight-bold rounded-pill' style='background-color:grey'>Ignored</div>";
+    }
     if ($text == "deny") {
         return "<div class='border border-dark text-white text-center font-weight-bold rounded-pill' style='background-color:crimson'>Denied</div>";
     }
@@ -44,23 +47,26 @@ function Pill($text)
     if ($text == "practical") {
         return "<div class='border border-dark text-dark text-center font-weight-bold rounded-pill' style='background-color:goldenrod'>Practical</div>";
     }
-    if ($text == "rank_-1") {
+    if ($text == "Recruit") {
         return "<div class='border border-dark text-dark text-center font-weight-bold rounded-pill' style='background-color:white; font-size:12px;'>Recruit</div>";
     }
-    if ($text == "rank_0") {
+    if ($text == "Driver") {
         return "<div class='border border-dark text-white text-center font-weight-bold rounded-pill' style='background-color:gray; font-size:12px;'>Driver</div>";
     }
-    if ($text == "rank_1") {
+    if ($text == "Private Hire") {
         return "<div class='border border-dark text-white text-center font-weight-bold rounded-pill' style='background-color:darkslategrey; font-size:12px;'>Private Hire</div>";
     }
-    if ($text == "rank_2") {
+    if ($text == "Instructor") {
+        return "<div class='border border-dark text-white text-center font-weight-bold rounded-pill' style='background-color:darkslategrey; font-size:12px;'>Instructor</div>";
+    }
+    if ($text == "Supervisor") {
         return "<div class='border border-dark text-dark text-center font-weight-bold rounded-pill' style='background-color:khaki; font-size:12px;'>Supervisor</div>";
     }
-    if ($text == "rank_3") {
+    if ($text == "Senior Supervisor") {
         return "<div class='border border-dark text-dark text-center font-weight-bold rounded-pill' style='background-color:gold; font-size:12px;'>Senior Supervisor</div>";
     }
-    if ($text == "rank_4") {
-        return "<div class='border border-dark text-white text-center font-weight-bold rounded-pill' style='background-color:dodgerblue; font-size:12px;'>Overboss</div>";
+    if ($text == "Overboss") {
+        return "<div class='border border-dark text-white text-center font-weight-bold rounded-pill' style='background-color:dodgerblue; font-size:12px;'>CabCo Boss</div>";
     }
 }
 
@@ -85,7 +91,8 @@ function Modal($id, $header, $body, $footer)
 function Tablefy($headers, $body)
 {
     if ($body) {
-        echo "<table class='table table-sm table-bordered table-striped blue-header'>";
+        echo "<div class='table-responsive'>";
+        echo "<table class='table table-striped'>";
         echo "<thead>";
         echo "<tr>";
         foreach ($headers as $h) {
@@ -104,6 +111,7 @@ function Tablefy($headers, $body)
 
         echo "</tbody>";
         echo "</table>";
+        echo "</div>";
     } else {
         echo "Table is empty";
     }
@@ -212,7 +220,7 @@ function Paginate($obj)
 {
     //$obj = CreatePaginateObj($count, $limit);
 
-    echo " <nav> <ul class='pagination'>";
+    echo " <nav> <ul class='pagination flex-wrap'>";
     echo "<li class='page-item";
     if ($obj->page == 1) {
         echo " disabled";

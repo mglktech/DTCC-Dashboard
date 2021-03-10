@@ -1,5 +1,5 @@
-<?php include "../include/header.php";
-include "../include/sqlconnection.php";
+<?php include "../include/components/head.php";
+
 include "../include/elements.php";
 
 
@@ -15,7 +15,7 @@ if ($tData) {
     foreach ($tData as $row) {
         $tRow = array();
         $tRow[] = $row->callsign . " | " . $row->char_name;
-        $tRow[] = Pill("rank_" . $row->rank);
+        $tRow[] = Pill(getRank($row->rank));
         $tRow[] = toDurationDays($row->duration);
         $tRow[] = $row->discord_name;
         //$tRow[] = $row->last_seen;
@@ -24,11 +24,13 @@ if ($tData) {
     }
 }
 ?>
-<h4>Time Spent On-Shift - Past All Time</h4>
+<div class="container">
+    <h4>Time Spent On-Shift - Past All Time</h4>
+    <?php
+    Tablefy($thead, $tbody);
+    Paginate($obj);
+    ?>
+    <a href="/shifts/shifts_index.php" class="btn btn-secondary">Go Back</a>
+</div>
 <?php
-Tablefy($thead, $tbody);
-Paginate($obj);
-?>
-<a href="/shifts/shifts_index.php" class="btn btn-secondary">Go Back</a>
-<?php
-include "../include/footer.php";
+include "../include/components/foot.php";

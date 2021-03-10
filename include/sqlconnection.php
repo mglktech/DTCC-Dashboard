@@ -1,14 +1,14 @@
 <?php include "db_connection.php";
 
-function set_temp_code($steam_name, $code)
+function set_temp_code($steam_id, $code)
 {
     //Users are given a Temporary code to log in on forgot password/first use
     // checks against "code" column of players table
     //$hash = pass_hash();
     $code_hash = password_hash($code, PASSWORD_BCRYPT);
-    $sql = "UPDATE players 
-    SET code='$code_hash'
-    WHERE steam_name = '$steam_name'";
+    $sql = "UPDATE `players` 
+    SET `code`='$code_hash'
+    WHERE `steam_id` = '$steam_id'";
     Query($sql);
 }
 function check_temp_code($steam_name, $code)
@@ -60,6 +60,9 @@ function QueryTrigger($sql)
     if ($audit_type == "UPDATE") {
         $target_table = explode(" ", $sql)[1];
     }
+    if ($audit_type == "SELECT") {
+        $target_table = "";
+    }
     if (isset($target_table)) {
         $fixed_sql = quotefix($sql);
         $audit_sql = "INSERT INTO audit_logs (audit_type,target_table,author,sql_code,timestamp) VALUES('$audit_type','$target_table','$author','$fixed_sql','$time')";
@@ -68,6 +71,35 @@ function QueryTrigger($sql)
         $conn->close();
     }
 }
+
+function GenerateToken($length = 10)
+{
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    return $randomString;
+}
+
+function BeginSession($player, $temp)
+{
+    //getAvatars($player->steam_id);
+    session_start();
+    $token = GenerateToken();
+    $_SESSION["token"] = $token;
+    $timenow = time();
+    $sql = "INSERT INTO `sessions`(`session_user`, `session_token`, `session_start`, `session_rank`, `session_steamid`) VALUES ('$player->steam_name','$token','$timenow','$player->rank','$player->steam_id')";
+    Query($sql);
+    if ($temp) {
+        header("Location: admin/change_password.php");
+    }
+    if (!$temp) {
+        header("Location: home.php");
+    }
+}
+
 
 function Query($sql)
 {
@@ -95,6 +127,18 @@ function Query($sql)
     $conn->close();
     QueryTrigger($sql);
 }
+
+function QueryFirst($sql)
+{
+    $result = Query($sql);
+
+    if (isset($result[0])) {
+        return $result[0];
+    } else {
+        return null;
+    }
+}
+
 function quotefix($str)
 {
     return str_replace("'", "''", "$str");
@@ -104,7 +148,7 @@ function LogError($statement = null, $error = null)
 {
     $time = time();
     $conn = OpenCon();
-    isset($_SESSION['steam_id']) ? $client = $_SESSION['steam_id'] : $client = "PROGRAM";
+    isset($_SESSION['steam_id']) ? $client = $_SESSION['steam_id'] : $client = "";
     $statement = quotefix($statement);
     $error = quotefix($error);
     $sql = "INSERT INTO `sql_errors` (`timestamp`,`client`,`sqlcode`,`errormsg`)VALUES('$time','$client','$statement','$error')";
@@ -116,26 +160,71 @@ function LogError($statement = null, $error = null)
 
 function q_fetchPlayer($steam_id)
 {
-    $sql = "SELECT
-    callsigns.label AS callsign,
-    players.char_name AS char_name,
-    players.rank AS rank,
-    players.steam_id AS steam_id,
-    players.steam_name AS steam_name,
-    players.phone_number AS phone_number,
-    players.discord_name AS discord_name,
-    players.av_icon AS av_icon
-FROM
-    players
-LEFT JOIN callsigns ON players.steam_id = callsigns.assigned_steam_id
-WHERE players.steam_id = '$steam_id'";
-    return Query($sql)[0];
+    $sql = "SELECT * FROM public_players WHERE steam_id = '$steam_id'";
+    $result = Query($sql);
+    if ($result) {
+        return $result[0];
+    }
 }
 
 function q_fetchPlayerFormatted($steam_id)
 {
     $player = q_fetchPlayer($steam_id);
-    return $player->callsign . " | " . $player->char_name;
+    if ($player) {
+        return $player->callsign . " | " . $player->char_name;
+    } else {
+        return null;
+    }
+}
+
+function getRank($rank_placement)
+{
+    $r = QueryFirst("SELECT `display_name` FROM `ranks` WHERE `placement` = '$rank_placement'");
+    if (isset($r->display_name)) {
+
+        return $r->display_name;
+    }
+}
+
+function Rank_Strict($rank_label)
+{
+    $r = false;
+    isset($_SESSION['rank']) ? $my_rank = $_SESSION['rank'] : $my_rank = null;
+    $q = Query("SELECT `placement` FROM `ranks` WHERE `display_name` = '$rank_label'");
+    if ($q) {
+        if ($my_rank == $q[0]->placement) {
+            $r = true;
+        }
+    }
+    return $r;
+}
+
+function Rank($rank_label, $doc_rank = null)
+{
+    $resp = false;
+    isset($_SESSION['rank']) ? $my_rank = $_SESSION['rank'] : $my_rank = null;
+    if ($my_rank > $doc_rank) {
+        $r = Query("SELECT `placement` FROM `ranks` WHERE `display_name` = '$rank_label'");
+
+        if ($r) {
+            if ($my_rank >= $r[0]->placement) {
+                $resp = true;
+            }
+        }
+    }
+    return $resp;
+}
+
+function getSteamID($steam_name)
+{
+    $sql = "SELECT steam_id FROM players WHERE steam_name='$steam_name'";
+    $result = Query($sql);
+    if ($result) {
+        return $result[0]->steam_id;
+    } else {
+        echo "database connection issue!";
+        return null;
+    }
 }
 
 function EXPORT_DATABASE($host, $user, $pass, $name,       $tables = false, $backup_name = false)

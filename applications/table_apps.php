@@ -1,5 +1,4 @@
-<?php include '../include/header.php';
-include "../include/sqlconnection.php";
+<?php include "../include/components/head.php";
 include "../include/elements.php";
 
 function CreateTableUnread()
@@ -14,7 +13,7 @@ function CreateTableUnread()
             $tblRow[] = toDate($row->app_timestamp);
             $tblRow[] = $row->char_name;
             $tblRow[] = $row->discord_name;
-            $tblRow[] = "<a class='btn btn-info' href='/applications/view_app.php?doc_id=" . $row->app_id . "'>View Application</a>";
+            $tblRow[] = "<a class='btn btn-secondary' href='/applications/view_app.php?doc_id=" . $row->app_id . "'>View Application</a>";
             $tblBody[] = $tblRow;
         }
     } else {
@@ -25,10 +24,21 @@ function CreateTableUnread()
 
 ?>
 
-<h1>Unread Applications</h1>
-<h5 class="mb-3 font-weight-normal"><i>need friends?</i></h5>
-<div class="container-fluid-p0">
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h3 class="h-title">Unread Applications</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h6 class="h-subtitle">Need Friends?</h6>
+        </div>
+    </div>
+
+<div class="container-table">
     <?php CreateTableUnread(); ?>
 </div>
+</div>
 
-<?php include '../include/footer.php'; ?>
+<?php include "../include/components/foot.php"; ?>

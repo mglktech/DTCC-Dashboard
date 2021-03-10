@@ -1,5 +1,5 @@
-<?php include "../include/header.php";
-include "../include/sqlconnection.php";
+<?php include "../include/components/head.php";
+
 if (isset($_POST["doc_id"])) {
     if (isset($_POST["doc_type"])) {
         $doc_id = $_POST["doc_id"];
@@ -11,4 +11,4 @@ if (isset($_POST["doc_id"])) {
     }
 }
 echo "Document has been successfully removed.";
-include "../include/footer.php";
+include "../include/components/foot.php";

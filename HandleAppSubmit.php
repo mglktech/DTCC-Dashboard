@@ -1,4 +1,4 @@
-<?php include "include/sqlconnection.php";
+<?php 
 
 if (isset($_POST['steam_url'])) {
     $steam_url = quotefix($_POST['steam_url']);
@@ -18,10 +18,10 @@ if (isset($_POST['steam_url'])) {
     // echo $reason;
     // AutoReject previous unsigned applications
     $sql = "SELECT * FROM unread_apps WHERE steam_url = '$steam_url'";
-    $response = Query($sql)[0];
+    $response = Query($sql);
     if ($response) {
         // previous application found, AutoReject it.
-        $doc_id = $response->app_id;
+        $doc_id = $response[0]->app_id;
         $date = time();
         $author = "Automatic";
         $reasons = "0/0/0/0/0/0/0/0/0";
