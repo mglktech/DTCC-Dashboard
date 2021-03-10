@@ -144,16 +144,16 @@ function quotefix($str)
     return str_replace("'", "''", "$str");
 }
 
-function LogError($statement, $error)
+function LogError($statement = null, $error = null)
 {
     $time = time();
     $conn = OpenCon();
     isset($_SESSION['steam_id']) ? $client = $_SESSION['steam_id'] : $client = "";
     $statement = quotefix($statement);
     $error = quotefix($error);
-    $sql = "INSERT INTO sql_errors (`timestamp`,`client`,`sqlcode`,`errormsg`)VALUES('$time','$client','$statement','$error')";
+    $sql = "INSERT INTO `sql_errors` (`timestamp`,`client`,`sqlcode`,`errormsg`)VALUES('$time','$client','$statement','$error')";
     $conn->query($sql);
-    $sql = "SELECT id FROM `sql_errors` where `timestamp` = '$time' ORDER BY `id`";
+    $sql = "SELECT `id` FROM `sql_errors` where `timestamp` = '$time' ORDER BY `id`";
     $resp = Query($sql);
     printf("SQL Error detected. Error ID: %s\n", $resp[0]->id);
 }
