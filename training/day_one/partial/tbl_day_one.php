@@ -17,9 +17,9 @@ function CreateTableTraining()
         foreach ($ntbt as $row) {
             $p = q_fetchPlayer($row->steam_id);
             $tblRow = array();
-            $tblRow[] = $row->callsign . " | " . $row->char_name;
+            $tblRow[] = $p->callsign . " | " . $p->char_name;
             $tblRow[] = toDateS($row->employment_start);
-            $tblRow[] = $row->discord_name;
+            $tblRow[] = $p->discord_name;
             $tblRow[] = "<a class='btn btn-secondary' href='/training/day_one/instructor_checklist.php?id=" . $row->steam_id . "'>Train</a>";
             $tblBody[] = $tblRow;
         }
