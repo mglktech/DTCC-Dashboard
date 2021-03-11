@@ -1,5 +1,5 @@
 <?php include "../include/components/head.php";
-include "../steam/SteamWebAPI.php";
+include "../steam/SteamWebApi.php";
 include "../include/elements.php";
 
 isset($_GET["steamid"]) ? $steamid = quotefix($_GET["steamid"]) : $steamid = "76561197995263974";
