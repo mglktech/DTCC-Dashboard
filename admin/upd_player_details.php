@@ -1,20 +1,31 @@
 <?php include "../include/components/head.php";
-
+include "../steam/SteamWebApi.php";
 include "../include/elements.php";
 
 isset($_GET["steamid"]) ? $steamid = quotefix($_GET["steamid"]) : $steamid = "76561197995263974";
 isset($_SESSION["rank"]) ? $rank = $_SESSION["rank"] : $rank = null;
 
+isset($_POST["new_steam_name"]) ? $newsteamname = quotefix($_POST["new_steam_name"])  : $newsteamname = null;
 isset($_POST["new_name"]) ? $newname = quotefix($_POST["new_name"])  : $newname = null;
 isset($_POST["new_phone"]) ? $newphone = quotefix($_POST["new_phone"])  : $newphone = null;
 isset($_POST["new_status"]) ? $newstatus = quotefix($_POST["new_status"])  : $newstatus = null;
 isset($_POST["new_discord"]) ? $newdiscord = quotefix($_POST["new_discord"])  : $newdiscord = null;
 isset($_POST["new_rank"]) ? $newrank = quotefix($_POST["new_rank"])  : $newrank = null;
 
+function getRecentSteamName($steamid)
+{
+    return GetSteamDetails($steamid)->steam_name;
+}
+
+
 if (Rank("Supervisor")) {
 
     if ($newname) {
         $sql = "UPDATE players SET char_name = '$newname' WHERE steam_id = '$steamid'";
+        Query($sql);
+    }
+    if ($newsteamname) {
+        $sql = "UPDATE players SET steam_name = '$newsteamname' WHERE steam_id = '$steamid'";
         Query($sql);
     }
     if ($newphone) {
@@ -49,7 +60,7 @@ if ($resp) {
 }
 $doc_type = "player";
 
-$flags = ["callsign", "name", "rank", "status", "phone", "discord"];
+$flags = ["callsign", "name", "rank", "status", "phone", "discord", "SName"];
 
 function ModalTitle($flag)
 {
@@ -72,6 +83,9 @@ function ModalTitle($flag)
     if ($flag == "discord") {
         $content = "Discord Name";
     }
+    if ($flag == "SName") {
+        $content = "Steam Name";
+    }
 
     return "Change " . $content;
 }
@@ -80,6 +94,9 @@ function ModalBody($flag, $rank)
 {
     if ($flag == "callsign") {
         $content = "not built yet!";
+    }
+    if ($flag == "SName") {
+        $content = "<input type='text' class='form-control' name='new_steam_name' value='" . getRecentSteamName($_GET["steamid"]) . "'>";
     }
     if ($flag == "name") {
         $content = "<input type='text' class='form-control' name='new_name'>";
@@ -143,6 +160,9 @@ function BtnEdit($flag)
     <i class='far fa-edit'></i>
 </button>";
 }
+
+
+
 if ($rank > 2) {
 
 
@@ -155,7 +175,7 @@ if ($rank > 2) {
         CreateInputElemFull(SpanPrepend("Status: "), SpanMiddleDefault($player->status), BtnEdit("status"));
         CreateInputElemFull(SpanPrepend("Phone: "), SpanMiddleDefault($player->phone_number), BtnEdit("phone"));
         CreateInputElemFull(SpanPrepend("Discord: "), SpanMiddleDefault($player->discord_name), BtnEdit("discord"));
-        //CreateInputElem("Steam Name:", $player->steam_name, "");
+        CreateInputElemFull(SpanPrepend("Steam Name:"), SpanMiddleDefault($player->steam_name), BtnEdit("SName"));
         //CreateInputElem("SteamID:", $player->steam_id, "");
         ?>
 

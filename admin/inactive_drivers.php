@@ -6,7 +6,7 @@ $timeNow = time();
 $oneMonth = 2629743; // one month in seconds (exact to the year, 30.44 days)
 $MonthAgo = $timeNow - $oneMonth;
 
-$sql = "SELECT * FROM public_players WHERE last_seen < '$MonthAgo' && rank >'-2'";
+$sql = "SELECT * FROM `public_players` WHERE `last_seen` < '$MonthAgo' AND `rank` >'-2'";
 $resp = Query($sql);
 $head = ["Name", "Rank", "Last Seen", ""];
 $body = array();
@@ -23,8 +23,8 @@ if ($resp) {
 
 ?>
 <div class="container">
-<h3> Inactive Staff (More than a Month ago)</h3>
-<?php Tablefy($head, $body); ?>
+    <h3> Inactive Staff (More than a Month ago)</h3>
+    <?php Tablefy($head, $body); ?>
 </div>
-<?php 
+<?php
 include "../include/components/foot.php";
