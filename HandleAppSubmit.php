@@ -1,4 +1,4 @@
-<?php 
+<?php include "include/sqlconnection.php";
 
 if (isset($_POST['steam_url'])) {
     $steam_url = quotefix($_POST['steam_url']);
@@ -17,7 +17,7 @@ if (isset($_POST['steam_url'])) {
     // echo $backstory;
     // echo $reason;
     // AutoReject previous unsigned applications
-    $sql = "SELECT * FROM unread_apps WHERE steam_url = '$steam_url'";
+    $sql = "SELECT * FROM `unread_apps` WHERE `steam_link` = '$steam_url'";
     $response = Query($sql);
     if ($response) {
         // previous application found, AutoReject it.
@@ -26,17 +26,17 @@ if (isset($_POST['steam_url'])) {
         $author = "Automatic";
         $reasons = "0/0/0/0/0/0/0/0/0";
         $add_info = "Multiple apps sent";
-        $sql = "UPDATE applications_v0
-        SET signed_by='$author',
+        $sql = "UPDATE `applications_v0`
+        SET `signed_by`='$author',
         `status` = 'deny',
-        status_desc='$reasons',
-        additional_info='$add_info',
-        signed_timestamp='$date'
-        WHERE app_id = '$doc_id'";
+        `status_desc`='$reasons',
+        `additional_info`='$add_info',
+        `signed_timestamp`='$date'
+        WHERE `app_id` = '$doc_id'";
         Query($sql);
     }
-    $sql = "INSERT INTO applications_v0 (
-        `char_name`, 
+    $sql = "INSERT INTO `applications_v0` (
+    `char_name`, 
     `phone_number`, 
     `discord_name`, 
     `steam_link`, 

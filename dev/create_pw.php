@@ -9,7 +9,7 @@ if (isset($_POST["ChangePW"])) {
         echo "Passwords do not match!";
     }
 }
-include "../include/_header.php";
+include "../include/components/head.php";
 ?>
 <form method="post" target="">
     make pass
