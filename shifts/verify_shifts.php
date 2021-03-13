@@ -159,7 +159,7 @@ if (isset($_POST["submit"])) {
         $verified_shifts[] = $verified_shift;
     }
     POST_shiftdata($verified_shifts);
-    echo "<h5>Done!</h5><br><a class='btn btn-outline-secondary' href='table_unver_shifts.php'>Back</a>";
+    echo "<div class='container'></div><h5>Done!</h5><br><a class='btn btn-outline-secondary' href='table_unver_shifts.php'>Back</a></div>";
 }
 
 
@@ -188,44 +188,44 @@ function display_selectbox($vals)
 
 <?php if (isset($shifts)) { ?>
     <div class="container">
-    <h3>Unverified Shifts: <?php echo $_GET['id'] ?></h3>
-    <table class="table table-striped blue-header">
-        <thead>
-            <tr>
-                <th>Server</th>
-                <th>Date</th>
-                <th>Time In</th>
-                <th>Time Out</th>
-                <th>Duration</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody id="TableBody">
-            <?php
+        <h3>Unverified Shifts: <?php echo $_GET['id'] ?></h3>
+        <table class="table table-striped blue-header">
+            <thead>
+                <tr>
+                    <th>Server</th>
+                    <th>Date</th>
+                    <th>Time In</th>
+                    <th>Time Out</th>
+                    <th>Duration</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="TableBody">
+                <?php
 
-            foreach ($shifts as $index => $s) {
-                echo "<tr>";
-                echo "<td>" . $s->Server . "</td>";
-                echo "<td>" . toDateS($s->InTimes[0]) . "</td>";
-                echo "<td>" . display_selectbox($s) . "</td>";
-                echo "<td>" . toTime($s->OutTime) . "</td>";
-                echo "<td>-</td>"; // duration cell
-                echo "<td><input type='checkbox' name='chk[]' form='ThisForm' value='" . $index . "' checked></td>";
-                echo "</tr>";
-                echo "<input class='inTimes'  value='" . json_encode($s->InTimes) . "' hidden>";
-                echo "<input class='outTime' value='" . $s->OutTime . "' hidden>";
-                echo "<input name='duration[]' class='duration' form='ThisForm' hidden>";
-                echo "<input name='server[]' form='ThisForm' value='" . $s->Server . "' hidden>";
-                echo "<input name='OutRows[]' form='ThisForm' value='" . $s->OutRow . "' hidden>";
-            }
-            ?>
-        </tbody>
-    </table>
-    <form id="ThisForm" action="verify_shifts.php" method="post">
-        <input name='steam_id' value="<?php echo $steam_id ?>" hidden>
+                foreach ($shifts as $index => $s) {
+                    echo "<tr>";
+                    echo "<td>" . $s->Server . "</td>";
+                    echo "<td>" . toDateS($s->InTimes[0]) . "</td>";
+                    echo "<td>" . display_selectbox($s) . "</td>";
+                    echo "<td>" . toTime($s->OutTime) . "</td>";
+                    echo "<td>-</td>"; // duration cell
+                    echo "<td><input type='checkbox' name='chk[]' form='ThisForm' value='" . $index . "' checked></td>";
+                    echo "</tr>";
+                    echo "<input class='inTimes'  value='" . json_encode($s->InTimes) . "' hidden>";
+                    echo "<input class='outTime' value='" . $s->OutTime . "' hidden>";
+                    echo "<input name='duration[]' class='duration' form='ThisForm' hidden>";
+                    echo "<input name='server[]' form='ThisForm' value='" . $s->Server . "' hidden>";
+                    echo "<input name='OutRows[]' form='ThisForm' value='" . $s->OutRow . "' hidden>";
+                }
+                ?>
+            </tbody>
+        </table>
+        <form id="ThisForm" action="verify_shifts.php" method="post">
+            <input name='steam_id' value="<?php echo $steam_id ?>" hidden>
 
-        <button name="submit" type="submit" class="btn btn-success">Submit</button>
-    </form>
+            <button name="submit" type="submit" class="btn btn-success">Submit</button>
+        </form>
     </div>
 <?php } ?>
 
