@@ -27,7 +27,7 @@ if ($tData) {
                 $tRow[] = toDurationDays($row->duration);
                 $tRow[] = toDateS($employ_start);
                 $tRow[] = $row->discord_name;
-                $tRow[] = "<a class='btn btn-secondary view-player' href='/view_player.php?id=" . $row->steam_id . "'>View Player</button>";
+                $tRow[] = "<a class='btn btn-secondary view-player' href='/players/view_player.php?id=" . $row->steam_id . "'>View Player</button>";
                 $tbody[] = $tRow;
             }
         }
