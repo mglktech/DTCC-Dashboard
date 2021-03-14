@@ -240,3 +240,27 @@ FROM
     `applications_v0`
 WHERE
     `applications_v0`.`signed_by` IS NULL;
+
+CREATE VIEW `_public_verified_shifts`  AS 
+SELECT `_verified_shifts`.`id` AS `id`, 
+`_verified_shifts`.`server` AS `server`, 
+`_verified_shifts`.`steam_id` AS `steam_id`, 
+`_verified_shifts`.`time_in` AS `time_in`, 
+`_verified_shifts`.`time_out` AS `time_out`, 
+`_verified_shifts`.`duration` AS `duration`, 
+`_verified_shifts`.`timestamp` AS `timestamp`, 
+`_verified_shifts`.`signed_by` AS `signed_by`, 
+`callsigns`.`label` AS `callsign`, 
+`players`.`char_name` AS `char_name`, 
+`players`.`discord_name` AS `discord_name`, 
+`players`.`rank` AS `rank` 
+FROM (
+    (
+        `_verified_shifts` 
+        left join `callsigns` 
+        on(`callsigns`.`assigned_steam_id` = `_verified_shifts`.`steam_id`)
+    )
+    left join `players` 
+    on(`players`.`steam_id` = `_verified_shifts`.`steam_id`)
+) 
+ORDER BY `_verified_shifts`.`time_in` DESC ;
