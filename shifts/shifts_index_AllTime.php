@@ -4,10 +4,10 @@ include "../include/elements.php";
 
 
 $limit = 20;
-$count = Query("SELECT count(DISTINCT steam_id) AS `count` FROM public_verified_shifts where callsign is not null")[0]->count;
+$count = Query("SELECT count(DISTINCT steam_id) AS `count` FROM _public_verified_shifts where callsign is not null")[0]->count;
 $obj = CreatePaginateObj($count, $limit);
 $curtime = time();
-$sql = "SELECT DISTINCT a.steam_id, a.discord_name, a.callsign, a.char_name, a.rank, (SELECT SUM(b.duration) FROM public_verified_shifts b WHERE b.steam_id=a.steam_id) duration FROM public_verified_shifts a  where a.callsign is not null order by duration desc LIMIT $obj->start,$limit";
+$sql = "SELECT DISTINCT a.steam_id, a.discord_name, a.callsign, a.char_name, a.rank, (SELECT SUM(b.duration) FROM _public_verified_shifts b WHERE b.steam_id=a.steam_id) duration FROM _public_verified_shifts a  where a.callsign is not null order by duration desc LIMIT $obj->start,$limit";
 $tData = Query($sql);
 $thead = ["Name", "Rank", "Time Clocked In", "Discord", ""];
 $tbody = array();
