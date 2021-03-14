@@ -1,0 +1,17 @@
+Problem:
+format of #live-clockin-taxi changed
+
+old format:
+isset btn_submit?
+$file = fopen($_FILES['file']['tmp_name'], 'r');
+
+fgetcsv is a function that allows us to read the file out line-by-line. each time it is called, the next line is returned as an array.
+(collect header row)
+$HeaderRow = fgetcsv($file, 1000); (header row is always the first row by default in this case)
+ $lines = array();
+    while (($row = fgetcsv($fh, 1000)) != FALSE) {
+        $lines[] = $row;
+    }
+    $records = TrimRecords($lines);
+    DumpRawShiftDataToDB($records);
+    CreateShifts();
