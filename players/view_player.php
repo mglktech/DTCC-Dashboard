@@ -38,13 +38,13 @@ function getPublicPlayer($steam_id)
 
 function getSumShifts($steam_id)
 {
-    $sql = "SELECT SUM(`duration`) as `sum` FROM `public_verified_shifts` WHERE `steam_id`='$steam_id'";
+    $sql = "SELECT SUM(`duration`) as `sum` FROM `_public_verified_shifts` WHERE `steam_id`='$steam_id'";
     return Query($sql)[0]->sum;
 }
 
 function getShiftData($steam_id)
 {
-    $sql = "SELECT * FROM `public_verified_shifts` WHERE `steam_id` = '$steam_id'";
+    $sql = "SELECT * FROM `_public_verified_shifts` WHERE `steam_id` = '$steam_id'";
     return Query($sql);
 }
 
@@ -128,4 +128,4 @@ if(Rank("Supervisor")) {
 }
 include "elems/profile.php";
 
-include "../include/components/foot.php"; ?>
+include "../include/components/foot.php";

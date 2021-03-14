@@ -11,7 +11,7 @@ function employment_start($steam_id)
 $curtime = time();
 $oneMonth = 2629743; //one month in seconds
 $MonthAgo = $curtime - $oneMonth;
-$sql = "SELECT DISTINCT a.steam_id, a.discord_name, a.callsign, a.char_name, a.rank, (SELECT SUM(b.duration) FROM public_verified_shifts b WHERE b.steam_id=a.steam_id and b.time_out > '$MonthAgo') duration FROM public_verified_shifts a  where a.callsign is not null  order by duration asc";
+$sql = "SELECT DISTINCT a.steam_id, a.discord_name, a.callsign, a.char_name, a.rank, (SELECT SUM(b.duration) FROM _public_verified_shifts b WHERE b.steam_id=a.steam_id and b.time_out > '$MonthAgo') duration FROM _public_verified_shifts a  where a.callsign is not null  order by duration asc";
 $tData = Query($sql);
 $thead = ["Name", "Rank", "Time Clocked In", "Employment Start", "Discord", ""];
 $tbody = array();
