@@ -95,8 +95,9 @@ function record_exists($id, $id_name, $table_name)
     }
 }
 
+convert_clockin_data();
+//convert_verified_shifts();
 
-convert_verified_shifts();
 ?>
 
 <?php include "../include/components/foot.php";
