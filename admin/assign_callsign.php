@@ -30,6 +30,12 @@ function CollectCallsigns($rank, $region)
 
 
 $player = QueryFirst("SELECT * FROM `public_players` WHERE `steam_id` = '$id'");
+if ($player->timezone == "GMT (Europe/London)") { // temporary patch because timezones are not being put to players table properly
+    $player->timezone = "GMT";
+}
+if ($player->timezone == "Eastern (US/Canada)") {
+    $player->timezone = "EST";
+}
 $available_callsigns = CollectCallsigns($player->rank, $player->timezone);
 $existing_callsign = IdHasCallsign($id);
 $latest_test = QueryFirst("SELECT * FROM `tests` WHERE `steam_id` = '$id' ORDER BY `id` DESC");
