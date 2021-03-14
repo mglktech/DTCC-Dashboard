@@ -58,7 +58,7 @@ function SQLUpdatePlayer($steam_id, $test_type)
         Query("UPDATE `players` SET `status` = 'Needs Practical' WHERE `steam_id` = '$steam_id'");
     }
     if ($test_type == "practical") {
-        Query("UPDATE `players` SET `status` = 'Active',`last_seen` = '$last_seen',`rank`='0', `instructor_trained`='1' WHERE `steam_id` = '$steam_id'");
+        Query("UPDATE `players` SET `status` = 'Active',`last_seen` = '$last_seen',`rank`='0', `instructor_trained`='0' WHERE `steam_id` = '$steam_id'");
     }
 }
 
