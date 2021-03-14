@@ -6,10 +6,32 @@ isset($_POST['IncludeStaff']) ? $inc_staff = quotefix($_POST['IncludeStaff']) : 
 $cururl = $_SERVER["REQUEST_URI"];
 function getLastUpdated()
 {
-    $sql = "SELECT MAX(`timestamp`) AS max FROM `public_verified_shifts`";
+    $sql = "SELECT MAX(`timestamp`) AS max FROM `_verified_shifts`";
     $result = Query($sql)[0]->max;
     return date("F j, Y, g:i a", $result);
 }
+
+/*
+CREATE VIEW _public_verified_shifts AS 
+SELECT
+    `id15098854_dtccdb`.`_verified_shifts`.`id` AS `id`,
+    `id15098854_dtccdb`.`_verified_shifts`.`server` AS `server`,
+    `id15098854_dtccdb`.`_verified_shifts`.`steam_id` AS `steam_id`,
+    `id15098854_dtccdb`.`_verified_shifts`.`time_in` AS `time_in`,
+    `id15098854_dtccdb`.`_verified_shifts`.`time_out` AS `time_out`,
+    `id15098854_dtccdb`.`_verified_shifts`.`duration` AS `duration`,
+    `id15098854_dtccdb`.`_verified_shifts`.`timestamp` AS `timestamp`,
+    `id15098854_dtccdb`.`_verified_shifts`.`signed_by` AS `signed_by`,
+    `id15098854_dtccdb`.`callsigns`.`label` AS `callsign`,
+    `id15098854_dtccdb`.`players`.`char_name` AS `char_name`,
+    `id15098854_dtccdb`.`players`.`discord_name` AS `discord_name`,
+    `id15098854_dtccdb`.`players`.`rank` AS `rank`
+    FROM `id15098854_dtccdb`.`_verified_shifts`
+    LEFT JOIN `id15098854_dtccdb`.`callsigns` ON `id15098854_dtccdb`.`callsigns`.`assigned_steam_id` = `id15098854_dtccdb`.`_verified_shifts`.`steam_id`
+    LEFT JOIN `id15098854_dtccdb`.`players` on `id15098854_dtccdb`.`players`.`steam_id` = `id15098854_dtccdb`.`_verified_shifts`.`steam_id`  
+ORDER BY `time_in` DESC
+
+*/
 
 function PopulateTab($timeframe, $inc_staff)
 {
@@ -39,7 +61,7 @@ function PopulateTab($timeframe, $inc_staff)
         $time_inc = " and b.time_out > '$TimeAgo'";
         //$sql = "SELECT DISTINCT a.steam_id, a.callsign, a.char_name, a.rank, (SELECT SUM(b.duration) FROM public_verified_shifts b WHERE b.steam_id=a.steam_id and b.time_out > '$TimeAgo') duration FROM public_verified_shifts a  where a.callsign is not null" . $inc . " order by duration desc LIMIT 10";
     }
-    $sql = "SELECT DISTINCT a.steam_id, a.callsign, a.char_name, a.rank, (SELECT SUM(b.duration) FROM public_verified_shifts b WHERE b.steam_id=a.steam_id" . $time_inc . ") duration FROM public_verified_shifts a  where a.callsign is not null" . $inc . " order by duration desc LIMIT 10";
+    $sql = "SELECT DISTINCT a.steam_id, a.callsign, a.char_name, a.rank, (SELECT SUM(b.duration) FROM `_public_verified_shifts` b WHERE b.steam_id=a.steam_id" . $time_inc . ") duration FROM `_public_verified_shifts` a  where a.callsign is not null" . $inc . " order by duration desc LIMIT 10";
     $tData =  Query($sql);
     $thead = ["", "Name", "Time Clocked In"];
     $tbody = array();
@@ -134,62 +156,62 @@ function IncludeStaffBtn($inc_staff)
 
 
 
-<?php
-if ($_SESSION["rank"] >= 3) {
-?>
-    Senior Supervisor Commands:<br>
-    <button class="btn bg-danger text-light mb-2" data-toggle="modal" data-target="#chkUpdateSteamDetails">Refresh Steam Names</button>
-    <button class="btn bg-danger text-light mb-2" data-toggle="modal" data-target="#chkCleanBlankShifts">Clean Blank Shifts</button>
-    <a class='btn btn-secondary  mb-2' href='/shifts/upload_shifts.php'>Upload Shift Data</a>
-    <a class='btn btn-secondary  mb-2' href='/shifts/table_unver_shifts.php'>Verify Shifts</a>
-    <div class="modal fade" id="chkUpdateSteamDetails" tabindex="-1" role="dialog" aria-hidden="true">
+    <?php
+    if ($_SESSION["rank"] >= 3) {
+    ?>
+        Senior Supervisor Commands:<br>
+        <button class="btn bg-danger text-light mb-2" data-toggle="modal" data-target="#chkUpdateSteamDetails">Refresh Steam Names</button>
+        <button class="btn bg-danger text-light mb-2" data-toggle="modal" data-target="#chkCleanBlankShifts">Clean Blank Shifts</button>
+        <a class='btn btn-secondary  mb-2' href='/shifts/upload_shifts.php'>Upload Shift Data</a>
+        <a class='btn btn-secondary  mb-2' href='/shifts/table_unver_shifts.php'>Verify Shifts</a>
+        <div class="modal fade" id="chkUpdateSteamDetails" tabindex="-1" role="dialog" aria-hidden="true">
 
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Refresh Steam Names</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    You are about to refresh Steam Names for <b>The Entire Database</b>. are you sure you want to do this?<br>
-                    This may take a while to complete. Do not refresh the page!
-                </div>
-                <div class="modal-footer">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Refresh Steam Names</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        You are about to refresh Steam Names for <b>The Entire Database</b>. are you sure you want to do this?<br>
+                        This may take a while to complete. Do not refresh the page!
+                    </div>
+                    <div class="modal-footer">
 
-                    <a href="/admin/update_steam_details.php" class="btn btn-success">Do it</a>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Back</button>
+                        <a href="/admin/update_steam_details.php" class="btn btn-success">Do it</a>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Back</button>
 
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="modal fade" id="chkCleanBlankShifts" tabindex="-1" role="dialog" aria-hidden="true">
-
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Clean Blank Shifts</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <b>WARNING: </b> You should only run this command <i>after</i> you have refreshed Steam Names. are you sure you want to do this?
-                </div>
-                <div class="modal-footer">
-
-                    <a href="/dev/BlankSteamIDCleanup.php" class="btn btn-success">Do it</a>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Back</button>
-
+                    </div>
                 </div>
             </div>
+
         </div>
 
-    </div>
+        <div class="modal fade" id="chkCleanBlankShifts" tabindex="-1" role="dialog" aria-hidden="true">
+
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Clean Blank Shifts</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <b>WARNING: </b> You should only run this command <i>after</i> you have refreshed Steam Names. are you sure you want to do this?
+                    </div>
+                    <div class="modal-footer">
+
+                        <a href="/dev/BlankSteamIDCleanup.php" class="btn btn-success">Do it</a>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Back</button>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
 </div>
 <?php }
-include "../include/components/foot.php";
+    include "../include/components/foot.php";

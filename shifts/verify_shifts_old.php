@@ -9,7 +9,7 @@ function POST_shiftdata($data)
     foreach ($data as $row) {
         if ($row->outcome == "Accept") {
 
-            //$sql = "INSERT INTO verified_shifts (`server`,`steam_id`,`inRow`,`outRow`,`duration`,`signed_by`,`timestamp`) VALUES ('$row->server','$row->steam_id','$row->inRow','$row->outRow','$row->duration','$row->signed_by','$timestamp')";
+            $sql = "INSERT INTO verified_shifts (`server`,`steam_id`,`inRow`,`outRow`,`duration`,`signed_by`,`timestamp`) VALUES ('$row->server','$row->steam_id','$row->inRow','$row->outRow','$row->duration','$row->signed_by','$timestamp')";
             //echo "<br>" . $sql;
             Query($sql);
         }
@@ -28,54 +28,6 @@ function sign_record($id, $sig, $outcome, $reason = NULL)
     $sql = "UPDATE shift_records SET `signed_by`='$sig',`outcome`='$outcome', `reason`='$reason' WHERE `id` = '$id'";
     //echo "<br>" . $sql;
     Query($sql);
-}
-
-function _create_shifts($steam_id)
-{
-    // must be organised by server
-    $sql = "SELECT DISTINCT `server` AS `serv` FROM `clockin_data` WHERE `steam_id` = '$steam_id'";
-    $result = Query($sql);
-    $sv = array();
-    foreach ($result as $s) {
-        $sv[] = $s->serv; // pull result into one dimension
-    }
-
-    foreach ($sv as $svNo) {
-        $sql = "SELECT * FROM `clockin_data` WHERE (`steam_id` = '$steam_id' AND `server` = '$svNo' AND `verified_shift_id` IS NULL) ORDER BY `timestamp`";
-        $records = Query($sql);
-        // echo "<br> SN: " . $sn . " SERVER: " . $svNo . " RECORDS: ";
-        $shift = new stdClass();
-        $shift->InRows = array();
-        $shift->InTimes = array();
-        if ($records) {
-            foreach ($records as $r) {
-                $id = $r->id;
-                $timestamp = $r->timestamp;
-                $shift->Server = $r->server;
-                $shift->steam_id = $r->steam_id;
-                $type = $r->type;
-                if ($type == "in") {
-                    $shift->InRows[] = $id;
-                    $shift->InTimes[] = $timestamp;
-                }
-                if ($type == "out") {
-                    $shift->OutTime = $timestamp;
-                    $shift->OutRow = $id;
-                    // echo "<br>";
-                    // print_r($shift);
-                    array_push($shifts, create_shift($shift));
-                    //$shifts[] = $shift;
-                    //unset($shift->InRows);
-                    //unset($shift->InTimes);
-                    //array_splice($shift->InRows, 0);
-                    //array_splice($shift->InTimes, 0);
-                    $shift->InRows = array();
-                    $shift->InTimes = array();
-                }
-            }
-        }
-    }
-    return $shifts;
 }
 
 function create_shifts($sn)
