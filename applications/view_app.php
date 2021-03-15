@@ -81,6 +81,7 @@ function UpdatePlayer($ap)
         `discord_name` = '$ap->discord_name',
         `char_name` = '$ap->char_name',
         `status` = '$ap->pStatus',
+        `rank` = '-1',
         `last_seen` = '$ap->date',
         `timezone` = '$ap->timezone',
         `av_full` = '$ap->av_full',
@@ -259,8 +260,14 @@ function PrepareContent($doc_id)
                 include("elems/app_ignored.php");
             }
         } else {
+
             if (Rank("Supervisor")) {
                 include("elems/app_sign.php");
+                if (IsAlreadyEmployed($app_info->SteamID)) {
+
+                    //include("../players/elems/player_infobtns.php");
+                    echo "This player is already a member of Downtown Cab Co. <br> DO NOT sign this application until this member has been removed properly.";
+                }
             } else {
                 include("elems/app_sign_disabled.php");
             }
@@ -268,6 +275,7 @@ function PrepareContent($doc_id)
         ?>
     </div>
 </section>
+
 
 
 

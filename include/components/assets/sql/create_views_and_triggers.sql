@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS app_history;
+DROP VIEW IF EXISTS app_history;
 CREATE VIEW app_history AS
 SELECT
     `applications_v0`.`char_name` AS `app_char_name`,
@@ -11,6 +12,7 @@ SELECT
     `players`.`char_name` AS `signed_by`,
     `callsigns`.`label` AS `callsign`,
     `applications_v0`.`steam_id` AS `steam_id`,
+    `applications_v0`.`steam_link` AS `steam_link`,
     `applications_v0`.`signed_timestamp` AS `signed_timestamp`
 FROM
     (
@@ -31,6 +33,7 @@ DESC;
 
 
 DROP TABLE IF EXISTS old_new_players;
+DROP VIEW IF EXISTS old_new_players;
 CREATE VIEW old_new_players AS
 SELECT
     `players`.`char_name` AS `char_name`,
@@ -45,7 +48,10 @@ FROM
             `old_players`.`steam_id` = `players`.`steam_id`
         )
     );
+
+
 DROP TABLE IF EXISTS public_players;
+DROP VIEW IF EXISTS public_players;
 CREATE VIEW public_players AS
 SELECT
     `callsigns`.`label` AS `callsign`,
@@ -81,7 +87,10 @@ FROM
     )
 WHERE
     `players`.`status` IS NOT NULL;
+
+
 DROP TABLE IF EXISTS notes;
+DROP VIEW IF EXISTS notes;
 CREATE VIEW notes AS
 SELECT
     `private_notes`.`id` AS `id`,
@@ -100,6 +109,7 @@ FROM
         )
     );
 DROP TABLE IF EXISTS public_strikes;
+DROP VIEW IF EXISTS public_strikes;
 CREATE VIEW public_strikes AS
 SELECT
     `strikes`.`id` AS `id`,
@@ -142,7 +152,9 @@ FROM
             `strikes`.`signed_by` = `playersB`.`steam_id`
         )
     );
+
 DROP TABLE IF EXISTS public_verified_shifts;
+DROP VIEW IF EXISTS public_verified_shifts;
 CREATE VIEW public_verified_shifts AS
 SELECT
     `verified_shifts`.`id` AS `id`,
@@ -188,7 +200,10 @@ FROM
 ORDER BY
     `sr1`.`timestamp`
 DESC;
+
+
 DROP TABLE IF EXISTS test_history;
+DROP VIEW IF EXISTS test_history;
 CREATE VIEW test_history AS
 SELECT
     `tests`.`id` AS `id`,
@@ -228,6 +243,7 @@ ORDER BY
     `tests`.`submit_date`
 DESC;
 DROP TABLE IF EXISTS unread_apps;
+DROP VIEW IF EXISTS unread_apps;
 CREATE VIEW unread_apps AS
 SELECT
     `applications_v0`.`app_id` AS `app_id`,
@@ -241,6 +257,9 @@ FROM
 WHERE
     `applications_v0`.`signed_by` IS NULL;
 
+
+DROP TABLE IF EXISTS `_public_verified_shifts`;
+DROP VIEW IF EXISTS `_public_verified_shifts`;
 CREATE VIEW `_public_verified_shifts`  AS 
 SELECT `_verified_shifts`.`id` AS `id`, 
 `_verified_shifts`.`server` AS `server`, 
@@ -264,3 +283,5 @@ FROM (
     on(`players`.`steam_id` = `_verified_shifts`.`steam_id`)
 ) 
 ORDER BY `_verified_shifts`.`time_in` DESC ;
+
+
