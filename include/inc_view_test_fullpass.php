@@ -9,6 +9,8 @@
                 feel free to join our Offical Discord Server ->https://discord.gg/C8xjc29WXz<br>
                 Please be patient while we assign you a ***shiny new tag***, You will be able to clock in as soon as you are whitelisted.<br>
                 Whitelisting usually takes 12-24 hours.<br>
+
+                PLEASE TAG AN @INSTRUCTOR IN #DISCUSSION FOR YOUR DAY ONE TRAINING.<br>
                 We look forward to seeing you on shift!<br>
                 Kind Regards<br>
                 <?php echo $rvals["signed_by"]; ?>
