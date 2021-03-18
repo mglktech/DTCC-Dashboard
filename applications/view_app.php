@@ -75,7 +75,8 @@ function UpdatePlayer($ap)
 
     if ($validate) {
         in_array($validate[0]->status, ["Needs Theory", "Needs Practical", "Active"]) ? $ap->pStatus = $validate[0]->status : $ap->pStatus = $ap->pStatus;
-        $sql = "UPDATE players SET
+        if ($ap->status == "accept") {
+            $sql = "UPDATE `players` SET
         `phone_number` = '$ap->phone_number',
         `steam_name` = '$ap->steam_name',
         `discord_name` = '$ap->discord_name',
@@ -86,6 +87,18 @@ function UpdatePlayer($ap)
         `timezone` = '$ap->timezone',
         `av_full` = '$ap->av_full',
         `backstory` = '$ap->backstory' WHERE `steam_id` = '$ap->steam_id'";
+        } else {
+            $sql = "UPDATE `players` SET
+        `phone_number` = '$ap->phone_number',
+        `steam_name` = '$ap->steam_name',
+        `discord_name` = '$ap->discord_name',
+        `char_name` = '$ap->char_name',
+        `status` = '$ap->pStatus',
+        `last_seen` = '$ap->date',
+        `timezone` = '$ap->timezone',
+        `av_full` = '$ap->av_full',
+        `backstory` = '$ap->backstory' WHERE `steam_id` = '$ap->steam_id'";
+        }
     } else {
         $sql = "REPLACE INTO players 
     (`steam_id`,`phone_number`,`steam_name`,`discord_name`,`char_name`,`status`,`last_seen`,`timezone`,`av_full`,`backstory`) 
