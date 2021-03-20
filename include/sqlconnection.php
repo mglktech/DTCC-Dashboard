@@ -61,7 +61,7 @@ function QueryTrigger($sql)
         $target_table = explode(" ", $sql)[1];
     }
     if ($audit_type == "SELECT") {
-        //$target_table = ""; verbose audit logging
+        $target_table = "";
     }
     if (isset($target_table)) {
         $fixed_sql = quotefix($sql);
