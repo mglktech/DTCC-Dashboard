@@ -35,7 +35,7 @@ if (isset($_POST["FireMe"])) {
     if ($reason == "other") {
         $reason = $_POST["otherreason"];
     }
-    $add_info = $_POST["additionalInformation"];
+    $add_info = quotefix($_POST["additionalInformation"]);
     if (isset($_POST["ban"]) || isset($_POST["banR"])) {
         $BanFire = "Banned";
         $banned = 1;
