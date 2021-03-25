@@ -43,15 +43,8 @@ function AppAccept($ap)
     $ap->status = "accept";
     $ap->status_desc = "";
     $ap->add_info = "";
-
-    if (PlayerValidate($ap->steam_id) == null) // if player isn't currently employed by us
-    {
-        $ap->pStatus = "Needs Theory";
-    } else {
-        $ap->pStatus = PlayerValidate($ap->steam_id);
-    }
     UpdateApplication($ap);
-    UpdatePlayer($ap);
+    _UpdatePlayer($ap,"accept");
 }
 function UpdateApplication($ap)
 {
@@ -69,37 +62,29 @@ function UpdateApplication($ap)
     }
 }
 
-function UpdatePlayer($ap)
+function _UpdatePlayer($ap,$result)
 {
-    $validate = QueryFirst("SELECT * FROM `players` WHERE `steam_id` = '$ap->steam_id'");
-
-    if ($validate) {
-        in_array($validate[0]->status, ["Needs Theory", "Needs Practical", "Active"]) ? $ap->pStatus = $validate->status : $ap->pStatus = $ap->pStatus;
-        if ($ap->status == "accept") {
-            $sql = "UPDATE `players` SET
-        `phone_number` = '$ap->phone_number',
-        `steam_name` = '$ap->steam_name',
-        `discord_name` = '$ap->discord_name',
-        `char_name` = '$ap->char_name',
-        `status` = '$ap->pStatus',
-        `rank` = '-1',
-        `last_seen` = '$ap->date',
-        `timezone` = '$ap->timezone',
-        `av_full` = '$ap->av_full',
-        `backstory` = '$ap->backstory' WHERE `steam_id` = '$ap->steam_id'";
-        } else {
-            $sql = "UPDATE `players` SET
-        `phone_number` = '$ap->phone_number',
-        `steam_name` = '$ap->steam_name',
-        `discord_name` = '$ap->discord_name',
-        `char_name` = '$ap->char_name',
-        `status` = '$ap->pStatus',
-        `last_seen` = '$ap->date',
-        `timezone` = '$ap->timezone',
-        `av_full` = '$ap->av_full',
-        `backstory` = '$ap->backstory' WHERE `steam_id` = '$ap->steam_id'";
-        }
-    } else {
+    $lastSeen = time();
+    if($result == "accept")
+    {
+        $sql = "REPLACE INTO players 
+    (`steam_id`,`phone_number`,`steam_name`,`discord_name`,`char_name`,`timezone`,`av_full`,`backstory`,`rank`,`status`,`last_seen`) 
+    VALUES(
+        '$ap->steam_id',
+        '$ap->phone_number',
+        '$ap->steam_name',
+        '$ap->discord_name',
+        '$ap->char_name',
+        '$ap->timezone',
+        '$ap->av_full',
+        '$ap->backstory',
+        '-1',
+        'Needs Theory',
+        '$lastSeen')";
+        Query($sql);
+    }
+    if($result == "deny")
+    {
         $sql = "REPLACE INTO players 
     (`steam_id`,`phone_number`,`steam_name`,`discord_name`,`char_name`,`timezone`,`av_full`,`backstory`) 
     VALUES(
@@ -111,24 +96,64 @@ function UpdatePlayer($ap)
         '$ap->timezone',
         '$ap->av_full',
         '$ap->backstory')";
+        Query($sql);
     }
-
-
-    Query($sql);
 }
+
+// function UpdatePlayer($ap)
+// {
+//     $validate = QueryFirst("SELECT * FROM `players` WHERE `steam_id` = '$ap->steam_id'");
+
+//     if ($validate) {
+//         in_array($validate[0]->status, ["Needs Theory", "Needs Practical", "Active"]) ? $ap->pStatus = $validate->status : $ap->pStatus = $ap->pStatus;
+//         if ($ap->status == "accept") {
+//             $sql = "UPDATE `players` SET
+//         `phone_number` = '$ap->phone_number',
+//         `steam_name` = '$ap->steam_name',
+//         `discord_name` = '$ap->discord_name',
+//         `char_name` = '$ap->char_name',
+//         `status` = '$ap->pStatus',
+//         `rank` = '-1',
+//         `last_seen` = '$ap->date',
+//         `timezone` = '$ap->timezone',
+//         `av_full` = '$ap->av_full',
+//         `backstory` = '$ap->backstory' WHERE `steam_id` = '$ap->steam_id'";
+//         } else {
+//             $sql = "UPDATE `players` SET
+//         `phone_number` = '$ap->phone_number',
+//         `steam_name` = '$ap->steam_name',
+//         `discord_name` = '$ap->discord_name',
+//         `char_name` = '$ap->char_name',
+//         `status` = '$ap->pStatus',
+//         `last_seen` = '$ap->date',
+//         `timezone` = '$ap->timezone',
+//         `av_full` = '$ap->av_full',
+//         `backstory` = '$ap->backstory' WHERE `steam_id` = '$ap->steam_id'";
+//         }
+//     } else {
+//         $sql = "REPLACE INTO players 
+//     (`steam_id`,`phone_number`,`steam_name`,`discord_name`,`char_name`,`timezone`,`av_full`,`backstory`) 
+//     VALUES(
+//         '$ap->steam_id',
+//         '$ap->phone_number',
+//         '$ap->steam_name',
+//         '$ap->discord_name',
+//         '$ap->char_name',
+//         '$ap->timezone',
+//         '$ap->av_full',
+//         '$ap->backstory')";
+//     }
+
+
+//     Query($sql);
+// }
 function AppDeny($ap)
 {
     $ap->status = "deny";
     $ap->status_desc = MakeDesc();
     $ap->add_info = quotefix(chkPost("txt-addinfo"));
     UpdateApplication($ap);
-
-    if ($ap->steam_id) {
-        if (chkPostBool("csw-banned")) {
-            $ap->pStatus = "Banned";
-        }
-        UpdatePlayer($ap);
-    }
+    _UpdatePlayer($ap,"deny");
 }
 function AppIgnore($ap)
 {
