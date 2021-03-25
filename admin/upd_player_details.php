@@ -105,6 +105,7 @@ function ModalBody($flag, $rank)
         if (Rank("Supervisor")) {
             $content = "<select class='form-select' name='new_rank'>
             <option selected>Choose Rank</option>
+            <option value='-1'>Recruit</option>
             <option value='0'>Driver</option>
             <option value='1'>Private Hire</option>
             <option value='1.5'>Instructor</option>
@@ -113,6 +114,7 @@ function ModalBody($flag, $rank)
         if (Rank("Senior Supervisor")) {
             $content = "<select class='form-select' name='new_rank'>
             <option selected>Choose Rank</option>
+            <option value='-1'>Recruit</option>
             <option value='0'>Driver</option>
             <option value='1'>Private Hire</option>
             <option value='1.5'>Instructor</option>
@@ -122,6 +124,7 @@ function ModalBody($flag, $rank)
         if (Rank("Overboss")) {
             $content = "<select class='form-select' name='new_rank'>
             <option selected>Choose Rank</option>
+            <option value='-1'>Recruit</option>
             <option value='0'>Driver</option>
             <option value='1'>Private Hire</option>
             <option value='1.5'>Instructor</option>
@@ -167,8 +170,8 @@ if ($rank > 2) {
 
 
 ?>
-    <div class="container col-6">
-        <?php
+<div class="container col-6">
+    <?php
         CreateInputElem("Callsign: ", $player->callsign, "");
         CreateInputElemFull(SpanPrepend("Name: "), SpanMiddleDefault($player->char_name), BtnEdit("name"));
         CreateInputElemFull(SpanPrepend("Rank: "), SpanMiddleDefault($player->rank_label), BtnEdit("rank"));
@@ -179,7 +182,7 @@ if ($rank > 2) {
         //CreateInputElem("SteamID:", $player->steam_id, "");
         ?>
 
-    </div>
+</div>
 
 
 
