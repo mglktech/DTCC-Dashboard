@@ -57,6 +57,7 @@ $student = q_fetchPlayer($student_id);
                     <li>Tell the trainee where to get the items needed (LTD's)</li>
                     <li>No illegal substance on you or in your system (alkohol or drugs)</li>
                     <li>Make the trainee show how to clock in, get a cab and advertise</li>
+                    <li>Dont park own vehicles in the garage at cab co, they can poof when company cars are spawned</li>
                 </ul>
             </div>
         </div>
@@ -74,7 +75,7 @@ $student = q_fetchPlayer($student_id);
                     <li>How to use push to talk</li>
                     <li>How to deafen</li>
                     <li>Must talk in city when talking in discord (city rule, could lead to deportation if not done)</li>
-                    <li>Code 0 - Game crash (Available soon again)</li>
+                    <li>Code 0 - Head Popped (Game Crash, Restarting FiveM)</li>
                     <li>Code 1 - Ready to take a call (No local) (Undeafen)</li>
                     <li>Code 2 - With local customer (Can still take calls) (Undeafen)</li>
                     <li>Code 3 - With player customer (Deafen)</li>
@@ -138,7 +139,6 @@ $student = q_fetchPlayer($student_id);
                 <ul>
                     <li>Taxi 33k, not allowed to put underglow on or tinted windows. Suggest to not waist money on tuning.</li>
                     <li>Limo 25k, not allowed to put underglow on.&nbsp;Suggest to not waist money on tuning.</li>
-                    <li>Dont park own vehicles in the garage at cab co, they can poof when company cars are spawned</li>
                 </ul>
             </div>
         </div>

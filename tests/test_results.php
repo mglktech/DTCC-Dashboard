@@ -58,7 +58,7 @@ function SQLUpdatePlayer($steam_id, $test_type)
         Query("UPDATE `players` SET `status` = 'Needs Practical' WHERE `steam_id` = '$steam_id'");
     }
     if ($test_type == "practical") {
-        Query("UPDATE `players` SET `status` = 'Active',`last_seen` = '$last_seen',`rank`='0', `instructor_trained`='1' WHERE `steam_id` = '$steam_id'");
+        Query("UPDATE `players` SET `status` = 'Active',`last_seen` = '$last_seen',`rank`='0' WHERE `steam_id` = '$steam_id'");
     }
 }
 
@@ -123,10 +123,12 @@ $test_id = SQLInsertTest($steam_id, $test_type, $test_version, $result->total_sc
                 if ($test_type == "practical") {
             ?>
                     <a class="btn btn-warning btn-pad" type="button" href="../admin/assign_callsign.php?id=<?= $steam_id ?>">Assign Callsign</a>
-            <?php }
-            } ?>
-            <a class="btn btn-secondary btn-pad" type="button" href="view_test.php?test_id=<?= $test_id ?>">More Info</a>
-            <a class="btn btn-dark btn-pad" type="button" href="table_tests_archive.php">Finish</a>
+                <?php } else {
+                ?> <a class="btn btn-secondary btn-pad" type="button" href="view_test.php?test_id=<?= $test_id ?>">More Info</a>
+                    <a class="btn btn-dark btn-pad" type="button" href="table_tests_archive.php">Finish</a> <?php
+                                                                                                        }
+                                                                                                    } ?>
+
         </div>
     </div>
 </div>

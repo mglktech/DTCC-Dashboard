@@ -11,11 +11,26 @@ function CanAccept($steamid)
         return [false, "steamid"];
     } else if (IsBanned($steamid)) {
         return [false, "banned"];
+    } else if (IsAlreadyEmployed($steamid)) {
+        return [false, "notfired"];
     } else {
         return [true, ""];
     }
 }
 
+function IsAlreadyEmployed($steam_id)
+{
+    $player = QueryFirst("SELECT * FROM `players` WHERE `steam_id` = '$steam_id'");
+    if ($player != null) {
+        if ($player->rank != null) {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
+}
 
 function IsBanned($steam_id)
 {

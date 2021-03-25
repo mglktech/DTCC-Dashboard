@@ -31,7 +31,7 @@ function POST_shiftdata($data) // $data = $verified_shifts
             $duration = $row->duration;
             $signed_by = $row->signed_by;
             $timestamp = time();
-            $clockin_data = create_clockin_data_obj($row);
+            //$clockin_data = create_clockin_data_obj($row);
             $clockin_data_encoded = json_encode($clockin_data);
             $sql = "INSERT INTO _verified_shifts (`server`,`steam_id`,`time_in`,`time_out`,`duration`,`signed_by`,`timestamp`, `clockin_data`) 
             VALUES ('$server','$steam_id','$time_in','$time_out','$duration','$signed_by','$timestamp', '$clockin_data_encoded')";

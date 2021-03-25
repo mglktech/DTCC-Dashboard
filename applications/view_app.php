@@ -71,11 +71,24 @@ function UpdateApplication($ap)
 
 function UpdatePlayer($ap)
 {
-    $validate = Query("SELECT * FROM `players` WHERE `steam_id` = '$ap->steam_id'");
+    $validate = QueryFirst("SELECT * FROM `players` WHERE `steam_id` = '$ap->steam_id'");
 
     if ($validate) {
-        in_array($validate[0]->status, ["Needs Theory", "Needs Practical", "Active"]) ? $ap->pStatus = $validate[0]->status : $ap->pStatus = $ap->pStatus;
-        $sql = "UPDATE players SET
+        in_array($validate[0]->status, ["Needs Theory", "Needs Practical", "Active"]) ? $ap->pStatus = $validate->status : $ap->pStatus = $ap->pStatus;
+        if ($ap->status == "accept") {
+            $sql = "UPDATE `players` SET
+        `phone_number` = '$ap->phone_number',
+        `steam_name` = '$ap->steam_name',
+        `discord_name` = '$ap->discord_name',
+        `char_name` = '$ap->char_name',
+        `status` = '$ap->pStatus',
+        `rank` = '-1',
+        `last_seen` = '$ap->date',
+        `timezone` = '$ap->timezone',
+        `av_full` = '$ap->av_full',
+        `backstory` = '$ap->backstory' WHERE `steam_id` = '$ap->steam_id'";
+        } else {
+            $sql = "UPDATE `players` SET
         `phone_number` = '$ap->phone_number',
         `steam_name` = '$ap->steam_name',
         `discord_name` = '$ap->discord_name',
@@ -85,17 +98,16 @@ function UpdatePlayer($ap)
         `timezone` = '$ap->timezone',
         `av_full` = '$ap->av_full',
         `backstory` = '$ap->backstory' WHERE `steam_id` = '$ap->steam_id'";
+        }
     } else {
         $sql = "REPLACE INTO players 
-    (`steam_id`,`phone_number`,`steam_name`,`discord_name`,`char_name`,`status`,`last_seen`,`timezone`,`av_full`,`backstory`) 
+    (`steam_id`,`phone_number`,`steam_name`,`discord_name`,`char_name`,`timezone`,`av_full`,`backstory`) 
     VALUES(
         '$ap->steam_id',
         '$ap->phone_number',
         '$ap->steam_name',
         '$ap->discord_name',
         '$ap->char_name',
-        '$ap->pStatus',
-        '$ap->date',
         '$ap->timezone',
         '$ap->av_full',
         '$ap->backstory')";
@@ -259,8 +271,14 @@ function PrepareContent($doc_id)
                 include("elems/app_ignored.php");
             }
         } else {
+
             if (Rank("Supervisor")) {
                 include("elems/app_sign.php");
+                if (IsAlreadyEmployed($app_info->SteamID)) {
+
+                    //include("../players/elems/player_infobtns.php");
+                    echo "This player is already a member of Downtown Cab Co. <br> DO NOT sign this application until this member has been removed properly.";
+                }
             } else {
                 include("elems/app_sign_disabled.php");
             }
@@ -268,6 +286,7 @@ function PrepareContent($doc_id)
         ?>
     </div>
 </section>
+
 
 
 
