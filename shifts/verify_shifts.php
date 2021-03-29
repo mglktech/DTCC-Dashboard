@@ -243,7 +243,7 @@ if (isset($_POST["submit"])) {
         $verified_shifts[] = $verified_shift;
     }
     POST_shiftdata($verified_shifts);
-    echo "<div class='container'></div><h5>Done!</h5><br><a class='btn btn-outline-secondary' href='table_unver_shifts.php'>Back</a></div>";
+    echo "<div class='container text-center'><h5>Done!</h5><br><a class='btn btn-outline-secondary' href='table_unver_shifts.php'>Back</a></div>";
 }
 
 
@@ -271,21 +271,24 @@ function display_selectbox($vals)
 ?>
 
 <?php if (isset($shifts)) { ?>
-    <div class="container">
-        <h3>Unverified Shifts: <?php echo q_fetchPlayerFormatted($_GET['id']) ?></h3>
-        <table class="table table-striped blue-header">
-            <thead>
-                <tr>
-                    <th>Server</th>
-                    <th>Date</th>
-                    <th>Time In</th>
-                    <th>Time Out</th>
-                    <th>Duration</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody id="TableBody">
-                <?php
+<div class="container text-center">
+    <h3>Unverified Shifts: <?php echo q_fetchPlayerFormatted($_GET['id']) ?></h3>
+    <h6>Shifts over 3hrs will not be checked automatically. You must manually select the correct clock-in time before
+        submitting.</h6>
+    <h6>Shifts under 10 minutes should also be left unchecked.</h6>
+    <table class="table table-striped blue-header">
+        <thead>
+            <tr>
+                <th>Server</th>
+                <th>Date</th>
+                <th>Time In</th>
+                <th>Time Out</th>
+                <th>Duration</th>
+                <th>Verify?</th>
+            </tr>
+        </thead>
+        <tbody id="TableBody">
+            <?php
 
                 foreach ($shifts as $index => $s) {
                     echo "<tr>";
@@ -294,7 +297,7 @@ function display_selectbox($vals)
                     echo "<td>" . display_selectbox($s) . "</td>";
                     echo "<td>" . toTime($s->OutTime) . "</td>";
                     echo "<td>-</td>"; // duration cell
-                    echo "<td><input type='checkbox' name='chk[]' form='ThisForm' value='" . $index . "' checked></td>";
+                    echo "<td><input type='checkbox' class= 'chk' name='chk[]' form='ThisForm' value='" . $index . "' checked></td>";
                     echo "</tr>";
                     echo "<input class='inTimes'  value='" . json_encode($s->InTimes) . "' hidden>";
                     echo "<input class='outTime' value='" . $s->OutTime . "' hidden>";
@@ -303,17 +306,33 @@ function display_selectbox($vals)
                     echo "<input name='OutRows[]' form='ThisForm' value='" . $s->OutRow . "' hidden>";
                 }
                 ?>
-            </tbody>
-        </table>
-        <form id="ThisForm" action="verify_shifts.php" method="post">
-            <input name='steam_id' value="<?php echo $steam_id ?>" hidden>
-            <button name="submit" type="submit" class="btn btn-success">Submit</button>
-        </form>
-    </div>
+        </tbody>
+    </table>
+    <form id="ThisForm" action="verify_shifts.php" method="post">
+        <input name='steam_id' value="<?php echo $steam_id ?>" hidden>
+        <button name="submit" type="submit" class="btn btn-success">Submit</button>
+    </form>
+</div>
 <?php } ?>
 
 <script>
     document.addEventListener("DOMContentLoaded", updateDurations());
+
+    function format(time) {
+        // Hours, minutes and seconds
+        var hrs = ~~(time / 3600);
+        var mins = ~~((time % 3600) / 60);
+        var secs = ~~time % 60;
+
+        // Output like "1:01" or "4:03:59" or "123:03:59"
+        var ret = "";
+        if (hrs > 0) {
+            ret += hrs + " hrs, ";
+        }
+        ret += mins + " mins, ";
+        ret += secs + " secs";
+        return ret;
+    }
 
     function updateDurations() {
         var TableBody = document.getElementById("TableBody");
@@ -323,13 +342,41 @@ function display_selectbox($vals)
             var tDurationInput = document.getElementsByClassName("duration")[i];
             var tComboCellIndex = tComboCell.selectedIndex;
             var tDurationCell = tRow.getElementsByTagName("td")[4];
+            var tCheckbox = document.getElementsByClassName("chk")[i];
             var TimeIn = JSON.parse(document.getElementsByClassName('inTimes')[i].value)[tComboCellIndex];
             var TimeOut = document.getElementsByClassName('outTime')[i].value;
-            console.log("INTIME: " + TimeIn);
-            console.log("OUTTIME: " + TimeOut);
+            //console.log("INTIME: " + TimeIn);
+            //console.log("OUTTIME: " + TimeOut);
+            var duration = TimeOut - TimeIn;
+            if (duration > (3600 * 3) || duration < (3600 / 6)) { // if over 3hrs or under 10mins, uncheck automatically
+                tCheckbox.checked = false;
+                //console.log("CHECKBOX");
+            }
+            //console.log("DURATION: " + format(duration));
+            var dataDuration = format(duration);
+            tDurationInput.value = duration;
+            tDurationCell.innerHTML = dataDuration;
+
+        }
+
+    }
+
+    function updateDurations_old() {
+        var TableBody = document.getElementById("TableBody");
+        for (var i = 0; i < TableBody.getElementsByTagName("tr").length; i++) {
+            var tRow = TableBody.getElementsByTagName("tr")[i];
+            var tComboCell = document.getElementsByClassName("custom-select")[i];
+            var tDurationInput = document.getElementsByClassName("duration")[i];
+            var tComboCellIndex = tComboCell.selectedIndex;
+            var tDurationCell = tRow.getElementsByTagName("td")[4];
+            var TimeIn = JSON.parse(document.getElementsByClassName('inTimes')[i].value)[tComboCellIndex];
+            var TimeOut = document.getElementsByClassName('outTime')[i].value;
+            //console.log("INTIME: " + TimeIn);
+            //console.log("OUTTIME: " + TimeOut);
             var duration = TimeOut - TimeIn;
             var tmath = new Date(duration * 1000);
             var dataDuration = tmath.getUTCHours() + "hrs " + tmath.getUTCMinutes() + "m ";
+            //console.log("DURATION: ")
             tDurationInput.value = duration;
             tDurationCell.innerHTML = dataDuration;
         }
