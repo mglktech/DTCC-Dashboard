@@ -11,9 +11,10 @@ function employment_start($steam_id)
 $curtime = time();
 $oneMonth = 2629743; //one month in seconds
 $MonthAgo = $curtime - $oneMonth;
-$sql = "SELECT DISTINCT a.steam_id, a.discord_name, a.callsign, a.char_name, a.rank, (SELECT SUM(b.duration) FROM _public_verified_shifts b WHERE b.steam_id=a.steam_id and b.time_out > '$MonthAgo') duration FROM _public_verified_shifts a  where a.callsign is not null  order by duration asc";
+$sql = "SELECT DISTINCT a.steam_id, a.discord_name, a.callsign, a.char_name, a.rank, a.last_seen, (SELECT SUM(b.duration) FROM _public_verified_shifts b WHERE b.steam_id=a.steam_id and b.time_out > '$MonthAgo') duration FROM _public_verified_shifts a  where a.callsign is not null  order by duration asc";
 $tData = Query($sql);
-$thead = ["Name", "Rank", "Time Clocked In", "Employment Start", "Discord", ""];
+
+$thead = ["Name", "Rank", "Time Clocked In", "Employment Start","Last Seen","Discord", ""];
 $tbody = array();
 if ($tData) {
     foreach ($tData as $row) {
@@ -26,6 +27,7 @@ if ($tData) {
                 $tRow[] = Pill(getRank($row->rank));
                 $tRow[] = toDurationDays($row->duration);
                 $tRow[] = toDateS($employ_start);
+                $tRow[] = toDateS($row->last_seen);
                 $tRow[] = $row->discord_name;
                 $tRow[] = "<a class='btn btn-secondary view-player' href='/players/view_player.php?id=" . $row->steam_id . "' target='_blank' >View Player</button>";
                 $tbody[] = $tRow;
