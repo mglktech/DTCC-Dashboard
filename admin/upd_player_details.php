@@ -21,29 +21,29 @@ function getRecentSteamName($steamid)
 if (Rank("Supervisor")) {
 
     if ($newname) {
-        $sql = "UPDATE players SET char_name = '$newname' WHERE steam_id = '$steamid'";
+        $sql = "UPDATE `players` SET `char_name` = '$newname' WHERE `steam_id` = '$steamid'";
         Query($sql);
     }
     if ($newsteamname) {
-        $sql = "UPDATE players SET steam_name = '$newsteamname' WHERE steam_id = '$steamid'";
+        $sql = "UPDATE `players` SET `steam_name` = '$newsteamname' WHERE `steam_id` = '$steamid'";
         Query($sql);
     }
     if ($newphone) {
-        $sql = "UPDATE players SET phone_number = '$newphone' WHERE steam_id = '$steamid'";
+        $sql = "UPDATE `players` SET `phone_number` = '$newphone' WHERE `steam_id` = '$steamid'";
         Query($sql);
     }
     if ($newstatus) {
-        $sql = "UPDATE players SET `status` = '$newstatus' WHERE steam_id = '$steamid'";
+        $sql = "UPDATE `players` SET `status` = '$newstatus' WHERE `steam_id` = '$steamid'";
         Query($sql);
     }
     if ($newdiscord) {
-        $sql = "UPDATE players SET discord_name = '$newdiscord' WHERE steam_id = '$steamid'";
+        $sql = "UPDATE `players` SET `discord_name` = '$newdiscord' WHERE `steam_id` = '$steamid'";
         Query($sql);
     }
     if ($newrank != null) {
-        $sql = "UPDATE players SET rank = '$newrank' WHERE steam_id = '$steamid'";
+        $sql = "UPDATE `players` SET `rank` = '$newrank' WHERE `steam_id` = '$steamid'";
         Query($sql);
-        $sql = "UPDATE players SET whitelisted = '0' WHERE steam_id = '$steamid'";
+        $sql = "UPDATE `players` SET `whitelisted` = '0' WHERE `steam_id` = '$steamid'";
         Query($sql);
     }
 }
@@ -51,7 +51,7 @@ if (Rank("Supervisor")) {
 
 
 $doc_id = $steamid;
-$sql = "SELECT * from public_players where steam_id = '$steamid'";
+$sql = "SELECT * from `public_players` where `steam_id` = '$steamid'";
 $player = Query($sql)[0];
 
 $resp = Query($sql);
