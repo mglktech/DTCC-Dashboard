@@ -154,18 +154,23 @@ function create_shifts_sid($sid)
                     $shift->InTimes[] = $timestamp;
                 }
                 if ($io == "out") {
-                    $shift->OutTime = $timestamp;
-                    $shift->OutRow = $id;
+                    if(count($shift->InRows) > 0 )
+                    {
+                        $shift->OutTime = $timestamp;
+                        $shift->OutRow = $id;
                     // echo "<br>";
                     // print_r($shift);
-                    array_push($shifts, create_shift($shift));
+                        array_push($shifts, create_shift($shift));
                     //$shifts[] = $shift;
                     //unset($shift->InRows);
                     //unset($shift->InTimes);
                     //array_splice($shift->InRows, 0);
                     //array_splice($shift->InTimes, 0);
-                    $shift->InRows = array();
-                    $shift->InTimes = array();
+                        $shift->InRows = array();
+                        $shift->InTimes = array();
+                    }
+                    
+                    
                 }
             }
         }
